@@ -6,7 +6,7 @@ class Artwork(models.Model):
     title = models.CharField(max_length=500)
     medium = models.CharField(max_length=500)
     dimensions = models.CharField(max_length=300)
-    data = models.CharField(max_length=100)
+    date = models.CharField(max_length=100)
 
 class ArtworkMedia(models.Model):
     artwork = models.ForeignKey(Artwork, on_delete=models.CASCADE, null=True, related_name='work_img')
