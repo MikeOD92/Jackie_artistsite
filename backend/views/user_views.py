@@ -14,7 +14,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 class UserViews(mixins.CreateModelMixin, generics.GenericAPIView):
-
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -23,6 +22,15 @@ class UserViews(mixins.CreateModelMixin, generics.GenericAPIView):
             'data': self.create(request).data
         })
 
+    def put(self, request):
+        user = request.user
 
+        if request.data['password'] != request.data['password_confirm']:
+            raise exceptions.ValidationError('passwords do not match')
+
+        user.set_password(request.data['password'])
+        user.save()
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 ## add view for updating password 
