@@ -52,7 +52,7 @@ class ArtworkMediaSerializer(serializers.ModelSerializer):
         model = ArtworkMedia
         fields = '__all__'
 
-class ArtworkSerialzer(serializers.ModelSerializer):
+class ArtworkSerializer(serializers.ModelSerializer):
     work_img = ArtworkMediaSerializer(many=True)
     class Meta:
         model = Artwork

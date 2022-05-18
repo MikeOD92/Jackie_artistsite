@@ -1,7 +1,5 @@
 from django.shortcuts import render
 
-from backend.serializers import ArtworkSerialzer
-
 from rest_framework import generics, mixins
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser
@@ -11,12 +9,12 @@ from rest_framework.permissions import IsAdminUser
 from django.core.files.storage import default_storage
 
 from ..models import *
-from ..serializers import ArtworkMediaSerializer, ArtworkSerialzer, CreateArtworkSerializer
+from ..serializers import ArtworkMediaSerializer, ArtworkSerializer, CreateArtworkSerializer
 
 ### generic API view for people visiting the site, they can view all and single artworks. 
 class ArtworkAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin):
     queryset = Artwork.objects.all()
-    serializer_class = ArtworkSerialzer
+    serializer_class = ArtworkSerializer
 
     def get(self, request, pk=None):
         if pk:
@@ -45,7 +43,7 @@ class Upload(APIView):
         })
 
 # creation API view, requires user to to logged in to POST new works
-class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
     queryset = Artwork.objects.all()
     serializer_class = CreateArtworkSerializer
     permission_classes = [IsAdminUser]
@@ -55,5 +53,29 @@ class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.ListModelM
             'data': self.create(request).data
         })
 
-# @api_view(["POST"])
-# def upload_media(request):
+# API view for all non creation functions on artworks
+class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+    queryset = Artwork.objects.all()
+    serializer_class = ArtworkSerializer
+    permission_classes = [IsAdminUser]
+
+    def put(self, request, pk=None):
+        return Response({
+            'data': self.partial_update(request, pk).data
+        })
+    
+    def delete(self, request, pk=None):
+        return self.destroy(request, pk)
+
+class ArtworkMediaProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
+    queryset = ArtworkMedia.objects.all()
+    serializer_class = ArtworkMediaSerializer
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        return Response({
+            'data': self.create(request).data
+        })
+
+    def delete(self, request, pk=None):
+        return self.destroy(request, pk)

@@ -8,6 +8,9 @@ urlpatterns = [
     path('artwork', artwork_views.ArtworkAPIView.as_view(), name="view_all_work"),
     path('artwork/<str:pk>', artwork_views.ArtworkAPIView.as_view(), name="view_single_work"),
     path('create-artwork', artwork_views.ArtworkCreationProtectedAPIView.as_view(), name="add_work"),
+    path('edit-artwork/<str:pk>', artwork_views.ArtworkProtectedAPIView.as_view(), name="edit_work"),
+    path('artwork-media', artwork_views.ArtworkMediaProtectedAPIView.as_view(), name="add_media"),
+    path('artwork-media/<str:pk>', artwork_views.ArtworkMediaProtectedAPIView.as_view(), name="delete_media"),
     path('upload', artwork_views.Upload.as_view(), name='upload')
 
 ]
