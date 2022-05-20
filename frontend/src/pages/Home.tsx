@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { ArtWork } from "../types/art_work";
-import { Container, Image } from "react-bootstrap";
+import { Container, Image, Col, Row } from "react-bootstrap";
 const Home: FC = () => {
   const [artworks, setArtworks] = useState<Array<ArtWork>>([]);
 
@@ -16,18 +16,34 @@ const Home: FC = () => {
   }, []);
 
   return (
-    <Container style={{ background: "red" }}>
-      <h1> HOME PAGE</h1>
-      <Container id="artgrid">
+    <Container className="mt-3 py-3" style={{ background: "aliceblue" }}>
+      <Container
+        className="padding-0"
+        id="art-grid"
+        fluid
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+        }}
+      >
         {artworks.map((work) => {
           return (
             <Image
-              fluid
+              className="m-1"
               src={`http://localhost:8000${work.work_img[0].img}`}
-              onClick={() => console.log("helloworld")}
+              onClick={() => console.log(work.title)}
+              style={{
+                maxHeight: "40vh",
+                objectFit: "contain",
+                verticalAlign: "bottom",
+                display: "inline",
+              }}
+              alt="art peice"
             />
           );
         })}
+        {/* </Row> */}
       </Container>
     </Container>
   );
