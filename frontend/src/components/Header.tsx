@@ -20,7 +20,9 @@ const Header: FC = () => {
           style={{ width: "100%", position: "relative", left: "20px" }}
         >
           <LinkContainer to="/">
-            <Nav.Link>Jackie Slanley</Nav.Link>
+            <Nav.Link>
+              <strong>Jackie Slanley</strong>
+            </Nav.Link>
           </LinkContainer>
 
           <Navbar.Toggle

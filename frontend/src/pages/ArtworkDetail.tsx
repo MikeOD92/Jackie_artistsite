@@ -30,9 +30,9 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <Container style={{ marginTop: "10vh" }}>
+    <div style={{ marginTop: "10vh" }}>
       <Row>
-        <Col md={8}>
+        <Col>
           {current ? (
             <Image
               fluid
@@ -73,7 +73,7 @@ const ArtworkDetail = () => {
         {artwork?.work_img
           ? artwork.work_img.map((img) => {
               return (
-                <Col md={3} key={img.id}>
+                <Col md={2} key={img.id}>
                   <Image
                     src={`http://localhost:8000${img.img}`}
                     fluid
@@ -85,7 +85,7 @@ const ArtworkDetail = () => {
             })
           : ""}
       </Row>
-    </Container>
+    </div>
   );
 };
 

@@ -25,7 +25,6 @@ const Home: FC = () => {
     }
   }, []);
 
-  /// this begins the experimental part
   useEffect(() => {
     if (artworks.length === 0) return;
     setBucket1([]);
@@ -59,84 +58,84 @@ const Home: FC = () => {
   }, [artworks]);
   return (
     <>
-      <Container style={{ marginTop: "10vh" }}>
-        <div
-          className="mt-3 "
-          style={{
-            marginBottom: "40vh",
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            margin: "0",
-            // justifyContent: "center",
-          }}
-        >
-          <Col lg={3} md={6} sm={6}>
-            {bucket1
-              ? Array.from(bucket1).map((work) => {
-                  return (
-                    <Link to={`/${work.id}`}>
-                      <Image
-                        style={{ margin: "1px" }}
-                        fluid
-                        src={`http://localhost:8000${work.work_img[0].img}`}
-                        alt="art peice"
-                      />
-                    </Link>
-                  );
-                })
-              : ""}
-          </Col>
-          <Col lg={3} md={6} sm={6}>
-            {bucket2
-              ? bucket2.map((work) => {
-                  return (
-                    <Link to={`/${work.id}`}>
-                      <Image
-                        style={{ margin: "1px" }}
-                        fluid
-                        src={`http://localhost:8000${work.work_img[0].img}`}
-                        alt="art peice"
-                      />
-                    </Link>
-                  );
-                })
-              : ""}
-          </Col>
-          <Col lg={3} md={6} sm={6}>
-            {bucket3
-              ? bucket3.map((work) => {
-                  return (
-                    <Link to={`/${work.id}`}>
-                      <Image
-                        style={{ margin: "1px" }}
-                        fluid
-                        src={`http://localhost:8000${work.work_img[0].img}`}
-                        alt="art peice"
-                      />
-                    </Link>
-                  );
-                })
-              : ""}
-          </Col>
-          <Col lg={3} md={6} sm={6}>
-            {bucket4
-              ? bucket4.map((work) => {
-                  return (
-                    <Link to={`/${work.id}`}>
-                      <Image
-                        style={{ margin: "1px" }}
-                        fluid
-                        src={`http://localhost:8000${work.work_img[0].img}`}
-                        alt="art peice"
-                      />
-                    </Link>
-                  );
-                })
-              : ""}
-          </Col>
-          {/* //////////////////////// */}
-          {/* {artworks.map((work) => {
+      {/* <Container style={{ marginTop: "10vh" }}> */}
+      <Container
+        fluid
+        style={{
+          marginBottom: "40vh",
+          marginTop: "15vh",
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          // justifyContent: "center",
+        }}
+      >
+        <Col sm={6} md={6} lg={3}>
+          {bucket1
+            ? bucket1.map((work) => {
+                return (
+                  <Link to={`/${work.id}`}>
+                    <Image
+                      style={{ margin: "1px" }}
+                      fluid
+                      src={`http://localhost:8000${work.work_img[0].img}`}
+                      alt="art peice"
+                    />
+                  </Link>
+                );
+              })
+            : ""}
+        </Col>
+        <Col sm={6} md={6} lg={3}>
+          {bucket2
+            ? bucket2.map((work) => {
+                return (
+                  <Link to={`/${work.id}`}>
+                    <Image
+                      style={{ margin: "1px" }}
+                      fluid
+                      src={`http://localhost:8000${work.work_img[0].img}`}
+                      alt="art peice"
+                    />
+                  </Link>
+                );
+              })
+            : ""}
+        </Col>
+        <Col sm={6} md={6} lg={3}>
+          {bucket3
+            ? bucket3.map((work) => {
+                return (
+                  <Link to={`/${work.id}`}>
+                    <Image
+                      style={{ margin: "1px" }}
+                      fluid
+                      src={`http://localhost:8000${work.work_img[0].img}`}
+                      alt="art peice"
+                    />
+                  </Link>
+                );
+              })
+            : ""}
+        </Col>
+        <Col sm={6} md={6} lg={3}>
+          {bucket4
+            ? bucket4.map((work) => {
+                return (
+                  <Link to={`/${work.id}`}>
+                    <Image
+                      style={{ margin: "1px" }}
+                      fluid
+                      src={`http://localhost:8000${work.work_img[0].img}`}
+                      alt="art peice"
+                    />
+                  </Link>
+                );
+              })
+            : ""}
+        </Col>
+        {/* //////////////////////// */}
+        {/* {artworks.map((work) => {
           return (
             <Link to={`/${work.id}`}>
               <Image
@@ -153,8 +152,8 @@ const Home: FC = () => {
             </Link>
           );
         })} */}
-          {/* </Container> */}
-        </div>
+        {/* </Container> */}
+        {/* </div> */}
       </Container>
     </>
   );
