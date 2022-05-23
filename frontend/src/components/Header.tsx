@@ -5,9 +5,20 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const Header: FC = () => {
   return (
-    <header>
+    <header
+      style={{
+        position: "fixed",
+        top: "0",
+        boxShadow: "2px 2px 5px rgba(0,0,0,0.6)",
+        width: "100%",
+        background: "white",
+      }}
+    >
       <Navbar id="navbar" expand="lg" collapseOnSelect variant="light">
-        <Nav className="mr-auto" style={{ width: "100%" }}>
+        <Nav
+          className="mr-auto"
+          style={{ width: "100%", position: "relative", left: "20px" }}
+        >
           <LinkContainer to="/">
             <Nav.Link>Jackie Slanley</Nav.Link>
           </LinkContainer>

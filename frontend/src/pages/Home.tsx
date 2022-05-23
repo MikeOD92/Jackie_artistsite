@@ -59,7 +59,7 @@ const Home: FC = () => {
   }, [artworks]);
   return (
     <>
-      <Container className="py-0">
+      <Container style={{ marginTop: "10vh" }}>
         <div
           className="mt-3 "
           style={{

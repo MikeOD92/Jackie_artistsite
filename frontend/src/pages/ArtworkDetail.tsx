@@ -30,7 +30,7 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <Container>
+    <Container style={{ marginTop: "10vh" }}>
       <Row>
         <Col md={8}>
           {current ? (
