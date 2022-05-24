@@ -64,17 +64,16 @@ const ArtworkDetail = () => {
             ""
           )}
         </Col>
-        <Col className="p-5" md={3}>
-          <Link to="/">
+        <Col md={4} style={{ padding: "0 0 0 10px" }}>
+          <div style={{ textAlign: "left" }}>
+            <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
+            <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
+            <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
+            <p className="mt-4"> {artwork ? artwork.date : ""}</p>
+          </div>
+          <Link to="/" style={{ position: "relative", right: "3vw" }}>
             <p> Home</p>
           </Link>
-
-          <div style={{ textAlign: "left" }}>
-            <h3 className="mt-3"> {artwork ? artwork.title : ""}</h3>
-            <h5 className="mt-5"> {artwork ? artwork.medium : ""} </h5>
-            <h5 className="mt-5"> {artwork ? artwork.dimensions : ""}</h5>
-            <h5 className="mt-5"> {artwork ? artwork.date : ""}</h5>
-          </div>
         </Col>
       </Row>
     </div>

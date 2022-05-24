@@ -9,7 +9,7 @@ const Header: FC = () => {
       style={{
         position: "fixed",
         top: "0",
-        boxShadow: "2px 2px 5px rgba(0,0,0,0.6)",
+        boxShadow: "2px 2px 5px rgba(0,0,0,0.4)",
         width: "100%",
         background: "white",
       }}
@@ -27,7 +27,7 @@ const Header: FC = () => {
 
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
-            style={{ position: "absolute", right: "15px" }}
+            style={{ position: "absolute", right: "25px" }}
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>

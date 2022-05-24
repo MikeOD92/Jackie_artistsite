@@ -5,6 +5,7 @@ import { Container, Image, Col, Row } from "react-bootstrap";
 import ArtworkDetail from "./ArtworkDetail";
 import { Link } from "react-router-dom";
 import { ArtWorkMedia } from "../types/artwork_media";
+import HomeImg from "../components/HomeImg";
 
 const Home: FC = () => {
   const [artworks, setArtworks] = useState<Array<ArtWork>>([]);
@@ -73,64 +74,28 @@ const Home: FC = () => {
         <Col sm={6} md={6} lg={3}>
           {bucket1
             ? bucket1.map((work) => {
-                return (
-                  <Link to={`/${work.id}`}>
-                    <Image
-                      style={{ margin: "1px" }}
-                      fluid
-                      src={`http://localhost:8000${work.work_img[0].img}`}
-                      alt="art peice"
-                    />
-                  </Link>
-                );
+                return <HomeImg work={work} />;
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={3}>
           {bucket2
             ? bucket2.map((work) => {
-                return (
-                  <Link to={`/${work.id}`}>
-                    <Image
-                      style={{ margin: "1px" }}
-                      fluid
-                      src={`http://localhost:8000${work.work_img[0].img}`}
-                      alt="art peice"
-                    />
-                  </Link>
-                );
+                return <HomeImg work={work} />;
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={3}>
           {bucket3
             ? bucket3.map((work) => {
-                return (
-                  <Link to={`/${work.id}`}>
-                    <Image
-                      style={{ margin: "1px" }}
-                      fluid
-                      src={`http://localhost:8000${work.work_img[0].img}`}
-                      alt="art peice"
-                    />
-                  </Link>
-                );
+                return <HomeImg work={work} />;
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={3}>
           {bucket4
             ? bucket4.map((work) => {
-                return (
-                  <Link to={`/${work.id}`}>
-                    <Image
-                      style={{ margin: "1px" }}
-                      fluid
-                      src={`http://localhost:8000${work.work_img[0].img}`}
-                      alt="art peice"
-                    />
-                  </Link>
-                );
+                return <HomeImg work={work} />;
               })
             : ""}
         </Col>
