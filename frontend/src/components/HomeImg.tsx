@@ -10,7 +10,7 @@ const HomeImg: FC<{ work: ArtWork }> = ({ work }) => {
   const visable = useInView(element);
 
   const style = (visable: Boolean) => ({
-    transition: "1s ease-in",
+    transition: "2.5s ease",
     opacity: visable ? "0" : "1",
   });
 

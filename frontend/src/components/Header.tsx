@@ -12,6 +12,7 @@ const Header: FC = () => {
         boxShadow: "2px 2px 5px rgba(0,0,0,0.4)",
         width: "100%",
         background: "white",
+        zIndex: "100",
       }}
     >
       <Navbar id="navbar" expand="lg" collapseOnSelect variant="light">
