@@ -30,8 +30,29 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <div style={{ marginTop: "10vh" }}>
-      <Row>
+    <div style={{ marginTop: "15vh" }}>
+      <Row className="mb-4">
+        <Col md={2} className="mt-3 flex-d">
+          <Container className="mb-4">
+            <Row>
+              {artwork?.work_img && artwork.work_img.length > 1
+                ? artwork.work_img.map((img) => {
+                    return (
+                      <Col md={6} key={img.id}>
+                        <Image
+                          src={`http://localhost:8000${img.img}`}
+                          fluid
+                          onClick={handleClick(img)}
+                          style={{ marginTop: "5px" }}
+                        />
+                      </Col>
+                    );
+                  })
+                : ""}
+            </Row>
+          </Container>
+        </Col>
+
         <Col>
           {current ? (
             <Image
@@ -43,47 +64,18 @@ const ArtworkDetail = () => {
             ""
           )}
         </Col>
-        <Col>
+        <Col className="p-5" md={3}>
           <Link to="/">
-            <p
-              style={{
-                position: "absolute",
-                right: "20px",
-                width: "25px",
-                height: "25px",
-              }}
-            >
-              X
-            </p>
+            <p> Home</p>
           </Link>
 
           <div style={{ textAlign: "left" }}>
-            <h2 className="mt-3"> {artwork ? artwork.title : ""}</h2>
-            <h4 className="mt-5"> {artwork ? artwork.medium : ""} </h4>
-            <h4 className="mt-3"> {artwork ? artwork.dimensions : ""}</h4>
-            <h4 className="mt-5"> {artwork ? artwork.date : ""}</h4>
+            <h3 className="mt-3"> {artwork ? artwork.title : ""}</h3>
+            <h5 className="mt-5"> {artwork ? artwork.medium : ""} </h5>
+            <h5 className="mt-5"> {artwork ? artwork.dimensions : ""}</h5>
+            <h5 className="mt-5"> {artwork ? artwork.date : ""}</h5>
           </div>
         </Col>
-      </Row>
-
-      <Row
-        className="mt-3 flex-d"
-        style={{ width: "50%", justifyContent: "space-evenly" }}
-      >
-        {artwork?.work_img
-          ? artwork.work_img.map((img) => {
-              return (
-                <Col md={2} key={img.id}>
-                  <Image
-                    src={`http://localhost:8000${img.img}`}
-                    fluid
-                    style={{ height: "15vh", padding: "0", margin: "0" }}
-                    onClick={handleClick(img)}
-                  />
-                </Col>
-              );
-            })
-          : ""}
       </Row>
     </div>
   );
