@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SyntheticEvent } from "react";
 import axios from "axios";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { ArtWork } from "../types/art_work";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ArtWorkMedia } from "../types/artwork_media";
+import { IoReturnDownBackOutline } from "react-icons/io5";
+import DetailImage from "../components/DetailImage";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
@@ -30,7 +32,7 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <div style={{ marginTop: "15vh" }}>
+    <div style={{ marginTop: "10vh" }}>
       <Row className="mb-4">
         <Col md={2} className="mt-3 flex-d">
           <Container className="mb-4">
@@ -53,26 +55,24 @@ const ArtworkDetail = () => {
           </Container>
         </Col>
 
-        <Col>
-          {current ? (
-            <Image
-              fluid
-              src={`http://localhost:8000${current.img}`}
-              style={{ maxHeight: "85vh" }}
-            />
-          ) : (
-            ""
-          )}
-        </Col>
-        <Col md={4} style={{ padding: "0 0 0 10px" }}>
+        <Col>{current ? <DetailImage img={current.img} /> : ""}</Col>
+        <Col md={3} style={{ padding: "0 0 0 10px" }}>
           <div style={{ textAlign: "left" }}>
             <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
             <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
             <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
             <p className="mt-4"> {artwork ? artwork.date : ""}</p>
           </div>
-          <Link to="/" style={{ position: "relative", right: "3vw" }}>
-            <p> Home</p>
+          <Link
+            to="/"
+            style={{
+              position: "relative",
+              left: "20vw",
+              fontSize: "32px",
+              color: "black",
+            }}
+          >
+            <IoReturnDownBackOutline />
           </Link>
         </Col>
       </Row>
