@@ -7,7 +7,7 @@ const useInView = (ref: any) => {
     const handleScroll = () => {
       if (!ref) return;
       const { top } = ref.current.getBoundingClientRect();
-      return setVisable(top > window.innerHeight);
+      return setVisable(top > window.innerHeight - 150);
     };
 
     window.addEventListener("scroll", handleScroll);
