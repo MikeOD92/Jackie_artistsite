@@ -18,7 +18,7 @@ const Header: FC = () => {
         zIndex: "100",
       }}
     >
-      <Navbar id="navbar" expand="lg" collapseOnSelect variant="light">
+      <Navbar id="navbar" expand="lg" collapseOnSelect>
         <Nav
           className="mr-auto"
           style={{ width: "100%", position: "relative", left: "20px" }}

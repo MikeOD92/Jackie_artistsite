@@ -13,14 +13,24 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   });
 
   useEffect(() => {
-    setZoom({
-      backgroundImage: `url('http://localhost:8000${img}')`,
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "contain",
-      height: "85vh",
-    });
-  }, [img]);
+    if (zoomable === false) {
+      setZoom({
+        backgroundImage: `url('http://localhost:8000${img}')`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
+        height: "85vh",
+      });
+    } else {
+      setZoom({
+        backgroundImage: `url('http://localhost:8000${img}')`,
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "160%",
+        height: "85vh",
+      });
+    }
+  }, [img, zoomable]);
 
   const handleMouseMovement = (
     event: React.MouseEvent<Element, MouseEvent>
