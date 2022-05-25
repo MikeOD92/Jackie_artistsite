@@ -1,6 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
 
-const DetailImage: FC<{ img: string }> = ({ img }) => {
+const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
+  img,
+  zoomable,
+}) => {
   const [zoom, setZoom] = useState({
     backgroundImage: `url('http://localhost:8000${img}')`,
     backgroundPosition: "center",
@@ -30,7 +33,7 @@ const DetailImage: FC<{ img: string }> = ({ img }) => {
       backgroundImage: `url('http://localhost:8000${img}')`,
       backgroundPosition: `${x}% ${y}%`,
       backgroundRepeat: "no-repeat",
-      backgroundSize: "150%",
+      backgroundSize: "160%",
       height: "85vh",
     });
   };
@@ -43,15 +46,17 @@ const DetailImage: FC<{ img: string }> = ({ img }) => {
       height: "85vh",
     });
   };
-  return (
-    <div style={{ margin: "0 auto" }}>
+  if (zoomable) {
+    return (
       <div
         style={zoom}
         onMouseMove={handleMouseMovement}
         onMouseOut={handleMouseExit}
       ></div>
-    </div>
-  );
+    );
+  } else {
+    return <div style={zoom}></div>;
+  }
 };
 
 export default DetailImage;

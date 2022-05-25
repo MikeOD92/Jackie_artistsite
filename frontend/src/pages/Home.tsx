@@ -13,7 +13,7 @@ const Home: FC = () => {
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
-  const [bucket4, setBucket4] = useState<Array<ArtWork>>([]);
+  // const [bucket4, setBucket4] = useState<Array<ArtWork>>([]);
 
   useEffect(() => {
     if (artworks.length < 1) {
@@ -31,10 +31,10 @@ const Home: FC = () => {
     setBucket1([]);
     setBucket2([]);
     setBucket3([]);
-    setBucket4([]);
+    // setBucket4([]);
     let counter = 1;
     for (let i = 0; i < artworks.length; i++) {
-      if (counter === 5) counter = 1;
+      if (counter === 4) counter = 1;
       switch (counter) {
         case 1:
           setBucket1((bucket1) => [...bucket1, artworks[i]]);
@@ -48,10 +48,10 @@ const Home: FC = () => {
           setBucket3((bucket3) => [...bucket3, artworks[i]]);
           counter++;
           break;
-        case 4:
-          setBucket4((bucket4) => [...bucket4, artworks[i]]);
-          counter++;
-          break;
+        // case 4:
+        //   setBucket4((bucket4) => [...bucket4, artworks[i]]);
+        //   counter++;
+        //   break;
         default:
           return;
       }
@@ -71,34 +71,34 @@ const Home: FC = () => {
           // justifyContent: "center",
         }}
       >
-        <Col sm={6} md={6} lg={3}>
+        <Col sm={6} md={6} lg={4}>
           {bucket1
             ? bucket1.map((work) => {
                 return <HomeImg work={work} />;
               })
             : ""}
         </Col>
-        <Col sm={6} md={6} lg={3}>
+        <Col sm={6} md={6} lg={4}>
           {bucket2
             ? bucket2.map((work) => {
                 return <HomeImg work={work} />;
               })
             : ""}
         </Col>
-        <Col sm={6} md={6} lg={3}>
+        <Col sm={6} md={6} lg={4}>
           {bucket3
             ? bucket3.map((work) => {
                 return <HomeImg work={work} />;
               })
             : ""}
         </Col>
-        <Col sm={6} md={6} lg={3}>
+        {/* <Col sm={6} md={6} lg={3}>
           {bucket4
             ? bucket4.map((work) => {
                 return <HomeImg work={work} />;
               })
             : ""}
-        </Col>
+        </Col> */}
         {/* //////////////////////// */}
         {/* {artworks.map((work) => {
           return (

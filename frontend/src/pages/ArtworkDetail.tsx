@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
+import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
   const [current, setCurrent] = useState<ArtWorkMedia>();
+  const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -55,7 +57,9 @@ const ArtworkDetail = () => {
           </Container>
         </Col>
 
-        <Col>{current ? <DetailImage img={current.img} /> : ""}</Col>
+        <Col>
+          {current ? <DetailImage img={current.img} zoomable={zoomable} /> : ""}
+        </Col>
         <Col md={3} style={{ padding: "0 0 0 10px" }}>
           <div style={{ textAlign: "left" }}>
             <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
@@ -63,11 +67,23 @@ const ArtworkDetail = () => {
             <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
             <p className="mt-4"> {artwork ? artwork.date : ""}</p>
           </div>
+
+          {zoomable ? (
+            <MdOutlineCancel
+              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+              style={{ fontSize: "32px" }}
+            />
+          ) : (
+            <MdZoomIn
+              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+              style={{ fontSize: "32px" }}
+            />
+          )}
           <Link
             to="/"
             style={{
               position: "relative",
-              left: "20vw",
+              left: "10vw",
               fontSize: "32px",
               color: "black",
             }}
