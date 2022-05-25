@@ -6,12 +6,15 @@ import { LinkContainer } from "react-router-bootstrap";
 const Header: FC = () => {
   return (
     <header
+      className="headerNav"
       style={{
         position: "fixed",
         top: "0",
-        boxShadow: "2px 2px 5px rgba(0,0,0,0.4)",
+        // boxShadow: "2px 2px 10px rgba(0,0,0,0.4)",
         width: "100%",
-        background: "white",
+        background: "yellow",
+        // background: "rgb(200,0,225)",
+        // background: "white",
         zIndex: "100",
       }}
     >
@@ -37,9 +40,6 @@ const Header: FC = () => {
               </LinkContainer>
               <LinkContainer to="/cv">
                 <Nav.Link>CV</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/contact">
-                <Nav.Link>Contact</Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

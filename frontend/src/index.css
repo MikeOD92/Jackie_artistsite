@@ -1,14 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@200;400;500&display=swap");
-/*     font-family: 'Inknut Antiqua', serif;
+@import url("https://fonts.googleapis.com/css2?family=Carme&family=Comfortaa:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;600&display=swap");
+/*        
+    font-family: 'Carme', sans-serif;
 
-    font-family: 'Plus Jakarta Sans', sans-serif; */
+    font-family: 'Comfortaa', cursive;
+
+    font-family: 'Cormorant Garamond', serif;
+    */
+* {
+  cursor: url(../public/jackie_site_cursor.png), auto;
+}
 body {
   margin: 0;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: "Carme", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: url(../public/jackie_site_cursor.png), auto;
 }
-
+.headerNav {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 18px;
+}
+.title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 36px;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

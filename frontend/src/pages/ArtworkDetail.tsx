@@ -43,7 +43,7 @@ const ArtworkDetail = () => {
           style={{ padding: "10px", marginLeft: "5vw" }}
         >
           <div style={{ textAlign: "left" }}>
-            <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
+            <h4 className="mt-5 title"> {artwork ? artwork.title : ""}</h4>
             <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
             <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
             <p className="mt-4"> {artwork ? artwork.date : ""}</p>

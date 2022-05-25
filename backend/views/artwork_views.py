@@ -13,7 +13,7 @@ from ..serializers import ArtworkMediaSerializer, ArtworkSerializer, CreateArtwo
 
 ### generic API view for people visiting the site, they can view all and single artworks. 
 class ArtworkAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin):
-    queryset = Artwork.objects.all()
+    queryset = Artwork.objects.all().order_by('-id')
     serializer_class = ArtworkSerializer
 
     def get(self, request, pk=None):
