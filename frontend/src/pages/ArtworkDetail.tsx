@@ -36,10 +36,49 @@ const ArtworkDetail = () => {
   return (
     <div style={{ marginTop: "10vh" }}>
       <Row className="mb-4">
+        <Col
+          md={2}
+          sm={12}
+          xs={12}
+          style={{ padding: "10px", marginLeft: "5vw" }}
+        >
+          <div style={{ textAlign: "left" }}>
+            <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
+            <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
+            <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
+            <p className="mt-4"> {artwork ? artwork.date : ""}</p>
+          </div>
+
+          <Link
+            to="/"
+            style={{
+              fontSize: "32px",
+              color: "black",
+            }}
+          >
+            <IoReturnDownBackOutline />
+          </Link>
+          {zoomable ? (
+            <MdOutlineCancel
+              className="hide-on-shrink"
+              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+              style={{ fontSize: "32px", position: "relative", left: "10vw" }}
+            />
+          ) : (
+            <MdZoomIn
+              className="hide-on-shrink"
+              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+              style={{ fontSize: "32px", position: "relative", left: "10vw" }}
+            />
+          )}
+        </Col>
+        <Col className="hide-on-shrink">
+          {current ? <DetailImage img={current.img} zoomable={zoomable} /> : ""}
+        </Col>
         <Col md={2} className="mt-3 flex-d">
           <Container className="mb-4">
             <Row>
-              {artwork?.work_img && artwork.work_img.length > 1
+              {artwork?.work_img
                 ? artwork.work_img.map((img) => {
                     return (
                       <Col md={6} key={img.id}>
@@ -55,41 +94,6 @@ const ArtworkDetail = () => {
                 : ""}
             </Row>
           </Container>
-        </Col>
-
-        <Col>
-          {current ? <DetailImage img={current.img} zoomable={zoomable} /> : ""}
-        </Col>
-        <Col md={3} style={{ padding: "0 0 0 10px" }}>
-          <div style={{ textAlign: "left" }}>
-            <h4 className="mt-5"> {artwork ? artwork.title : ""}</h4>
-            <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
-            <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
-            <p className="mt-4"> {artwork ? artwork.date : ""}</p>
-          </div>
-
-          {zoomable ? (
-            <MdOutlineCancel
-              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
-              style={{ fontSize: "32px" }}
-            />
-          ) : (
-            <MdZoomIn
-              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
-              style={{ fontSize: "32px" }}
-            />
-          )}
-          <Link
-            to="/"
-            style={{
-              position: "relative",
-              left: "10vw",
-              fontSize: "32px",
-              color: "black",
-            }}
-          >
-            <IoReturnDownBackOutline />
-          </Link>
         </Col>
       </Row>
     </div>
