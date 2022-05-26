@@ -19,7 +19,7 @@ const CV: FC = () => {
   });
 
   return (
-    <Container style={{ marginTop: "20vh" }}>
+    <Container style={{ marginTop: "20vh", minHeight: "100vh" }}>
       <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
       {data?.links
         ? data.links.map((link) => {

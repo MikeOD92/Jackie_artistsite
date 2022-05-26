@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import CV from "./pages/CV";
 import About from "./pages/About";
-
+import Login from "./pages/Login";
 import ArtworkDetail from "./pages/ArtworkDetail";
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
           <Route path={"/cv"} element={<CV />} />
           <Route path={"/about"} element={<About />} />
           <Route path={"/:id"} element={<ArtworkDetail />} />
+          <Route path={"/login"} element={<Login />} />
         </Routes>
       </main>
     </div>

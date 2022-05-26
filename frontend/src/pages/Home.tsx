@@ -1,10 +1,7 @@
-import { FC, useEffect, useState, SyntheticEvent } from "react";
+import { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { ArtWork } from "../types/art_work";
-import { Container, Image, Col, Row } from "react-bootstrap";
-import ArtworkDetail from "./ArtworkDetail";
-import { Link } from "react-router-dom";
-import { ArtWorkMedia } from "../types/artwork_media";
+import { Container, Col } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
 
 const Home: FC = () => {
@@ -61,6 +58,7 @@ const Home: FC = () => {
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
+          minHeight: "100vh",
         }}
       >
         <Col sm={6} md={6} lg={4}>

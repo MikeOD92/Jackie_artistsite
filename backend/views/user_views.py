@@ -18,9 +18,24 @@ class UserViews(mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = UserSerializer
 
     def post(self, request):
-        return Response({
-            'data': self.create(request).data
-        })
+        data = request.data
+
+        try:
+            user = User.objects.create(
+                username=data['email'],
+                email = data['email'],
+                password=make_password(data['password']),
+                is_staff=True
+            )
+            serializer = UserSerializer
+
+            return Response({
+                'data': serializer(user).data
+            })
+
+        except:
+            return Response({'message': "error"}, status=status.HTTP_400_BAD_REQUEST)
+
 
     def put(self, request):
         user = request.user
