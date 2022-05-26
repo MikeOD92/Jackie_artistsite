@@ -1,9 +1,27 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import axios from "axios";
 
 const Header: FC = () => {
+  const [auth, setAuth] = useState<boolean>(false);
+  const token = localStorage.getItem("access_token");
+
+  useEffect(() => {
+    const validate = async () => {
+      const data = await axios.post("http://localhost:8000/api/token/verify/", {
+        token: token,
+      });
+      if (data.status === 200) {
+        setAuth(true);
+      }
+    };
+    if (localStorage.getItem("access_token")) {
+      validate();
+    }
+  }, [token]);
+
   return (
     <header
       className="headerNav"
@@ -42,6 +60,13 @@ const Header: FC = () => {
               <LinkContainer to="/cv">
                 <Nav.Link className="pointer">CV</Nav.Link>
               </LinkContainer>
+              {auth ? (
+                <LinkContainer to="/cv">
+                  <Nav.Link className="pointer">Authorized</Nav.Link>
+                </LinkContainer>
+              ) : (
+                ""
+              )}
             </Nav>
           </Navbar.Collapse>
         </Nav>
