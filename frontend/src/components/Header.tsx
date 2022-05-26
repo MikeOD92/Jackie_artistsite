@@ -24,22 +24,23 @@ const Header: FC = () => {
           style={{ width: "100%", position: "relative", left: "20px" }}
         >
           <LinkContainer to="/">
-            <Nav.Link>
+            <Nav.Link className="pointer">
               <strong>Jackie Slanley</strong>
             </Nav.Link>
           </LinkContainer>
 
           <Navbar.Toggle
+            className="pointer"
             aria-controls="basic-navbar-nav"
             style={{ position: "absolute", right: "25px" }}
           />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
               <LinkContainer to="/about">
-                <Nav.Link>About</Nav.Link>
+                <Nav.Link className="pointer">About</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/cv">
-                <Nav.Link>CV</Nav.Link>
+                <Nav.Link className="pointer">CV</Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

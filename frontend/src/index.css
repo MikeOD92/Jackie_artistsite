@@ -9,6 +9,9 @@
 * {
   cursor: url(../public/jackie_site_cursor.png), auto;
 }
+.pointer:hover {
+  cursor: url(../public/cursor2.png), auto;
+}
 body {
   margin: 0;
   font-family: "Carme", sans-serif;

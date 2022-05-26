@@ -51,6 +51,7 @@ const ArtworkDetail = () => {
 
           <Link
             to="/"
+            className="pointer"
             style={{
               fontSize: "32px",
               color: "black",
@@ -60,13 +61,13 @@ const ArtworkDetail = () => {
           </Link>
           {zoomable ? (
             <MdOutlineCancel
-              className="hide-on-shrink"
+              className="hide-on-shrink pointer"
               onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
               style={{ fontSize: "32px", position: "relative", left: "10vw" }}
             />
           ) : (
             <MdZoomIn
-              className="hide-on-shrink"
+              className="hide-on-shrink pointer"
               onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
               style={{ fontSize: "32px", position: "relative", left: "10vw" }}
             />
@@ -83,6 +84,7 @@ const ArtworkDetail = () => {
                     return (
                       <Col md={6} key={img.id}>
                         <Image
+                          className="pointer"
                           src={`http://localhost:8000${img.img}`}
                           fluid
                           onClick={handleClick(img)}
