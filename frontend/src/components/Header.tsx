@@ -1,26 +1,34 @@
-import React, { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { FC } from "react";
+
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import axios from "axios";
+
+import { useDispatch } from "react-redux";
+import { logout } from "../store";
+import useAuth from "../hooks/useAuth";
 
 const Header: FC = () => {
-  const [auth, setAuth] = useState<boolean>(false);
-  const token = localStorage.getItem("access_token");
+  // const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const auth = useAuth();
+  // const [auth, setAuth] = useState<boolean>(false);
 
-  useEffect(() => {
-    const validate = async () => {
-      const data = await axios.post("http://localhost:8000/api/token/verify/", {
-        token: token,
-      });
-      if (data.status === 200) {
-        setAuth(true);
-      }
-    };
-    if (localStorage.getItem("access_token")) {
-      validate();
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   const validate = async () => {
+  //     const data = await axios.post("http://localhost:8000/api/token/verify/", {
+  //       token: user,
+  //     });
+  //     if (data.status === 200) {
+  //       setAuth(true);
+  //       console.log(user);
+  //     }
+  //   };
+  //   if (user !== "") {
+  //     validate();
+  //   } else {
+  //     setAuth(false);
+  //   }
+  // }, [user]);
 
   return (
     <header
@@ -61,9 +69,19 @@ const Header: FC = () => {
                 <Nav.Link className="pointer">CV</Nav.Link>
               </LinkContainer>
               {auth ? (
-                <LinkContainer to="/cv">
-                  <Nav.Link className="pointer">Authorized</Nav.Link>
+                <LinkContainer to="/">
+                  <Nav.Link className="pointer">New</Nav.Link>
                 </LinkContainer>
+              ) : (
+                ""
+              )}
+              {auth ? (
+                <Nav.Link
+                  className="pointer"
+                  onClick={() => dispatch(logout())}
+                >
+                  Logout
+                </Nav.Link>
               ) : (
                 ""
               )}
