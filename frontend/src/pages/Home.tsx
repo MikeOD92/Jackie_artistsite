@@ -63,22 +63,22 @@ const Home: FC = () => {
       >
         <Col sm={6} md={6} lg={4}>
           {bucket1
-            ? bucket1.map((work) => {
-                return <HomeImg work={work} />;
+            ? bucket1.map((work, i) => {
+                return <HomeImg work={work} key={`${work.title} ${i}`} />;
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={4}>
           {bucket2
-            ? bucket2.map((work) => {
-                return <HomeImg work={work} />;
+            ? bucket2.map((work, i) => {
+                return <HomeImg work={work} key={`${work.title} ${i}`} />;
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={4}>
           {bucket3
-            ? bucket3.map((work) => {
-                return <HomeImg work={work} />;
+            ? bucket3.map((work, i) => {
+                return <HomeImg work={work} key={`${work.title} ${i}`} />;
               })
             : ""}
         </Col>

@@ -32,10 +32,10 @@ const About: FC = () => {
           <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
           <ul style={{ listStyle: "none" }}>
             {data?.links
-              ? data.links.map((link) => {
+              ? data.links.map((link, i) => {
                   if (link.title === "instagram") {
                     return (
-                      <li>
+                      <li key={`${link.title} ${i}`}>
                         <a href={link.url}>
                           {" "}
                           <AiOutlineInstagram
@@ -46,7 +46,7 @@ const About: FC = () => {
                     );
                   } else {
                     return (
-                      <li>
+                      <li key={`${link.title} ${i}`}>
                         <a href={link.url}>{link.text}</a>{" "}
                       </li>
                     );

@@ -13,6 +13,10 @@
   cursor: url(../public/jackie_site_cursor_rotate.png), auto;
   /* cursor:  */
 }
+.defaultCursor {
+  cursor: auto;
+}
+
 body {
   margin: 0;
   font-family: "Carme", sans-serif;
