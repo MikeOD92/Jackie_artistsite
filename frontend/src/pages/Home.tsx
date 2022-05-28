@@ -53,8 +53,8 @@ const Home: FC = () => {
       <Container
         fluid
         style={{
-          marginBottom: "40vh",
-          marginTop: "15vh",
+          marginBottom: "45vh",
+          marginTop: "10vh",
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
@@ -82,26 +82,6 @@ const Home: FC = () => {
               })
             : ""}
         </Col>
-        {/* //////////////////////// */}
-        {/* {artworks.map((work) => {
-          return (
-            <Link to={`/${work.id}`}>
-              <Image
-                className="m-1"
-                src={`http://localhost:8000${work.work_img[0].img}`}
-                style={{
-                  maxHeight: "60vh",
-                  objectFit: "contain",
-                  verticalAlign: "bottom",
-                  display: "inline",
-                }}
-                alt="art peice"
-              />
-            </Link>
-          );
-        })} */}
-        {/* </Container> */}
-        {/* </div> */}
       </Container>
       <footer className="p-2" style={{ fontSize: "13px" }}>
         <Row>
