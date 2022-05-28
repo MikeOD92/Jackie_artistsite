@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { ArtWork } from "../types/art_work";
-import { Container, Col } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
-
+import { BiCopyright } from "react-icons/bi";
 const Home: FC = () => {
   const [artworks, setArtworks] = useState<Array<ArtWork>>([]);
 
@@ -103,6 +103,21 @@ const Home: FC = () => {
         {/* </Container> */}
         {/* </div> */}
       </Container>
+      <footer className="p-2" style={{ fontSize: "13px" }}>
+        <Row>
+          <Col md={2}>
+            <small>
+              Website by{" "}
+              <a style={{ color: "darkgray" }} href="https://www.m-odell.com">
+                Michael O'Dell
+              </a>
+            </small>
+          </Col>
+          <Col className="text-center">
+            Copyright <BiCopyright /> Jackie Slanley
+          </Col>
+        </Row>
+      </footer>
     </>
   );
 };

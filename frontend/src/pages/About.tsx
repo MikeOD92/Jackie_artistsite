@@ -26,7 +26,7 @@ const About: FC = () => {
   return (
     <Container style={{ marginTop: "20vh", minHeight: "100vh" }}>
       {auth && data ? (
-        <PageEdit data={data} />
+        <PageEdit data={data} setData={setData} />
       ) : (
         <>
           <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
@@ -35,7 +35,7 @@ const About: FC = () => {
               ? data.links.map((link, i) => {
                   if (link.title === "instagram") {
                     return (
-                      <li key={`${link.title} ${i}`}>
+                      <li className="py-3" key={`${link.title} ${i}`}>
                         <a href={link.url}>
                           {" "}
                           <AiOutlineInstagram
@@ -46,7 +46,7 @@ const About: FC = () => {
                     );
                   } else {
                     return (
-                      <li key={`${link.title} ${i}`}>
+                      <li className="py-3" key={`${link.title} ${i}`}>
                         <a href={link.url}>{link.text}</a>{" "}
                       </li>
                     );

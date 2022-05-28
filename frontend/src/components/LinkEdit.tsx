@@ -4,12 +4,14 @@ import axios, { AxiosResponse } from "axios";
 import { ExternalLinks } from "../types/external_links";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store";
+import { SiteData } from "../types/site_data";
 
 const LinkEdit: FC<{
   link: ExternalLinks | null;
   pageId: Number;
   action: string;
-}> = ({ link, pageId, action }) => {
+  setData: Function;
+}> = ({ link, pageId, action, setData }) => {
   const user = useSelector(selectUser);
 
   const title = useRef<HTMLInputElement>(null);
@@ -18,16 +20,15 @@ const LinkEdit: FC<{
 
   const [saved, setSaved] = useState<boolean | null>(null);
 
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${user}`,
+    },
+  };
+
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${user}`,
-      },
-    };
-
     try {
       if (
         title?.current !== null &&
@@ -69,7 +70,20 @@ const LinkEdit: FC<{
       console.error(err);
     }
   };
-
+  const submitDelete = async (e: SyntheticEvent, id: Number) => {
+    e.preventDefault();
+    const deletedLink = await axios.delete(
+      `http://localhost:8000/api/external-links/edit/${id}`,
+      config
+    );
+    if (deletedLink.status === 200 && link) {
+      const fetchData = await axios.get("http://localhost:8000/api/site-data");
+      const pageData = fetchData.data.filter(
+        (item: SiteData) => item.id === link.page
+      );
+      setData(pageData[0]);
+    }
+  };
   return (
     <Form className="mt-3" onSubmit={(e: SyntheticEvent) => submit(e)}>
       <Row>
@@ -103,10 +117,17 @@ const LinkEdit: FC<{
           <Row>
             <Col md={6}>
               <Button type="submit"> Save </Button>
-
-              <Button variant="outline-danger" style={{ marginLeft: "2vw" }}>
-                X
-              </Button>
+              {link ? (
+                <Button
+                  onClick={(e: SyntheticEvent) => submitDelete(e, link.id)}
+                  variant="outline-danger"
+                  style={{ marginLeft: "2vw" }}
+                >
+                  X
+                </Button>
+              ) : (
+                ""
+              )}
             </Col>
             <Col md={6}>
               {saved === true ? (

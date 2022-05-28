@@ -7,7 +7,10 @@ import { SiteData } from "../types/site_data";
 import { ExternalLinks } from "../types/external_links";
 import { selectUser } from "../store";
 
-const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
+const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
+  data,
+  setData,
+}) => {
   const user = useSelector(selectUser);
   const [success, setSuccess] = useState<boolean | null>(null);
   const [newLinks, setNewLinks] = useState<number>(0);
@@ -38,8 +41,9 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
       }
     }
   };
+
   return (
-    <div className="mb-5">
+    <div className="mb-5 mt-5">
       <h4> _ Page Body _</h4>
       <Form className="mt-5" onSubmit={(e: SyntheticEvent) => submitEdit(e)}>
         {data ? (
@@ -84,9 +88,15 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
           </Row>
           <Row>
             {data?.links.length > 0
-              ? data.links.map((link: ExternalLinks) => {
+              ? data.links.map((link: ExternalLinks, i) => {
                   return (
-                    <LinkEdit link={link} pageId={data.id} action="update" />
+                    <LinkEdit
+                      key={`${link.title} ${i}`}
+                      link={link}
+                      pageId={data.id}
+                      action="update"
+                      setData={setData}
+                    />
                   );
                 })
               : ""}
@@ -94,13 +104,26 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
           <Row>
             {newLinks > 0
               ? [...Array(newLinks)].map((i) => {
-                  return <LinkEdit link={null} pageId={data.id} action="new" />;
+                  return (
+                    <LinkEdit
+                      link={null}
+                      pageId={data.id}
+                      action="new"
+                      setData={setData}
+                    />
+                  );
                 })
               : ""}
           </Row>
           <Row>
-            <Col md={1}>
-              <Button onClick={() => setNewLinks(newLinks + 1)}>+</Button>
+            <Col md={2}>
+              <Button className="m-2" onClick={() => setNewLinks(newLinks + 1)}>
+                +
+              </Button>
+
+              <Button className="m-2" onClick={() => setNewLinks(newLinks - 1)}>
+                -
+              </Button>
             </Col>
           </Row>
         </div>
