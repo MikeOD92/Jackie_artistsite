@@ -3,7 +3,6 @@ import { ArtWork } from "../types/art_work";
 import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import useInView from "../hooks/useInView";
-import { isNull } from "util";
 
 const HomeImg: FC<{ work: ArtWork }> = ({ work }) => {
   const element = useRef<HTMLImageElement>(null);
@@ -12,7 +11,7 @@ const HomeImg: FC<{ work: ArtWork }> = ({ work }) => {
   const style = (visable: Boolean) => ({
     transition: "3.5s ease",
     opacity: visable ? "0" : "1",
-    marginTop: "7px",
+    // marginTop: "7px",
   });
 
   return (

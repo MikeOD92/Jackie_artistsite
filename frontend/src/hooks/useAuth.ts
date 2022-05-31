@@ -5,7 +5,7 @@ import { selectUser } from "../store";
 
 const useAuth = () => {
   const user = useSelector(selectUser);
-  const [auth, setAuth] = useState<boolean>(false);
+  const [auth, setAuth] = useState<boolean>();
 
   useEffect(() => {
     const validate = async () => {
@@ -18,6 +18,7 @@ const useAuth = () => {
     };
     if (user !== "") {
       validate();
+      return;
     } else {
       setAuth(false);
     }

@@ -1,7 +1,7 @@
-import React, { FC, SyntheticEvent, useEffect, useState, useRef } from "react";
+import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { SiteData } from "../types/site_data";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { AiOutlineInstagram } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 

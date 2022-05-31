@@ -8,7 +8,7 @@ import CV from "./pages/CV";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import ArtworkDetail from "./pages/ArtworkDetail";
-
+import NewArtwork from "./pages/NewArtwork";
 function App() {
   return (
     <Provider store={store}>
@@ -21,6 +21,7 @@ function App() {
             <Route path={"/about"} element={<About />} />
             <Route path={"/:id"} element={<ArtworkDetail />} />
             <Route path={"/login"} element={<Login />} />
+            <Route path={"/add-work"} element={<NewArtwork />} />
           </Routes>
         </main>
       </div>

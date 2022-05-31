@@ -20,7 +20,7 @@ const Home: FC = () => {
       };
       fetch();
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (artworks.length === 0) return;
@@ -75,7 +75,7 @@ const Home: FC = () => {
               })
             : ""}
         </Col>
-        <Col sm={6} md={6} lg={4}>
+        <Col sm={12} md={12} lg={4}>
           {bucket3
             ? bucket3.map((work, i) => {
                 return <HomeImg work={work} key={`${work.title} ${i}`} />;
