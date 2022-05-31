@@ -5,12 +5,7 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { selectUser } from "../store";
 import { useSelector } from "react-redux";
-// id: number;
-// title: string;
-// medium: string;
-// dimensions: string;
-// date: string;
-// work_img: Array<ArtWorkMedia>;
+
 const NewArtwork: FC = () => {
   const auth = useAuth();
   const title = useRef<HTMLInputElement>(null);
@@ -18,8 +13,10 @@ const NewArtwork: FC = () => {
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const [images, setImages] = useState<Array<string>>([]);
+  const mediaSuccess: number[] = [];
 
+  const [images, setImages] = useState<Array<string>>([]);
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
   const user = useSelector(selectUser);
 
   const config = {
@@ -51,6 +48,7 @@ const NewArtwork: FC = () => {
       upload(data);
     }
   };
+
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (
@@ -72,7 +70,7 @@ const NewArtwork: FC = () => {
       );
       if (createdArtwork.status === 200) {
         for (let x in images) {
-          await axios.post(
+          const newMedia = await axios.post(
             "http://localhost:8000/api/artwork-media",
             {
               artwork: createdArtwork.data.data.id,
@@ -80,12 +78,22 @@ const NewArtwork: FC = () => {
             },
             config
           );
+          mediaSuccess.push(newMedia.status);
         }
+      }
+      if (mediaSuccess.indexOf(200) === -1) {
+        await axios.delete(
+          `http://localhost:8000/api/edit-artwork/${createdArtwork.data.data.id}`,
+          config
+        );
+        setSuccess(false);
+      } else {
+        setSuccess(true);
       }
     }
   };
 
-  if (auth === false) {
+  if (auth === false || success === true) {
     return <Navigate to="/" />;
   }
   return (
@@ -115,6 +123,11 @@ const NewArtwork: FC = () => {
             />
 
             <Button type="submit">save</Button>
+            {success === false ? (
+              <p style={{ color: "red" }}> Error: Artwork not created</p>
+            ) : (
+              ""
+            )}
           </Form>
         </Col>
         <Col lg={6}>
