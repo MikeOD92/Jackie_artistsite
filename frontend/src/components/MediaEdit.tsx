@@ -21,7 +21,7 @@ const MediaEdit: FC<{
         <p>
           <small>* click to remove image</small>
         </p>
-        {images.length > 1
+        {images.length > 0
           ? images.map((img, i) => {
               return (
                 <Col md={4} key={i}>

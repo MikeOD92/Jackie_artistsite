@@ -28,6 +28,8 @@ const EditArtwork: FC = () => {
   const [uploadSuccess, setUploadSuccess] = useState<boolean | undefined>(
     undefined
   );
+  const [redirect, setRedirect] = useState<boolean>(false);
+
   useEffect(() => {
     const fetch = async () => {
       const fetchData = await axios.get(
@@ -125,7 +127,18 @@ const EditArtwork: FC = () => {
     }
   };
 
-  if (auth === false) {
+  const deleteWork = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log("delete", id);
+    const deleteRequest = await axios.delete(
+      `http://localhost:8000/api/edit-artwork/${id}`,
+      config
+    );
+    if (deleteRequest.status === 204) {
+      setRedirect(true);
+    }
+  };
+  if (auth === false || redirect === true) {
     return <Navigate to="/" />;
   }
   return (
@@ -161,7 +174,13 @@ const EditArtwork: FC = () => {
               ref={date}
               required
             />
-            <Button type="submit">save</Button>
+            {artwork ? (
+              <Button type="submit" disabled={artwork?.work_img.length < 1}>
+                save
+              </Button>
+            ) : (
+              ""
+            )}
             {success === false ? (
               <p style={{ color: "red" }}> Error: Update Failed</p>
             ) : success === true ? (
@@ -174,7 +193,21 @@ const EditArtwork: FC = () => {
         <Col lg={6}>
           <Form onSubmit={(e) => saveMedia(e)}>
             <Upload setImages={setImages} />
-            <Button type="submit">Save </Button>
+            {artwork ? (
+              <>
+                <Button
+                  type="submit"
+                  disabled={artwork?.work_img.length < 1 && images.length < 1}
+                >
+                  Save{" "}
+                </Button>
+                <p>
+                  <small>* click to remove image</small>
+                </p>
+              </>
+            ) : (
+              ""
+            )}
             {uploadSuccess === false ? (
               <p style={{ color: "red" }}> Error: upload Failed</p>
             ) : uploadSuccess === true ? (
@@ -213,6 +246,14 @@ const EditArtwork: FC = () => {
                 })
               : ""}
           </Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={3}>
+          <Button variant="outline-danger" onClick={(e) => deleteWork(e)}>
+            {" "}
+            DELETE
+          </Button>
         </Col>
       </Row>
     </Container>
