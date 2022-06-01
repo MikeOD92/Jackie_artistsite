@@ -1,5 +1,5 @@
-import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
-import { Container, Form, Button, Row, Col, Image } from "react-bootstrap";
+import React, { FC, SyntheticEvent, useState, useEffect } from "react";
+import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -72,7 +72,7 @@ const EditArtwork: FC = () => {
       <h1> Edit Artwork Data</h1>
       <Row className="mt-5">
         <Col md={6}>
-          <ArtworkEditform id={id} images={images} artwork={artwork} />
+          <ArtworkEditform id={id} media={media} artwork={artwork} />
         </Col>
         <Col lg={6}>
           <ArtworkEditImages

@@ -105,7 +105,9 @@ const NewArtwork: FC = () => {
             <Form.Control type="text" placeholder="date" ref={date} required />
             <Upload setImages={setImages} />
 
-            <Button type="submit">save</Button>
+            <Button style={{ backgroundColor: "black" }} type="submit">
+              save
+            </Button>
             {success === false ? (
               <p style={{ color: "red" }}> Error: Artwork not created</p>
             ) : (

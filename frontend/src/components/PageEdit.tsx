@@ -59,7 +59,10 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
         ) : (
           ""
         )}
-        <Button type="submit"> SAVE </Button>
+        <Button style={{ backgroundColor: "black" }} type="submit">
+          {" "}
+          SAVE{" "}
+        </Button>
         {success === true ? (
           <p style={{ color: "green" }}> Updated </p>
         ) : success === false ? (
@@ -117,11 +120,19 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
           </Row>
           <Row>
             <Col md={2}>
-              <Button className="m-2" onClick={() => setNewLinks(newLinks + 1)}>
+              <Button
+                style={{ backgroundColor: "black" }}
+                className="m-2"
+                onClick={() => setNewLinks(newLinks + 1)}
+              >
                 +
               </Button>
 
-              <Button className="m-2" onClick={() => setNewLinks(newLinks - 1)}>
+              <Button
+                style={{ backgroundColor: "black" }}
+                className="m-2"
+                onClick={() => setNewLinks(newLinks - 1)}
+              >
                 -
               </Button>
             </Col>

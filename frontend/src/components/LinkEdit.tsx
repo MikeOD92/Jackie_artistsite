@@ -116,7 +116,10 @@ const LinkEdit: FC<{
         <Col md={4}>
           <Row>
             <Col md={6}>
-              <Button type="submit"> Save </Button>
+              <Button style={{ backgroundColor: "black" }} type="submit">
+                {" "}
+                Save{" "}
+              </Button>
               {link ? (
                 <Button
                   onClick={(e: SyntheticEvent) => submitDelete(e, link.id)}

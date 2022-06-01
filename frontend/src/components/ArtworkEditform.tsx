@@ -1,18 +1,18 @@
-import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
-import { Form, Button, Row, Col, Image } from "react-bootstrap";
+import React, { FC, SyntheticEvent, useRef, useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 import { selectUser } from "../store";
 import { useSelector } from "react-redux";
 
 import { ArtWork } from "../types/art_work";
+import { ArtWorkMedia } from "../types/artwork_media";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
-  images: string[];
   artwork: ArtWork | undefined;
-}> = ({ id, images, artwork }) => {
+  media: ArtWorkMedia[];
+}> = ({ id, artwork, media }) => {
   const user = useSelector(selectUser);
 
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
@@ -77,7 +77,11 @@ const ArtworkEditform: FC<{
         required
       />
       {artwork ? (
-        <Button type="submit" disabled={artwork?.work_img.length < 1}>
+        <Button
+          style={{ backgroundColor: "black" }}
+          type="submit"
+          disabled={media?.length < 1}
+        >
           save
         </Button>
       ) : (

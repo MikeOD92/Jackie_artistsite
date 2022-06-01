@@ -97,6 +97,7 @@ const ArtworkEditImages: FC<{
         {artwork ? (
           <>
             <Button
+              style={{ backgroundColor: "black" }}
               type="submit"
               disabled={artwork?.work_img.length < 1 && images.length < 1}
             >
