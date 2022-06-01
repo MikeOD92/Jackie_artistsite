@@ -129,13 +129,17 @@ const EditArtwork: FC = () => {
 
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log("delete", id);
-    const deleteRequest = await axios.delete(
-      `http://localhost:8000/api/edit-artwork/${id}`,
-      config
+    const confirm = window.confirm(
+      "this will delete the artwork and any associated images, continue?"
     );
-    if (deleteRequest.status === 204) {
-      setRedirect(true);
+    if (confirm) {
+      const deleteRequest = await axios.delete(
+        `http://localhost:8000/api/edit-artwork/${id}`,
+        config
+      );
+      if (deleteRequest.status === 204) {
+        setRedirect(true);
+      }
     }
   };
   if (auth === false || redirect === true) {
