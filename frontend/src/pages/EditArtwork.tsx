@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import Upload from "../components/Upload";
 import MediaEdit from "../components/MediaEdit";
 
-const NewArtwork: FC = () => {
+const EditArtwork: FC = () => {
   const auth = useAuth();
   const user = useSelector(selectUser);
 
@@ -19,7 +19,7 @@ const NewArtwork: FC = () => {
 
   const [images, setImages] = useState<Array<string>>([]);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
-  let mediaSuccess: Number[] = [];
+  //   let mediaSuccess: Number[] = [];
 
   const config = {
     headers: {
@@ -37,8 +37,8 @@ const NewArtwork: FC = () => {
       date.current &&
       images.length >= 1
     ) {
-      const createdArtwork = await axios.post(
-        "http://localhost:8000/api/create-artwork",
+      const editArtwork = await axios.put(
+        "http://localhost:8000/api/",
         {
           title: title.current.value,
           medium: medium.current.value,
@@ -47,35 +47,10 @@ const NewArtwork: FC = () => {
         },
         config
       );
-      if (createdArtwork.status === 200) {
-        for (let x in images) {
-          const newMedia = await axios.post(
-            "http://localhost:8000/api/artwork-media",
-            {
-              artwork: createdArtwork.data.data.id,
-              img: images[x],
-            },
-            config
-          );
-          mediaSuccess.push(newMedia.status);
-        }
-      } else {
-        setSuccess(false);
+      if (editArtwork.status === 200) {
       }
-      if (mediaSuccess.indexOf(200) === -1) {
-        await axios.delete(
-          `http://localhost:8000/api/edit-artwork/${createdArtwork.data.data.id}`,
-          config
-        );
-        setSuccess(false);
-      } else {
-        setSuccess(true);
-      }
-    } else {
-      setSuccess(false);
     }
   };
-
   if (auth === false || success === true) {
     return <Navigate to="/" />;
   }
@@ -121,4 +96,4 @@ const NewArtwork: FC = () => {
   );
 };
 
-export default NewArtwork;
+export default EditArtwork;

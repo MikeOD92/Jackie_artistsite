@@ -4,7 +4,10 @@ import { ArtWork } from "../types/art_work";
 import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
 import { BiCopyright } from "react-icons/bi";
+import useAuth from "../hooks/useAuth";
+
 const Home: FC = () => {
+  const auth = useAuth();
   const [artworks, setArtworks] = useState<Array<ArtWork>>([]);
 
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
@@ -64,21 +67,27 @@ const Home: FC = () => {
         <Col sm={6} md={6} lg={4}>
           {bucket1
             ? bucket1.map((work, i) => {
-                return <HomeImg work={work} key={`${work.title} ${i}`} />;
+                return (
+                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
+                );
               })
             : ""}
         </Col>
         <Col sm={6} md={6} lg={4}>
           {bucket2
             ? bucket2.map((work, i) => {
-                return <HomeImg work={work} key={`${work.title} ${i}`} />;
+                return (
+                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
+                );
               })
             : ""}
         </Col>
         <Col sm={12} md={12} lg={4}>
           {bucket3
             ? bucket3.map((work, i) => {
-                return <HomeImg work={work} key={`${work.title} ${i}`} />;
+                return (
+                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
+                );
               })
             : ""}
         </Col>

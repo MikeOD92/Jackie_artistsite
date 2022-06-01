@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import useInView from "../hooks/useInView";
 
-const HomeImg: FC<{ work: ArtWork }> = ({ work }) => {
+const HomeImg: FC<{ work: ArtWork; auth: boolean | undefined }> = ({
+  work,
+  auth,
+}) => {
   const element = useRef<HTMLImageElement>(null);
   const visable = useInView(element);
 
@@ -15,7 +18,7 @@ const HomeImg: FC<{ work: ArtWork }> = ({ work }) => {
   });
 
   return (
-    <Link to={`/${work.id}`}>
+    <Link to={auth ? `/edit/${work.id}` : `/${work.id}`}>
       <Image
         ref={element}
         style={style(visable)}
