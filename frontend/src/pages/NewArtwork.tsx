@@ -80,6 +80,8 @@ const NewArtwork: FC = () => {
           );
           mediaSuccess.push(newMedia.status);
         }
+      } else {
+        setSuccess(false);
       }
       if (mediaSuccess.indexOf(200) === -1) {
         await axios.delete(
@@ -90,6 +92,20 @@ const NewArtwork: FC = () => {
       } else {
         setSuccess(true);
       }
+    } else {
+      setSuccess(false);
+    }
+  };
+
+  const removeUpload = (e: SyntheticEvent, idx: number) => {
+    e.preventDefault();
+    if (images.length === 1) {
+      setImages([]);
+    } else {
+      let newset = images;
+      newset.splice(idx, 1);
+      console.log(newset);
+      setImages([...newset]);
     }
   };
 
@@ -106,14 +122,20 @@ const NewArtwork: FC = () => {
               submission(e);
             }}
           >
-            <Form.Control type="text" placeholder="title" ref={title} />
+            <Form.Control
+              type="text"
+              placeholder="title"
+              ref={title}
+              required
+            />
             <Form.Control type="text" placeholder="medium" ref={medium} />
             <Form.Control
               type="text"
               placeholder="dimensions"
               ref={dimensions}
+              required
             />
-            <Form.Control type="text" placeholder="date" ref={date} />
+            <Form.Control type="text" placeholder="date" ref={date} required />
             <Form.Control
               type="file"
               placeholder="img upload"
@@ -132,19 +154,28 @@ const NewArtwork: FC = () => {
         </Col>
         <Col lg={6}>
           <Row>
-            {images
-              ? images.map((img, i) => {
+            {images.length > 0 ? (
+              <>
+                <p>
+                  <small>* click on image to remove</small>
+                </p>
+                {images.map((img, i) => {
+                  console.log(i);
                   return (
                     <Col md={4} key={i}>
                       <Image
                         src={`http://localhost:8000${img}`}
                         fluid
                         className="mb-3"
+                        onClick={(e) => removeUpload(e, i)}
                       />
                     </Col>
                   );
-                })
-              : ""}
+                })}
+              </>
+            ) : (
+              ""
+            )}
           </Row>
         </Col>
       </Row>
