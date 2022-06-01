@@ -1,14 +1,19 @@
-import React, { FC, SyntheticEvent, useRef, useState } from "react";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
+import { Container, Form, Button, Row, Col, Image } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { selectUser } from "../store";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Upload from "../components/Upload";
-import MediaEdit from "../components/MediaEdit";
+import { ArtWork } from "../types/art_work";
+import { ArtWorkMedia } from "../types/artwork_media";
 
 const EditArtwork: FC = () => {
+  const { id } = useParams();
+  const [artwork, setArtwork] = useState<ArtWork>();
+
   const auth = useAuth();
   const user = useSelector(selectUser);
 
@@ -18,8 +23,25 @@ const EditArtwork: FC = () => {
   const date = useRef<HTMLInputElement>(null);
 
   const [images, setImages] = useState<Array<string>>([]);
+  const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
-  //   let mediaSuccess: Number[] = [];
+  const [uploadSuccess, setUploadSuccess] = useState<boolean | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    const fetch = async () => {
+      const fetchData = await axios.get(
+        `http://localhost:8000/api/artwork/${id}`
+      );
+      const data = await fetchData.data.data;
+      setArtwork(data);
+    };
+    fetch();
+  }, [id, uploadSuccess]);
+
+  useEffect(() => {
+    if (artwork) setMedia(artwork?.work_img);
+  }, [artwork]);
 
   const config = {
     headers: {
@@ -38,7 +60,7 @@ const EditArtwork: FC = () => {
       images.length >= 1
     ) {
       const editArtwork = await axios.put(
-        "http://localhost:8000/api/",
+        `http://localhost:8000/api/edit-artwork/${id}`,
         {
           title: title.current.value,
           medium: medium.current.value,
@@ -48,15 +70,67 @@ const EditArtwork: FC = () => {
         config
       );
       if (editArtwork.status === 200) {
+        setSuccess(true);
       }
     }
   };
-  if (auth === false || success === true) {
+
+  const removeUpload = (e: SyntheticEvent, idx: number) => {
+    e.preventDefault();
+    if (images.length === 1) {
+      setImages([]);
+    } else {
+      let newset = images;
+      newset.splice(idx, 1);
+      setImages([...newset]);
+    }
+  };
+
+  const deleteMedia = async (e: SyntheticEvent, mediaId: number) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/artwork-media/${mediaId}`,
+        config
+      );
+    } catch (err) {
+      console.error(err);
+    } finally {
+      const fetchData = await axios.get(
+        `http://localhost:8000/api/artwork/${id}`
+      );
+      const data = await fetchData.data.data;
+      setMedia(data.work_img);
+    }
+  };
+
+  const saveMedia = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    let mediaSuccess = [];
+    for (let x in images) {
+      const newMedia = await axios.post(
+        "http://localhost:8000/api/artwork-media",
+        {
+          artwork: id,
+          img: images[x],
+        },
+        config
+      );
+      mediaSuccess.push(newMedia.status);
+    }
+    if (mediaSuccess.indexOf(200) !== -1) {
+      setUploadSuccess(true);
+      setImages([]);
+    } else {
+      setUploadSuccess(false);
+    }
+  };
+
+  if (auth === false) {
     return <Navigate to="/" />;
   }
   return (
     <Container className="mt-5 p-5">
-      <h1> Add New Artworks</h1>
+      <h1> Edit Artwork Data</h1>
       <Row className="mt-5">
         <Col md={6}>
           <Form
@@ -66,30 +140,79 @@ const EditArtwork: FC = () => {
           >
             <Form.Control
               type="text"
-              placeholder="title"
+              defaultValue={artwork?.title || ""}
               ref={title}
               required
             />
-            <Form.Control type="text" placeholder="medium" ref={medium} />
             <Form.Control
               type="text"
-              placeholder="dimensions"
+              defaultValue={artwork?.medium || ""}
+              ref={medium}
+            />
+            <Form.Control
+              type="text"
+              defaultValue={artwork?.dimensions || ""}
               ref={dimensions}
               required
             />
-            <Form.Control type="text" placeholder="date" ref={date} required />
-            <Upload setImages={setImages} />
-
+            <Form.Control
+              type="text"
+              defaultValue={artwork?.date || ""}
+              ref={date}
+              required
+            />
             <Button type="submit">save</Button>
             {success === false ? (
-              <p style={{ color: "red" }}> Error: Artwork not created</p>
+              <p style={{ color: "red" }}> Error: Update Failed</p>
+            ) : success === true ? (
+              <p style={{ color: "green" }}> Update Successful</p>
             ) : (
               ""
             )}
           </Form>
         </Col>
         <Col lg={6}>
-          <MediaEdit images={images} setImages={setImages} />
+          <Form onSubmit={(e) => saveMedia(e)}>
+            <Upload setImages={setImages} />
+            <Button type="submit">Save </Button>
+            {uploadSuccess === false ? (
+              <p style={{ color: "red" }}> Error: upload Failed</p>
+            ) : uploadSuccess === true ? (
+              <p style={{ color: "green" }}> Media Update Successful</p>
+            ) : (
+              ""
+            )}
+          </Form>
+          <Row>
+            {media
+              ? media.map((img) => {
+                  return (
+                    <Col md={4}>
+                      <Image
+                        src={`http://localhost:8000${img.img}`}
+                        fluid
+                        className="mb-3"
+                        onClick={(e) => deleteMedia(e, img.id)}
+                      />
+                    </Col>
+                  );
+                })
+              : ""}
+            {images
+              ? images.map((img, i) => {
+                  return (
+                    <Col md={4}>
+                      <Image
+                        src={`http://localhost:8000${img}`}
+                        fluid
+                        className="mb-3"
+                        onClick={(e) => removeUpload(e, i)}
+                      />
+                    </Col>
+                  );
+                })
+              : ""}
+          </Row>
         </Col>
       </Row>
     </Container>

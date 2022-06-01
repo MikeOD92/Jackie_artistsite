@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import ArtworkDetail from "./pages/ArtworkDetail";
 import NewArtwork from "./pages/NewArtwork";
+import EditArtwork from "./pages/EditArtwork";
 function App() {
   return (
     <Provider store={store}>
@@ -22,6 +23,7 @@ function App() {
             <Route path={"/:id"} element={<ArtworkDetail />} />
             <Route path={"/login"} element={<Login />} />
             <Route path={"/add-work"} element={<NewArtwork />} />
+            <Route path={"edit/:id"} element={<EditArtwork />} />
           </Routes>
         </main>
       </div>
