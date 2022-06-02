@@ -1,11 +1,12 @@
 import React, { FC, SyntheticEvent, useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Image } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import LinkEdit from "./LinkEdit";
 import { SiteData } from "../types/site_data";
 import { ExternalLinks } from "../types/external_links";
 import { selectUser } from "../store";
+import Upload from "./Upload";
 
 const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
   data,
@@ -15,6 +16,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
   const [success, setSuccess] = useState<boolean | null>(null);
   const [newLinks, setNewLinks] = useState<number>(0);
   const body = useRef<HTMLTextAreaElement>(null);
+  const [splash, setSplash] = useState<string>("");
 
   const submitEdit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
       try {
         const updatedBody = await axios.put(
           `http://localhost:8000/api/site-data/edit/${data?.id}`,
-          { text: body.current.value },
+          { text: body.current.value, splash: splash[0] },
           config
         );
         if (updatedBody.status === 200) {
@@ -59,6 +61,17 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
         ) : (
           ""
         )}
+        <Form.Label className="mt-3">Splash Image</Form.Label>
+        <Upload setImages={setSplash} />
+        <Row className="p-3">
+          <Col md={2}>
+            {splash !== "" ? (
+              <Image fluid src={`http://localhost:8000${splash}`} />
+            ) : (
+              <Image fluid src={`http://localhost:8000${data.splash}`} />
+            )}
+          </Col>
+        </Row>
         <Button style={{ backgroundColor: "black" }} type="submit">
           {" "}
           SAVE{" "}

@@ -20,6 +20,7 @@ class ArtworkMedia(models.Model):
 class PageData(models.Model):
     name = models.CharField(max_length=300)
     text = models.CharField(max_length=8000, blank=True)
+    splash = models.CharField(max_length=500, null=True)
 
     def __str__(self):
         return str(self.name)
@@ -29,6 +30,6 @@ class ExternalLinks(models.Model):
     title = models.CharField(max_length=100)
     text = models.CharField(max_length=200, blank=True)
     url = models.CharField(max_length=200)
-        
+    
     def __str__(self):
         return str(self.title)

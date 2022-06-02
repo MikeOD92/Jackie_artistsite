@@ -5,11 +5,13 @@ export class SiteData {
   name: string;
   text: string;
   links: Array<ExternalLinks>;
+  splash: string;
 
-  constructor(id = 0, name = "", text = "", links = []) {
+  constructor(id = 0, name = "", text = "", splash = "", links = []) {
     this.id = id;
     this.name = name;
     this.text = text;
     this.links = links;
+    this.splash = splash;
   }
 }

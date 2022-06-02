@@ -30,7 +30,11 @@ const About: FC = () => {
       ) : (
         <Row>
           <Col md={4}>
-            <Image src="http://localhost:8000/media/Ceram%2B1.jpg" fluid />
+            {data ? (
+              <Image src={`http://localhost:8000${data.splash}`} fluid />
+            ) : (
+              ""
+            )}
           </Col>
           <Col className="mt-5">
             <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>

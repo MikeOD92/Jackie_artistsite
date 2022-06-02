@@ -69,7 +69,7 @@ class PageDataSerializer(serializers.ModelSerializer):
     links = ExternalLinkSerializer(many=True)
     class Meta:
         model = PageData
-        fields = ['id', 'name', 'text', 'links']
+        fields = ['id', 'name', 'text', 'splash', 'links']
 
 class PageDataCreateSerializer(serializers.ModelSerializer):
     class Meta:
