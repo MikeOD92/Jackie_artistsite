@@ -1,7 +1,7 @@
 import React, { FC, SyntheticEvent } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 
-const MediaEdit: FC<{
+const NewArrworkImages: FC<{
   images: string[];
   setImages: Function;
 }> = ({ images, setImages }) => {
@@ -40,4 +40,4 @@ const MediaEdit: FC<{
   );
 };
 
-export default MediaEdit;
+export default NewArrworkImages;

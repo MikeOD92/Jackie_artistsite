@@ -10,7 +10,7 @@
   cursor: url(../public/jackie_site_cursor.png), auto;
 }
 .pointer:hover {
-  cursor: url(../public/jackie_site_cursor_rotate.png), auto;
+  cursor: auto;
   /* cursor:  */
 }
 .defaultCursor {
@@ -27,12 +27,15 @@ body {
 .headerNav {
   font-family: "Comfortaa", sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
 }
 .title {
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
-  font-size: 36px;
+  font-size: 48px;
+}
+.wall-txt {
+  font-size: 18px;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

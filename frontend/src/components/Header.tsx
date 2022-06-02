@@ -17,11 +17,11 @@ const Header: FC = () => {
       className="headerNav"
       style={{
         position: "fixed",
+        // position: "absolute",
         top: "0",
-        // boxShadow: "2px 2px 10px rgba(0,0,0,0.4)",
+        boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
         width: "100%",
-        background: "yellow",
-        // background: "white",
+        background: "#dde1cb",
         zIndex: "100",
       }}
     >

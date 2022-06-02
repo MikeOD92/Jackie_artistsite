@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import { selectUser } from "../store";
 import { useSelector } from "react-redux";
 import Upload from "../components/Upload";
-import MediaEdit from "../components/MediaEdit";
+import NewArrworkImages from "../components/NewArrworkImages";
 
 const NewArtwork: FC = () => {
   const auth = useAuth();
@@ -116,7 +116,7 @@ const NewArtwork: FC = () => {
           </Form>
         </Col>
         <Col lg={6}>
-          <MediaEdit images={images} setImages={setImages} />
+          <NewArrworkImages images={images} setImages={setImages} />
         </Col>
       </Row>
     </Container>

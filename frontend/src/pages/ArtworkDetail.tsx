@@ -34,7 +34,7 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <div style={{ marginTop: "10vh" }}>
+    <div style={{ marginTop: "12vh" }}>
       <Row className="mb-4">
         <Col
           md={2}
@@ -43,10 +43,13 @@ const ArtworkDetail = () => {
           style={{ padding: "10px", marginLeft: "5vw" }}
         >
           <div style={{ textAlign: "left" }}>
-            <h4 className="mt-5 title"> {artwork ? artwork.title : ""}</h4>
-            <p className="mt-5"> {artwork ? artwork.medium : ""} </p>
-            <p className="mt-4"> {artwork ? artwork.dimensions : ""}</p>
-            <p className="mt-4"> {artwork ? artwork.date : ""}</p>
+            <h3 className="mt-5 title"> {artwork ? artwork.title : ""}</h3>
+            <p className="mt-5 wall-txt"> {artwork ? artwork.medium : ""} </p>
+            <p className="mt-4 wall-txt">
+              {" "}
+              {artwork ? artwork.dimensions : ""}
+            </p>
+            <p className="mt-4 wall-txt"> {artwork ? artwork.date : ""}</p>
           </div>
 
           <Link

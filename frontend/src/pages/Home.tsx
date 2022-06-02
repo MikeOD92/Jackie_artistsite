@@ -57,7 +57,7 @@ const Home: FC = () => {
         fluid
         style={{
           marginBottom: "45vh",
-          marginTop: "10vh",
+          marginTop: "11.5vh",
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
@@ -92,9 +92,10 @@ const Home: FC = () => {
             : ""}
         </Col>
       </Container>
+
       <footer className="p-2" style={{ fontSize: "13px" }}>
         <Row>
-          <Col md={2}>
+          <Col md={4}>
             <small>
               Website by{" "}
               <a style={{ color: "darkgray" }} href="https://www.m-odell.com">
@@ -102,8 +103,21 @@ const Home: FC = () => {
               </a>
             </small>
           </Col>
-          <Col className="text-center">
+          <Col md={4} className="text-center">
             Copyright <BiCopyright /> Jackie Slanley
+          </Col>
+          <Col md={4} style={{ textAlign: "right" }}>
+            <a
+              href="#top"
+              style={{
+                color: "black",
+                textDecoration: "none",
+                position: "relative",
+                right: "25px",
+              }}
+            >
+              top
+            </a>
           </Col>
         </Row>
       </footer>
