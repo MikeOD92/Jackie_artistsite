@@ -2,7 +2,7 @@ import React, { FC, SyntheticEvent, useState, useEffect } from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { selectUser } from "../store";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -93,6 +93,11 @@ const EditArtwork: FC = () => {
             {" "}
             DELETE
           </Button>
+        </Col>
+        <Col md={3}>
+          <Link className="pointer" style={{ color: "black" }} to={`/${id}`}>
+            Standard Artwork view
+          </Link>
         </Col>
       </Row>
     </Container>

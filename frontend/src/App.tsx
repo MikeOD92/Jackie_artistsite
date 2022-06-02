@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import ArtworkDetail from "./pages/ArtworkDetail";
 import NewArtwork from "./pages/NewArtwork";
 import EditArtwork from "./pages/EditArtwork";
+import UserPage from "./pages/UserPage";
 function App() {
   return (
     <Provider store={store}>
@@ -24,6 +25,7 @@ function App() {
             <Route path={"/login"} element={<Login />} />
             <Route path={"/add-work"} element={<NewArtwork />} />
             <Route path={"edit/:id"} element={<EditArtwork />} />
+            <Route path={"user"} element={<UserPage />} />
           </Routes>
         </main>
       </div>

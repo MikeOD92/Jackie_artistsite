@@ -92,17 +92,30 @@ const NewArtwork: FC = () => {
             <Form.Control
               type="text"
               placeholder="title"
+              className="defaultCursor"
               ref={title}
               required
             />
-            <Form.Control type="text" placeholder="medium" ref={medium} />
+            <Form.Control
+              type="text"
+              placeholder="medium"
+              className="defaultCursor"
+              ref={medium}
+            />
             <Form.Control
               type="text"
               placeholder="dimensions"
+              className="defaultCursor"
               ref={dimensions}
               required
             />
-            <Form.Control type="text" placeholder="date" ref={date} required />
+            <Form.Control
+              type="text"
+              placeholder="date"
+              className="defaultCursor"
+              ref={date}
+              required
+            />
             <Upload setImages={setImages} />
 
             <Button style={{ backgroundColor: "black" }} type="submit">

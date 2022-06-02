@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password
 from rest_framework import status, exceptions
+from rest_framework.permissions import IsAdminUser
 
 from backend import serializers
 
@@ -16,6 +17,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 class UserViews(mixins.CreateModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]
 
     def post(self, request):
         data = request.data

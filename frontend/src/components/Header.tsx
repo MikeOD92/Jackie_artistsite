@@ -6,7 +6,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch } from "react-redux";
 import { logout } from "../store";
 import useAuth from "../hooks/useAuth";
-import { relative } from "path";
+
+import { FiUser, FiLogOut } from "react-icons/fi";
 
 const Header: FC = () => {
   const dispatch = useDispatch();
@@ -70,11 +71,20 @@ const Header: FC = () => {
                   ""
                 )}
                 {auth ? (
+                  <LinkContainer to="/user">
+                    <Nav.Link className="pointer rightalign-nav-links">
+                      <FiUser />
+                    </Nav.Link>
+                  </LinkContainer>
+                ) : (
+                  ""
+                )}
+                {auth ? (
                   <Nav.Link
                     className="pointer rightalign-nav-links"
                     onClick={() => dispatch(logout())}
                   >
-                    Logout
+                    <FiLogOut />
                   </Nav.Link>
                 ) : (
                   ""

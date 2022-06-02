@@ -10,7 +10,7 @@
   cursor: url(../public/jackie_site_cursor.png), auto;
 }
 .pointer:hover {
-  cursor: auto;
+  cursor: url(../public/cursor_4_large.png), auto;
   /* cursor:  */
 }
 .defaultCursor {

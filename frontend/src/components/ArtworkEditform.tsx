@@ -57,22 +57,26 @@ const ArtworkEditform: FC<{
         type="text"
         defaultValue={artwork?.title || ""}
         ref={title}
+        className="defaultCursor"
         required
       />
       <Form.Control
         type="text"
         defaultValue={artwork?.medium || ""}
+        className="defaultCursor"
         ref={medium}
       />
       <Form.Control
         type="text"
         defaultValue={artwork?.dimensions || ""}
+        className="defaultCursor"
         ref={dimensions}
         required
       />
       <Form.Control
         type="text"
         defaultValue={artwork?.date || ""}
+        className="defaultCursor"
         ref={date}
         required
       />

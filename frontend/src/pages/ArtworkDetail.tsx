@@ -34,7 +34,7 @@ const ArtworkDetail = () => {
     };
   };
   return (
-    <div style={{ marginTop: "12vh" }}>
+    <div style={{ marginTop: "14vh" }}>
       <Row className="mb-4">
         <Col
           md={2}
