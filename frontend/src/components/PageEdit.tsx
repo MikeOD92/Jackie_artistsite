@@ -61,17 +61,24 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
         ) : (
           ""
         )}
-        <Form.Label className="mt-3">Splash Image</Form.Label>
-        <Upload setImages={setSplash} />
-        <Row className="p-3">
-          <Col md={2}>
-            {splash !== "" ? (
-              <Image fluid src={`http://localhost:8000${splash}`} />
-            ) : (
-              <Image fluid src={`http://localhost:8000${data.splash}`} />
-            )}
-          </Col>
-        </Row>
+        {data.name === "about" ? (
+          <>
+            <Form.Label className="mt-3">Splash Image</Form.Label>
+            <Upload setImages={setSplash} />
+            <Row className="p-3">
+              <Col md={2}>
+                {splash !== "" ? (
+                  <Image fluid src={`http://localhost:8000${splash}`} />
+                ) : (
+                  <Image fluid src={`http://localhost:8000${data.splash}`} />
+                )}
+              </Col>
+            </Row>
+          </>
+        ) : (
+          ""
+        )}
+
         <Button style={{ backgroundColor: "black" }} type="submit">
           {" "}
           SAVE{" "}
