@@ -9,7 +9,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "contain",
-    height: "85vh",
+    height: "80vh",
   });
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
-        height: "85vh",
+        height: "80vh",
       });
     } else {
       setZoom({
@@ -27,7 +27,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "160%",
-        height: "85vh",
+        height: "80vh",
       });
     }
   }, [img, zoomable]);
@@ -44,7 +44,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
       backgroundPosition: `${x}% ${y}%`,
       backgroundRepeat: "no-repeat",
       backgroundSize: "160%",
-      height: "85vh",
+      height: "80vh",
     });
   };
   const handleMouseExit = (event: React.MouseEvent<Element, MouseEvent>) => {
@@ -53,7 +53,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
-      height: "85vh",
+      height: "80vh",
     });
   };
   if (zoomable) {
