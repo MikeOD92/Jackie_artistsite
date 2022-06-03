@@ -16,9 +16,9 @@ const HomeImg: FC<{ work: ArtWork; auth: boolean | undefined }> = ({
     opacity: visable ? "0" : "1",
     // marginTop: "7px",
   });
-  if (work.work_img[0] === undefined) {
-    return <></>;
-  }
+  // if (work.work_img[0] === undefined) {
+  //   return <></>;
+  // }
   return (
     <Link to={auth ? `/edit/${work.id}` : `/${work.id}`}>
       <Image

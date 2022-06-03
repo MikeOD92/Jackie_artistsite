@@ -32,6 +32,9 @@ const Home: FC = () => {
     setBucket3([]);
     let counter = 1;
     for (let i = 0; i < artworks.length; i++) {
+      if (!artworks[i].work_img[0]) {
+        continue;
+      }
       if (counter === 4) counter = 1;
       switch (counter) {
         case 1:
