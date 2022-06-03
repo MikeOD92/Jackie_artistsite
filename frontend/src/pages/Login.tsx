@@ -57,7 +57,7 @@ const Login: FC = () => {
                 ""
               )}
               <Button
-                className="m-3 main-btn pointer"
+                className="m-3 main-btn"
                 type="submit"
                 style={{ backgroundColor: "black" }}
               >

@@ -38,7 +38,7 @@ const About: FC = () => {
           </Col>
           <Col className="m-5 ">
             <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
-            <ul style={{ listStyle: "none" }}>
+            <ul className="mt-5" style={{ listStyle: "none" }}>
               {data?.links
                 ? data.links.map((link, i) => {
                     if (link.title === "instagram") {
@@ -54,7 +54,7 @@ const About: FC = () => {
                       );
                     } else {
                       return (
-                        <li className="mt-5" key={`${link.title} ${i}`}>
+                        <li key={`${link.title} ${i}`}>
                           <a href={link.url}>{link.text}</a>{" "}
                         </li>
                       );

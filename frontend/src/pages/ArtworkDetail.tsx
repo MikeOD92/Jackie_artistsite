@@ -8,7 +8,6 @@ import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
-import { LinkContainer } from "react-router-bootstrap";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
@@ -55,7 +54,6 @@ const ArtworkDetail = () => {
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Link
               to="/"
-              className="pointer"
               style={{
                 fontSize: "32px",
                 color: "black",
@@ -72,14 +70,13 @@ const ArtworkDetail = () => {
                   padding: "10px",
                   left: "5vw",
                 }}
-                className="hide-on-shrink pointer"
+                className="hide-on-shrink"
                 onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
               >
                 <MdOutlineCancel />
               </div>
             ) : (
               <div
-                className="pointer"
                 onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
                 style={{
                   fontSize: "32px",
@@ -104,7 +101,6 @@ const ArtworkDetail = () => {
                     return (
                       <Col md={6} key={img.id}>
                         <Image
-                          className="pointer"
                           src={`http://localhost:8000${img.img}`}
                           fluid
                           onClick={handleClick(img)}

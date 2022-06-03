@@ -15,15 +15,13 @@ const Header: FC = () => {
 
   return (
     <header
-      className="headerNav"
+      className={`headerNav`}
       style={{
         position: "fixed",
-        // position: "absolute",
         top: "0",
-        // boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+        boxShadow: "2px 2px 10px rgba(0,0,0,0.3)",
+        background: "whitesmoke",
         width: "100%",
-        // background: "#dde1cb",
-        background: "yellow",
         zIndex: "100",
       }}
     >
@@ -33,20 +31,21 @@ const Header: FC = () => {
             <Col md={3}>
               <LinkContainer
                 to="/"
-                className="pointer"
                 style={{ position: "relative", left: "20px" }}
               >
-                <Nav.Link>
-                  <strong>Jackie Slanley</strong>
-                </Nav.Link>
+                <Nav.Link>Jackie Slanley</Nav.Link>
               </LinkContainer>
             </Col>
           </Col>
           <Col md={3} style={{ display: "flex", flexDirection: "row" }}>
             <Navbar.Toggle
-              className="pointer"
               aria-controls="basic-navbar-nav"
-              style={{ position: "absolute", right: "25px", top: "7px" }}
+              style={{
+                position: "absolute",
+                right: "25px",
+                top: "7px",
+                color: "white",
+              }}
             />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav
@@ -56,27 +55,21 @@ const Header: FC = () => {
                 }}
               >
                 <LinkContainer to="/about">
-                  <Nav.Link className="pointer rightalign-nav-links">
-                    About
-                  </Nav.Link>
+                  <Nav.Link className="rightalign-nav-links">About</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/cv">
-                  <Nav.Link className="pointer rightalign-nav-links">
-                    CV
-                  </Nav.Link>
+                  <Nav.Link className="rightalign-nav-links">CV</Nav.Link>
                 </LinkContainer>
                 {auth ? (
                   <LinkContainer to="/add-work">
-                    <Nav.Link className="pointer rightalign-nav-links">
-                      New
-                    </Nav.Link>
+                    <Nav.Link className="rightalign-nav-links">New</Nav.Link>
                   </LinkContainer>
                 ) : (
                   ""
                 )}
                 {auth ? (
                   <LinkContainer to="/user">
-                    <Nav.Link className="pointer rightalign-nav-links">
+                    <Nav.Link className="rightalign-nav-links">
                       <FiUser />
                     </Nav.Link>
                   </LinkContainer>
@@ -85,7 +78,7 @@ const Header: FC = () => {
                 )}
                 {auth ? (
                   <Nav.Link
-                    className="pointer rightalign-nav-links"
+                    className="rightalign-nav-links"
                     onClick={() => dispatch(logout())}
                   >
                     <FiLogOut />

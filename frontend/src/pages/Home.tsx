@@ -4,6 +4,7 @@ import { ArtWork } from "../types/art_work";
 import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
 import { BiCopyright } from "react-icons/bi";
+import { Gi3DStairs } from "react-icons/gi";
 import useAuth from "../hooks/useAuth";
 
 const Home: FC = () => {
@@ -55,7 +56,7 @@ const Home: FC = () => {
     }
   }, [artworks]);
   return (
-    <>
+    <div>
       <Container
         fluid
         style={{
@@ -96,9 +97,14 @@ const Home: FC = () => {
         </Col>
       </Container>
 
+      <Row>
+        {/* <Col md={12} style={{ textAlign: "right" }}> */}
+
+        {/* </Col> */}
+      </Row>
       <footer className="p-2" style={{ fontSize: "13px" }}>
         <Row>
-          <Col md={4}>
+          <Col md={4} style={{ display: "flex", alignItems: "flex-end" }}>
             <small>
               Website by{" "}
               <a style={{ color: "darkgray" }} href="https://www.m-odell.com">
@@ -106,25 +112,33 @@ const Home: FC = () => {
               </a>
             </small>
           </Col>
-          <Col md={4} className="text-center">
+          <Col
+            md={4}
+            className="text-center"
+            style={{
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+            }}
+          >
             Copyright <BiCopyright /> Jackie Slanley
           </Col>
           <Col md={4} style={{ textAlign: "right" }}>
             <a
               href="#top"
               style={{
-                color: "black",
+                color: "grey",
                 textDecoration: "none",
-                position: "relative",
-                right: "25px",
+                padding: "10px",
+                fontSize: "34px",
               }}
             >
-              top
+              <Gi3DStairs />
             </a>
           </Col>
         </Row>
       </footer>
-    </>
+    </div>
   );
 };
 

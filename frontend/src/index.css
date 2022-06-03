@@ -9,10 +9,12 @@
 * {
   cursor: url(../public/jackie_site_cursor.png), auto;
 }
-.pointer:hover {
+/* * {
   cursor: url(../public/cursor_4_large.png), auto;
-  /* cursor:  */
 }
+* {
+  cursor: url(../public/cursor2.png), auto;
+} */
 .defaultCursor {
   cursor: auto;
 }
@@ -22,7 +24,7 @@ body {
   font-family: "Carme", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: url(../public/jackie_site_cursor.png), auto;
+  /* cursor: url(../public/jackie_site_cursor.png), auto; */
 }
 .headerNav {
   font-family: "Comfortaa", sans-serif;

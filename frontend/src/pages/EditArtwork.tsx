@@ -95,7 +95,7 @@ const EditArtwork: FC = () => {
           </Button>
         </Col>
         <Col md={3}>
-          <Link className="pointer" style={{ color: "black" }} to={`/${id}`}>
+          <Link style={{ color: "black" }} to={`/${id}`}>
             Standard Artwork view
           </Link>
         </Col>

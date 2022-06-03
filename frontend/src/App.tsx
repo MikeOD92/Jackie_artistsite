@@ -1,3 +1,4 @@
+// import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import store from "./store";
@@ -12,9 +13,26 @@ import NewArtwork from "./pages/NewArtwork";
 import EditArtwork from "./pages/EditArtwork";
 import UserPage from "./pages/UserPage";
 function App() {
+  // const [cursor, setCursor] = useState<string>("");
+
+  // useEffect(() => {
+  //   let num = Math.floor(Math.random() * 3);
+  //   switch (num) {
+  //     case 1:
+  //       setCursor("floral");
+  //       break;
+  //     case 2:
+  //       setCursor("zshape");
+  //       break;
+  //     default:
+  //       setCursor("flame");
+  //       break;
+  //   }
+  // }, []);
+
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className={`App`}>
         <main>
           <Header />
           <Routes>
