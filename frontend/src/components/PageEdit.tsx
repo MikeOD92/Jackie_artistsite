@@ -1,6 +1,6 @@
-import React, { FC, SyntheticEvent, useEffect, useState, useRef } from "react";
+import React, { FC, SyntheticEvent, useState, useRef } from "react";
 import axios from "axios";
-import { Container, Form, Button, Row, Col, Image } from "react-bootstrap";
+import { Form, Button, Row, Col, Image } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import LinkEdit from "./LinkEdit";
 import { SiteData } from "../types/site_data";

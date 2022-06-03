@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { Navbar, Nav, NavDropdown, Col } from "react-bootstrap";
+import { Navbar, Nav, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { useDispatch } from "react-redux";
@@ -20,23 +20,27 @@ const Header: FC = () => {
         position: "fixed",
         // position: "absolute",
         top: "0",
-        boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+        // boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
         width: "100%",
-        background: "#dde1cb",
+        // background: "#dde1cb",
+        background: "yellow",
         zIndex: "100",
       }}
     >
       <Navbar id="navbar" expand="lg" collapseOnSelect>
         <Nav className="mr-auto" style={{ width: "100vw" }}>
           <Col md={9}>
-            <LinkContainer
-              to="/"
-              style={{ position: "relative", left: "20px" }}
-            >
-              <Nav.Link className="pointer">
-                <strong>Jackie Slanley</strong>
-              </Nav.Link>
-            </LinkContainer>
+            <Col md={3}>
+              <LinkContainer
+                to="/"
+                className="pointer"
+                style={{ position: "relative", left: "20px" }}
+              >
+                <Nav.Link>
+                  <strong>Jackie Slanley</strong>
+                </Nav.Link>
+              </LinkContainer>
+            </Col>
           </Col>
           <Col md={3} style={{ display: "flex", flexDirection: "row" }}>
             <Navbar.Toggle

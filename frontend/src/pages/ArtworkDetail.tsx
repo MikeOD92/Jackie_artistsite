@@ -8,6 +8,7 @@ import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
@@ -51,30 +52,46 @@ const ArtworkDetail = () => {
             </p>
             <p className="mt-4 wall-txt"> {artwork ? artwork.date : ""}</p>
           </div>
-
-          <Link
-            to="/"
-            className="pointer"
-            style={{
-              fontSize: "32px",
-              color: "black",
-            }}
-          >
-            <IoReturnDownBackOutline />
-          </Link>
-          {zoomable ? (
-            <MdOutlineCancel
-              className="hide-on-shrink pointer"
-              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
-              style={{ fontSize: "32px", position: "relative", left: "10vw" }}
-            />
-          ) : (
-            <MdZoomIn
-              className="hide-on-shrink pointer"
-              onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
-              style={{ fontSize: "32px", position: "relative", left: "10vw" }}
-            />
-          )}
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Link
+              to="/"
+              className="pointer"
+              style={{
+                fontSize: "32px",
+                color: "black",
+                padding: "10px",
+              }}
+            >
+              <IoReturnDownBackOutline />
+            </Link>
+            {zoomable ? (
+              <div
+                style={{
+                  fontSize: "32px",
+                  position: "relative",
+                  padding: "10px",
+                  left: "5vw",
+                }}
+                className="hide-on-shrink pointer"
+                onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+              >
+                <MdOutlineCancel />
+              </div>
+            ) : (
+              <div
+                className="pointer"
+                onClick={(e: SyntheticEvent) => setZoomable(!zoomable)}
+                style={{
+                  fontSize: "32px",
+                  position: "relative",
+                  padding: "10px",
+                  left: "5vw",
+                }}
+              >
+                <MdZoomIn className="hide-on-shrink" />
+              </div>
+            )}
+          </div>
         </Col>
         <Col className="hide-on-shrink">
           {current ? <DetailImage img={current.img} zoomable={zoomable} /> : ""}

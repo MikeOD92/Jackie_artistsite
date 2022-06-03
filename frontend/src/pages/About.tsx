@@ -36,7 +36,7 @@ const About: FC = () => {
               ""
             )}
           </Col>
-          <Col className="mt-5">
+          <Col className="m-5 ">
             <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
             <ul style={{ listStyle: "none" }}>
               {data?.links
