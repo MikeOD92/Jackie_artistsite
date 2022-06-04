@@ -99,7 +99,7 @@ const ArtworkDetail = () => {
                     return (
                       <Col md={6} key={img.id}>
                         <Image
-                          src={`http://localhost:8000${img.img}`}
+                          src={img.img}
                           fluid
                           onClick={handleClick(img)}
                           style={{ marginTop: "5px" }}
