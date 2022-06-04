@@ -1,1 +1,1 @@
-web: gunicorn jackie_slanley_artistsite.wsgi --log-file-
+web: gunicorn jackie_slanley_artistsite.wsgi --log-file -
