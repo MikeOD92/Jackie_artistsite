@@ -25,7 +25,7 @@ const HomeImg: FC<{
         ref={element}
         style={style(visable)}
         fluid
-        src={`http://localhost:8000${work.work_img[0].img}`}
+        src={work.work_img[0].img}
         alt="art peice"
       />
     </Link>

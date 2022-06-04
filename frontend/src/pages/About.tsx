@@ -14,7 +14,7 @@ const About: FC = () => {
   useEffect(() => {
     if (data) return;
     const fetch = async () => {
-      const fetchData = await axios.get("http://localhost:8000/api/site-data");
+      const fetchData = await axios.get("/api/site-data");
       const pageData = fetchData.data.filter(
         (item: SiteData) => item.name === "about"
       );
@@ -27,15 +27,20 @@ const About: FC = () => {
     <Container style={{ marginTop: "14vh", minHeight: "100vh" }}>
       {auth && data ? (
         <PageEdit data={data} setData={setData} />
+      ) : auth && !data ? (
+        <PageEdit
+          data={{
+            id: 0,
+            name: "about",
+            text: "",
+            links: [],
+            splash: "",
+          }}
+          setData={setData}
+        />
       ) : (
         <Row>
-          <Col md={4}>
-            {data ? (
-              <Image src={`http://localhost:8000${data.splash}`} fluid />
-            ) : (
-              ""
-            )}
-          </Col>
+          <Col md={4}>{data ? <Image src={`${data.splash}`} fluid /> : ""}</Col>
           <Col className="m-5 ">
             <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
             <ul className="mt-5" style={{ listStyle: "none" }}>

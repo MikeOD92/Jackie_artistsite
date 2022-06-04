@@ -5,7 +5,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   zoomable,
 }) => {
   const [zoom, setZoom] = useState({
-    backgroundImage: `url('http://localhost:8000${img}')`,
+    backgroundImage: `url('${img}')`,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "contain",
@@ -15,7 +15,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   useEffect(() => {
     if (zoomable === false) {
       setZoom({
-        backgroundImage: `url('http://localhost:8000${img}')`,
+        backgroundImage: `url('${img}')`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
@@ -23,7 +23,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
       });
     } else {
       setZoom({
-        backgroundImage: `url('http://localhost:8000${img}')`,
+        backgroundImage: `url('${img}')`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "160%",
@@ -40,7 +40,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
     const x = ((event.pageX - left) / width) * 100;
     const y = ((event.pageY - top) / height) * 100;
     setZoom({
-      backgroundImage: `url('http://localhost:8000${img}')`,
+      backgroundImage: `url('${img}')`,
       backgroundPosition: `${x}% ${y}%`,
       backgroundRepeat: "no-repeat",
       backgroundSize: "160%",
@@ -49,7 +49,7 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   };
   const handleMouseExit = (event: React.MouseEvent<Element, MouseEvent>) => {
     setZoom({
-      backgroundImage: `url('http://localhost:8000${img}')`,
+      backgroundImage: `url('${img}')`,
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",

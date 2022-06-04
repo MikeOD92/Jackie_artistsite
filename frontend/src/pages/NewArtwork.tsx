@@ -38,7 +38,7 @@ const NewArtwork: FC = () => {
       images.length >= 1
     ) {
       const createdArtwork = await axios.post(
-        "http://localhost:8000/api/create-artwork",
+        "/api/create-artwork",
         {
           title: title.current.value,
           medium: medium.current.value,
@@ -50,7 +50,7 @@ const NewArtwork: FC = () => {
       if (createdArtwork.status === 200) {
         for (let x in images) {
           const newMedia = await axios.post(
-            "http://localhost:8000/api/artwork-media",
+            "/api/artwork-media",
             {
               artwork: createdArtwork.data.data.id,
               img: images[x],
@@ -64,7 +64,7 @@ const NewArtwork: FC = () => {
       }
       if (mediaSuccess.indexOf(200) === -1) {
         await axios.delete(
-          `http://localhost:8000/api/edit-artwork/${createdArtwork.data.data.id}`,
+          `/api/edit-artwork/${createdArtwork.data.data.id}`,
           config
         );
         setSuccess(false);

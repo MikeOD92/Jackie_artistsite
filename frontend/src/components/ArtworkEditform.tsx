@@ -33,7 +33,7 @@ const ArtworkEditform: FC<{
     e.preventDefault();
     if (title.current && medium.current && dimensions.current && date.current) {
       const editArtwork = await axios.put(
-        `http://localhost:8000/api/edit-artwork/${id}`,
+        `/api/edit-artwork/${id}`,
         {
           title: title.current.value,
           medium: medium.current.value,

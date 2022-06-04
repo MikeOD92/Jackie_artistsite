@@ -27,13 +27,10 @@ const Login: FC = () => {
                 event.preventDefault();
                 if (user.current !== null && pass.current !== null) {
                   try {
-                    const data = await axios.post(
-                      "http://localhost:8000/api/auth/login",
-                      {
-                        username: user.current.value,
-                        password: pass.current.value,
-                      }
-                    );
+                    const data = await axios.post("/api/auth/login", {
+                      username: user.current.value,
+                      password: pass.current.value,
+                    });
                     localStorage.setItem("access_key", `${data.data.access}`);
                     dispatch(login(`${data.data.access}`));
                     setRedirect(true);

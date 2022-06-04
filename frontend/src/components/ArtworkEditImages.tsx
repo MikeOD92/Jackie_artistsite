@@ -53,16 +53,11 @@ const ArtworkEditImages: FC<{
     const confirm = window.confirm("delete image?");
     if (confirm) {
       try {
-        await axios.delete(
-          `http://localhost:8000/api/artwork-media/${mediaId}`,
-          config
-        );
+        await axios.delete(`/api/artwork-media/${mediaId}`, config);
       } catch (err) {
         console.error(err);
       } finally {
-        const fetchData = await axios.get(
-          `http://localhost:8000/api/artwork/${id}`
-        );
+        const fetchData = await axios.get(`/api/artwork/${id}`);
         const data = await fetchData.data.data;
         setMedia(data.work_img);
       }
@@ -74,7 +69,7 @@ const ArtworkEditImages: FC<{
     let mediaSuccess = [];
     for (let x in images) {
       const newMedia = await axios.post(
-        "http://localhost:8000/api/artwork-media",
+        "/api/artwork-media",
         {
           artwork: id,
           img: images[x],
@@ -129,7 +124,7 @@ const ArtworkEditImages: FC<{
               return (
                 <Col md={4}>
                   <Image
-                    src={`http://localhost:8000${img.img}`}
+                    src={img.img}
                     fluid
                     className="mb-3"
                     onClick={(e) => deleteMedia(e, img.id)}
@@ -143,7 +138,7 @@ const ArtworkEditImages: FC<{
               return (
                 <Col md={4}>
                   <Image
-                    src={`http://localhost:8000${img}`}
+                    src={img}
                     fluid
                     className="mb-3"
                     onClick={(e) => removeUpload(e, i)}

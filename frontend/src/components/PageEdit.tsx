@@ -27,21 +27,38 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
           Authorization: `Bearer ${user}`,
         },
       };
-      try {
-        const updatedBody = await axios.put(
-          `http://localhost:8000/api/site-data/edit/${data?.id}`,
-          { text: body.current.value, splash: splash[0] },
-          config
-        );
-        if (updatedBody.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
+      if (data.id === 0) {
+        try {
+          const updatedBody = await axios.post(
+            `/api/site-data/create`,
+            { name: data.name, text: body.current.value, splash: splash[0] },
+            config
+          );
+          if (updatedBody.status === 200) {
+            setSuccess(true);
+          } else {
+            setSuccess(false);
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
+      } else {
+        try {
+          const updatedBody = await axios.put(
+            `/api/site-data/edit/${data?.id}`,
+            { text: body.current.value, splash: splash[0] },
+            config
+          );
+          if (updatedBody.status === 200) {
+            setSuccess(true);
+          } else {
+            setSuccess(false);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       }
-    }
+    } else return;
   };
 
   return (
@@ -68,9 +85,9 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
             <Row className="p-3">
               <Col md={2}>
                 {splash !== "" ? (
-                  <Image fluid src={`http://localhost:8000${splash}`} />
+                  <Image fluid src={splash} />
                 ) : (
-                  <Image fluid src={`http://localhost:8000${data.splash}`} />
+                  <Image fluid src={data.splash} />
                 )}
               </Col>
             </Row>
@@ -162,4 +179,5 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
     </div>
   );
 };
+
 export default PageEdit;

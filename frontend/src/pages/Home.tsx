@@ -18,13 +18,17 @@ const Home: FC = () => {
   useEffect(() => {
     if (artworks.length < 1) {
       const fetch = async () => {
-        const fetchData = await axios.get("http://localhost:8000/api/artwork");
-        const data = fetchData.data;
-        setArtworks(data);
+        try {
+          const fetchData = await axios.get("/api/artwork");
+          const data = fetchData.data;
+          setArtworks(data);
+        } catch (err) {
+          console.error(err);
+        }
       };
       fetch();
     }
-  });
+  }, [artworks.length]);
 
   useEffect(() => {
     if (artworks.length === 0) return;
@@ -125,7 +129,7 @@ const Home: FC = () => {
           </Col>
           <Col md={4} style={{ textAlign: "right" }}>
             <a
-              href="#top"
+              href="/#"
               style={{
                 color: "grey",
                 textDecoration: "none",

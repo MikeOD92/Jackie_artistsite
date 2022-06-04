@@ -37,7 +37,7 @@ const UserPage: FC = () => {
     if (password.current !== null && confirmPassword.current !== null) {
       try {
         const update = await axios.put(
-          "http://localhost:8000/api/auth/password",
+          "/api/auth/password",
           {
             password: password.current.value,
             password_confirm: confirmPassword.current.value,
@@ -59,7 +59,7 @@ const UserPage: FC = () => {
     if (email.current !== null && newUserPass.current !== null) {
       try {
         const createdUser = await axios.post(
-          "http://localhost:8000/api/register",
+          "/api/register",
           {
             email: email.current.value,
             password: newUserPass.current.value,

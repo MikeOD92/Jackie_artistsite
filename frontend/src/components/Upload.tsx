@@ -23,11 +23,7 @@ const Upload: FC<{ setImages: Function }> = ({ setImages }) => {
     for (let i = 0; i < files.length; i++) {
       data.append("image", files[i]);
     }
-    const uploaded = await axios.post(
-      "http://localhost:8000/api/upload",
-      data,
-      config
-    );
+    const uploaded = await axios.post("/api/upload", data, config);
     setImages((uploads: string[]) => [...uploads, ...uploaded.data.data]);
   };
 

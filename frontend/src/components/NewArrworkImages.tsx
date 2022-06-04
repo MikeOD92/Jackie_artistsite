@@ -26,7 +26,7 @@ const NewArrworkImages: FC<{
               return (
                 <Col md={4} key={i}>
                   <Image
-                    src={`http://localhost:8000${img}`}
+                    src={img}
                     fluid
                     className="mb-3"
                     onClick={(e) => removeUpload(e, i)}

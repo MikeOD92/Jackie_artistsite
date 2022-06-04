@@ -17,9 +17,7 @@ const ArtworkDetail = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const fetchData = await axios.get(
-        `http://localhost:8000/api/artwork/${id}`
-      );
+      const fetchData = await axios.get(`/api/artwork/${id}`);
       const data = await fetchData.data.data;
       setArtwork(data);
       setCurrent(data.work_img[0]);

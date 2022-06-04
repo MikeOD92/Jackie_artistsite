@@ -28,9 +28,7 @@ const EditArtwork: FC = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const fetchData = await axios.get(
-        `http://localhost:8000/api/artwork/${id}`
-      );
+      const fetchData = await axios.get(`/api/artwork/${id}`);
       const data = await fetchData.data.data;
       setArtwork(data);
     };
@@ -55,7 +53,7 @@ const EditArtwork: FC = () => {
     );
     if (confirm) {
       const deleteRequest = await axios.delete(
-        `http://localhost:8000/api/edit-artwork/${id}`,
+        `/api/edit-artwork/${id}`,
         config
       );
       if (deleteRequest.status === 204) {

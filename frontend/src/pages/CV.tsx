@@ -12,7 +12,7 @@ const CV: FC = () => {
   useEffect(() => {
     if (data) return;
     const fetch = async () => {
-      const fetchData = await axios.get("http://localhost:8000/api/site-data");
+      const fetchData = await axios.get("/api/site-data");
       const pageData = fetchData.data.filter(
         (item: SiteData) => item.name === "CV"
       );
@@ -25,6 +25,17 @@ const CV: FC = () => {
     <Container style={{ marginTop: "20vh", minHeight: "100vh" }}>
       {auth && data ? (
         <PageEdit data={data} setData={setData} />
+      ) : auth && !data ? (
+        <PageEdit
+          data={{
+            id: 0,
+            name: "CV",
+            text: "",
+            links: [],
+            splash: "",
+          }}
+          setData={setData}
+        />
       ) : (
         <>
           {" "}

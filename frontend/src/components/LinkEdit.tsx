@@ -38,7 +38,7 @@ const LinkEdit: FC<{
         const update: AxiosResponse<ExternalLinks> | null =
           action === "update" && link !== null
             ? await axios.put(
-                `http://localhost:8000/api/external-links/edit/${link.id}`,
+                `/api/external-links/edit/${link.id}`,
                 {
                   page: pageId,
                   title: title.current.value,
@@ -49,7 +49,7 @@ const LinkEdit: FC<{
               )
             : action === "new"
             ? await axios.post(
-                `http://localhost:8000/api/external-links`,
+                `/api/external-links`,
                 {
                   page: pageId,
                   title: title.current.value,
@@ -73,11 +73,11 @@ const LinkEdit: FC<{
   const submitDelete = async (e: SyntheticEvent, id: Number) => {
     e.preventDefault();
     const deletedLink = await axios.delete(
-      `http://localhost:8000/api/external-links/edit/${id}`,
+      `/api/external-links/edit/${id}`,
       config
     );
     if (deletedLink.status === 200 && link) {
-      const fetchData = await axios.get("http://localhost:8000/api/site-data");
+      const fetchData = await axios.get("/api/site-data");
       const pageData = fetchData.data.filter(
         (item: SiteData) => item.id === link.page
       );
