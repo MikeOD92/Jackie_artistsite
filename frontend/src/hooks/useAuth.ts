@@ -9,7 +9,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const validate = async () => {
-      const data = await axios.post("http://localhost:8000/api/token/verify/", {
+      const data = await axios.post("/api/token/verify/", {
         token: user,
       });
       if (data.status === 200) {
