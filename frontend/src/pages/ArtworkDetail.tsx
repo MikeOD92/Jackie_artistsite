@@ -54,7 +54,7 @@ const ArtworkDetail = () => {
               to="/"
               style={{
                 fontSize: "32px",
-                color: "black",
+                color: "white",
                 padding: "10px",
               }}
             >
@@ -103,6 +103,7 @@ const ArtworkDetail = () => {
                           fluid
                           onClick={handleClick(img)}
                           style={{ marginTop: "5px" }}
+                          className="invert"
                         />
                       </Col>
                     );

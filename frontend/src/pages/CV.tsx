@@ -22,7 +22,12 @@ const CV: FC = () => {
   });
 
   return (
-    <Container style={{ marginTop: "20vh", minHeight: "100vh" }}>
+    <Container
+      style={{
+        marginTop: "20vh",
+        minHeight: "100vh",
+      }}
+    >
       {auth && data ? (
         <PageEdit data={data} setData={setData} />
       ) : auth && !data ? (

@@ -7,14 +7,11 @@
     font-family: 'Cormorant Garamond', serif;
     */
 * {
-  cursor: url(../public/jackie_site_cursor.png), auto;
+  cursor: url(../public/jackie_site_cursor_white.png), auto;
 }
-/* * {
-  cursor: url(../public/cursor_4_large.png), auto;
-}
-* {
+.invert:hover {
   cursor: url(../public/cursor2.png), auto;
-} */
+}
 .defaultCursor {
   cursor: auto;
 }
@@ -24,6 +21,8 @@ body {
   font-family: "Carme", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: white;
   /* cursor: url(../public/jackie_site_cursor.png), auto; */
 }
 .headerNav {

@@ -24,7 +24,12 @@ const About: FC = () => {
   });
 
   return (
-    <Container style={{ marginTop: "14vh", minHeight: "100vh" }}>
+    <Container
+      style={{
+        marginTop: "14vh",
+        minHeight: "100vh",
+      }}
+    >
       {auth && data ? (
         <PageEdit data={data} setData={setData} />
       ) : auth && !data ? (
@@ -40,7 +45,13 @@ const About: FC = () => {
         />
       ) : (
         <Row>
-          <Col md={4}>{data ? <Image src={`${data.splash}`} fluid /> : ""}</Col>
+          <Col md={4}>
+            {data ? (
+              <Image src={`${data.splash}`} fluid className="invert" />
+            ) : (
+              ""
+            )}
+          </Col>
           <Col className="m-5 ">
             <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
             <ul className="mt-5" style={{ listStyle: "none" }}>
@@ -52,14 +63,17 @@ const About: FC = () => {
                           <a href={link.url}>
                             {" "}
                             <AiOutlineInstagram
-                              style={{ fontSize: "32px", color: "black" }}
+                              style={{ fontSize: "32px", color: "white" }}
                             />{" "}
                           </a>
                         </li>
                       );
                     } else {
                       return (
-                        <li key={`${link.title} ${i}`}>
+                        <li
+                          key={`${link.title} ${i}`}
+                          style={{ color: "white" }}
+                        >
                           <a href={link.url}>{link.text}</a>{" "}
                         </li>
                       );

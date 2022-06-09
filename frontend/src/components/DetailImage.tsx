@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-
+import { Image } from "react-bootstrap";
 const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   img,
   zoomable,
@@ -59,13 +59,19 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
   if (zoomable) {
     return (
       <div
+        className="invert"
         style={zoom}
         onMouseMove={handleMouseMovement}
         onMouseOut={handleMouseExit}
       ></div>
     );
   } else {
-    return <div style={zoom}></div>;
+    return (
+      <div className="d-flex" style={{ justifyContent: "center" }}>
+        {/* <div className="invert" style={zoom}></div> */}
+        <Image fluid style={{ height: "80vh" }} src={img} className="invert" />
+      </div>
+    );
   }
 };
 

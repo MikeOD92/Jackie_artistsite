@@ -15,7 +15,7 @@ const Header: FC = () => {
 
   return (
     <header
-      className={`headerNav`}
+      className={`headerNav invert`}
       style={{
         position: "fixed",
         top: "0",
@@ -25,21 +25,27 @@ const Header: FC = () => {
         zIndex: "100",
       }}
     >
-      <Navbar id="navbar" expand="lg" collapseOnSelect>
-        <Nav className="mr-auto" style={{ width: "100vw" }}>
-          <Col md={9}>
-            <Col md={3}>
+      <Navbar id="navbar" expand="lg" collapseOnSelect className="invert">
+        <Nav className="mr-auto invert" style={{ width: "100vw" }}>
+          <Col md={9} className="invert">
+            <Col md={3} className="invert">
               <LinkContainer
                 to="/"
                 style={{ position: "relative", left: "20px" }}
+                className="invert"
               >
                 <Nav.Link>Jackie Slanley</Nav.Link>
               </LinkContainer>
             </Col>
           </Col>
-          <Col md={3} style={{ display: "flex", flexDirection: "row" }}>
+          <Col
+            md={3}
+            style={{ display: "flex", flexDirection: "row" }}
+            className="invert"
+          >
             <Navbar.Toggle
               aria-controls="basic-navbar-nav"
+              className="invert"
               style={{
                 position: "absolute",
                 right: "25px",
@@ -47,28 +53,29 @@ const Header: FC = () => {
                 color: "white",
               }}
             />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="invert">
               <Nav
                 style={{
                   width: "100%",
                   justifyContent: "flex-end",
                 }}
+                className="invert"
               >
-                <LinkContainer to="/about">
+                <LinkContainer to="/about" className="invert">
                   <Nav.Link className="rightalign-nav-links">About</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/cv">
+                <LinkContainer to="/cv" className="invert">
                   <Nav.Link className="rightalign-nav-links">CV</Nav.Link>
                 </LinkContainer>
                 {auth ? (
-                  <LinkContainer to="/add-work">
+                  <LinkContainer to="/add-work" className="invert">
                     <Nav.Link className="rightalign-nav-links">New</Nav.Link>
                   </LinkContainer>
                 ) : (
                   ""
                 )}
                 {auth ? (
-                  <LinkContainer to="/user">
+                  <LinkContainer to="/user" className="invert">
                     <Nav.Link className="rightalign-nav-links">
                       <FiUser />
                     </Nav.Link>
@@ -78,7 +85,7 @@ const Header: FC = () => {
                 )}
                 {auth ? (
                   <Nav.Link
-                    className="rightalign-nav-links"
+                    className="rightalign-nav-links invert"
                     onClick={() => dispatch(logout())}
                   >
                     <FiLogOut />

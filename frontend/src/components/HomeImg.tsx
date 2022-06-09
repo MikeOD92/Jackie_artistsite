@@ -20,13 +20,14 @@ const HomeImg: FC<{
   //   return <></>;
   // }
   return (
-    <Link to={auth ? `/edit/${work.id}` : `/${work.id}`}>
+    <Link to={auth ? `/edit/${work.id}` : `/${work.id}`} className="invert">
       <Image
         ref={element}
         style={style(visable)}
         fluid
         src={work.work_img[0].img}
         alt="art peice"
+        className="p-2 invert"
       />
     </Link>
   );
