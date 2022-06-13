@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 
 import axios from "axios";
 
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 
 const Upload: FC<{ setImages: Function }> = ({ setImages }) => {

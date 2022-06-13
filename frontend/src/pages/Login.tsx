@@ -1,54 +1,41 @@
-import React, { FC, SyntheticEvent, useRef, useState } from "react";
+import React, { FC, useRef } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../store";
+import { useTypedSelector } from "../hooks/useTypedSelect";
+import { useActions } from "../hooks/useActions";
 
 const Login: FC = () => {
-  const dispatch = useDispatch();
-  const [redirect, setRedirect] = useState<boolean>(false);
-  const [loginErr, setLoginErr] = useState<boolean>(false);
+  const { login } = useActions();
+
   const user = useRef<HTMLInputElement>(null);
   const pass = useRef<HTMLInputElement>(null);
+
+  const { access_key, error } = useTypedSelector((state) => state.user);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (user.current && pass.current) {
+      login(user.current.value, pass.current.value);
+    }
+  };
 
   return (
     <Container style={{ marginTop: "20vh" }}>
       <Row>
         <Col />
-        {redirect ? (
+        {access_key ? (
           <Navigate to="/" />
         ) : (
           <Col style={{ alignSelf: "center" }} md={6}>
             <h1> Login </h1>
 
-            <Form
-              onSubmit={async (event: SyntheticEvent) => {
-                event.preventDefault();
-                if (user.current !== null && pass.current !== null) {
-                  try {
-                    const data = await axios.post("/api/auth/login", {
-                      username: user.current.value,
-                      password: pass.current.value,
-                    });
-                    localStorage.setItem("access_key", `${data.data.access}`);
-                    dispatch(login(`${data.data.access}`));
-                    setRedirect(true);
-                  } catch (err) {
-                    console.error(err);
-                    setLoginErr(true);
-                    user.current.value = "";
-                    pass.current.value = "";
-                  }
-                }
-              }}
-            >
+            <Form onSubmit={onSubmit}>
               <Form.Control ref={user} type="email" placeholder="email" />
               <Form.Control ref={pass} type="password" placeholder="password" />
-              {loginErr ? (
+              {error ? (
                 <p className="mt-3" style={{ color: "red" }}>
                   {" "}
-                  Incorrect email or password
+                  {error}
                 </p>
               ) : (
                 ""

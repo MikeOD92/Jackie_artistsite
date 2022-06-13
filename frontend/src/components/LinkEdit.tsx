@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";
 import { ExternalLinks } from "../types/external_links";
 import { useSelector } from "react-redux";
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { SiteData } from "../types/site_data";
 
 const LinkEdit: FC<{

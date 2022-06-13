@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import LinkEdit from "./LinkEdit";
 import { SiteData } from "../types/site_data";
 import { ExternalLinks } from "../types/external_links";
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import Upload from "./Upload";
 
 const PageEdit: FC<{ data: SiteData; setData: Function }> = ({

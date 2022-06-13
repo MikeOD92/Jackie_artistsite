@@ -2,7 +2,7 @@ import React, { FC, SyntheticEvent, useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 import axios from "axios";
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 
 import { ArtWork } from "../types/art_work";

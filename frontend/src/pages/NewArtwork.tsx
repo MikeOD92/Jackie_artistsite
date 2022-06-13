@@ -3,7 +3,7 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 import Upload from "../components/Upload";
 import NewArrworkImages from "../components/NewArrworkImages";

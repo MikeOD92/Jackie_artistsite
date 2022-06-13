@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Image } from "react-bootstrap";
 
 import axios from "axios";
 
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 
 import Upload from "../components/Upload";

@@ -3,7 +3,7 @@ import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { Navigate, Link } from "react-router-dom";
-import { selectUser } from "../store";
+import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { ArtWork } from "../types/art_work";

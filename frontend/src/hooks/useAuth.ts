@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
-import { selectUser } from "../store";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const useAuth = () => {
-  const user = useSelector(selectUser);
+  const user = useTypedSelector((state) => state.user);
   const [auth, setAuth] = useState<boolean>();
 
   useEffect(() => {
     const validate = async () => {
       const data = await axios.post("/api/token/verify/", {
-        token: user,
+        token: user.access_key,
       });
       if (data.status === 200) {
         setAuth(true);
       }
     };
-    if (user !== "") {
+    if (user.access_key !== "") {
       validate();
       return;
     } else {
