@@ -3,8 +3,7 @@ import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { Navigate, Link } from "react-router-dom";
-import { selectUser } from "../redux/store";
-import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
 import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
@@ -16,7 +15,7 @@ const EditArtwork: FC = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
 
   const auth = useAuth();
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
