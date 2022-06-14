@@ -2,17 +2,16 @@ import React, { FC, SyntheticEvent } from "react";
 import { Form } from "react-bootstrap";
 
 import axios from "axios";
-
-import { selectUser } from "../redux/store";
-import { useSelector } from "react-redux";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Upload: FC<{ setImages: Function }> = ({ setImages }) => {
-  const user = useSelector(selectUser);
+  const { access_key } = useTypedSelector((state) => state.user);
 
   const config = {
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${user}`,
+      Authorization: `Bearer ${access_key}`,
     },
   };
 

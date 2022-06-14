@@ -4,22 +4,21 @@ import { SiteData } from "../types/site_data";
 import { Container } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import PageEdit from "../components/PageEdit";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const CV: FC = () => {
   const auth = useAuth();
+  const { getPageData } = useActions();
+  const pageData = useTypedSelector((state) => state.siteData);
+
   const [data, setData] = useState<SiteData>();
 
   useEffect(() => {
     if (data) return;
-    const fetch = async () => {
-      const fetchData = await axios.get("/api/site-data");
-      const pageData = fetchData.data.filter(
-        (item: SiteData) => item.name === "CV"
-      );
-      setData(pageData[0]);
-    };
-    fetch();
-  });
+    getPageData("CV");
+    setData(pageData.data);
+  }, [data, pageData.data, getPageData]);
 
   return (
     <Container

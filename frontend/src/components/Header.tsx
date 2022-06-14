@@ -4,7 +4,7 @@ import { Navbar, Nav, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { useDispatch } from "react-redux";
-import { logout } from "../redux/store";
+// import { logout } from "../redux/store";
 import useAuth from "../hooks/useAuth";
 
 import { FiUser, FiLogOut } from "react-icons/fi";
@@ -86,7 +86,7 @@ const Header: FC = () => {
                 {auth ? (
                   <Nav.Link
                     className="rightalign-nav-links invert"
-                    onClick={() => dispatch(logout())}
+                    // onClick={() => dispatch(logout())}
                   >
                     <FiLogOut />
                   </Nav.Link>

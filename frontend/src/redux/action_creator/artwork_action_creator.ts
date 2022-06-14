@@ -17,7 +17,7 @@ export const getArtWorks = () => {
     } catch (err: any) {
       console.error(err);
       dispatch({
-        type: ActionTypes.ARTWORKLIST_GET_SUCCESS,
+        type: ActionTypes.ARTWORKLIST_GET_FAIL,
         payload: err.message,
       });
     }

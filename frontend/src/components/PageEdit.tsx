@@ -5,18 +5,24 @@ import { useSelector } from "react-redux";
 import LinkEdit from "./LinkEdit";
 import { SiteData } from "../types/site_data";
 import { ExternalLinks } from "../types/external_links";
-import { selectUser } from "../redux/store";
+
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelect";
+
 import Upload from "./Upload";
 
 const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
   data,
   setData,
 }) => {
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
   const [success, setSuccess] = useState<boolean | null>(null);
   const [newLinks, setNewLinks] = useState<number>(0);
   const body = useRef<HTMLTextAreaElement>(null);
   const [splash, setSplash] = useState<string>("");
+
+  const { editPageData } = useActions();
+  const { access_key } = useTypedSelector((state) => state.user);
 
   const submitEdit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -24,7 +30,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user}`,
+          Authorization: `Bearer ${access_key}`,
         },
       };
       if (data.id === 0) {
@@ -44,16 +50,12 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
         }
       } else {
         try {
-          const updatedBody = await axios.put(
-            `/api/site-data/edit/${data?.id}`,
-            { text: body.current.value, splash: splash[0] },
-            config
+          editPageData(
+            access_key,
+            data.id.toString(),
+            body.current.value,
+            splash
           );
-          if (updatedBody.status === 200) {
-            setSuccess(true);
-          } else {
-            setSuccess(false);
-          }
         } catch (err) {
           console.error(err);
         }

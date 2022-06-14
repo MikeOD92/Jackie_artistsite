@@ -12,6 +12,7 @@ const initialState = {
   error: null,
   success: "",
 };
+
 const createUserReducer = (
   state: CreateUserState = initialState,
   action: Action

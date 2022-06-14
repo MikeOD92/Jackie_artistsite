@@ -31,6 +31,14 @@ import {
   artworkDeleteActionSuccess,
   artworkDeleteActionFail,
 } from "./artworkActions";
+import {
+  getPageDataAction,
+  getPageDataActionFail,
+  getPageDataActionSuccess,
+  editPageDataAction,
+  editPageDataActionFail,
+  editPageDataActionSuccess,
+} from "./pageDataActions";
 
 export type Action =
   | loginAction
@@ -57,4 +65,10 @@ export type Action =
   | artworkEditActionFail
   | artworkDeleteAction
   | artworkDeleteActionSuccess
-  | artworkDeleteActionFail;
+  | artworkDeleteActionFail
+  | getPageDataAction
+  | getPageDataActionFail
+  | getPageDataActionSuccess
+  | editPageDataAction
+  | editPageDataActionFail
+  | editPageDataActionSuccess;

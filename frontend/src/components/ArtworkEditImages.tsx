@@ -3,7 +3,7 @@ import { Form, Button, Row, Col, Image } from "react-bootstrap";
 
 import axios from "axios";
 
-import { selectUser } from "../redux/store";
+// import { selectUser } from "../redux/store";
 import { useSelector } from "react-redux";
 
 import Upload from "../components/Upload";
@@ -29,12 +29,12 @@ const ArtworkEditImages: FC<{
   setUploadSuccess,
   artwork,
 }) => {
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
 
   const config = {
     headers: {
       "Content-type": "application/json",
-      Authorization: `Bearer ${user}`,
+      // Authorization: `Bearer ${user}`,
     },
   };
 

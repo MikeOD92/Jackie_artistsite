@@ -1,6 +1,9 @@
 import React, { FC, SyntheticEvent, useState, useEffect } from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelect";
+
 import axios from "axios";
 import { Navigate, Link } from "react-router-dom";
 
@@ -12,10 +15,15 @@ import ArtworkEditImages from "../components/ArtworkEditImages";
 
 const EditArtwork: FC = () => {
   const { id } = useParams();
+
   const [artwork, setArtwork] = useState<ArtWork>();
 
   const auth = useAuth();
   // const user = useSelector(selectUser);
+  const { access_key } = useTypedSelector((state) => state.user);
+  const { data, error } = useTypedSelector((state) => state.artwork);
+
+  const { getArtSingleWork, deleteArtwork } = useActions();
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
@@ -26,38 +34,22 @@ const EditArtwork: FC = () => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetch = async () => {
-      const fetchData = await axios.get(`/api/artwork/${id}`);
-      const data = await fetchData.data.data;
+    if (id) {
+      getArtSingleWork(id);
+    }
+    if (data) {
       setArtwork(data);
-    };
-    fetch();
+    }
   }, [id, uploadSuccess]);
 
   useEffect(() => {
-    if (artwork) setMedia(artwork?.work_img);
+    if (artwork) setMedia(artwork.work_img);
   }, [artwork]);
-
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${user}`,
-    },
-  };
 
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const confirm = window.confirm(
-      "this will delete the artwork and any associated images, continue?"
-    );
-    if (confirm) {
-      const deleteRequest = await axios.delete(
-        `/api/edit-artwork/${id}`,
-        config
-      );
-      if (deleteRequest.status === 204) {
-        setRedirect(true);
-      }
+    if (id) {
+      deleteArtwork(id, access_key);
     }
   };
 
