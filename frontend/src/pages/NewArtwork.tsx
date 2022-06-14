@@ -1,16 +1,18 @@
 import React, { FC, SyntheticEvent, useRef, useState } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { selectUser } from "../redux/store";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../hooks/useTypedSelect";
+
 import Upload from "../components/Upload";
 import NewArrworkImages from "../components/NewArrworkImages";
+import { useActions } from "../hooks/useActions";
 
 const NewArtwork: FC = () => {
   const auth = useAuth();
-  const user = useSelector(selectUser);
+  const user = useTypedSelector((state) => state.user);
+
+  const { createArtwork } = useActions();
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
@@ -19,60 +21,18 @@ const NewArtwork: FC = () => {
 
   const [images, setImages] = useState<Array<string>>([]);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
-  let mediaSuccess: Number[] = [];
-
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${user}`,
-    },
-  };
 
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (
-      title.current &&
-      medium.current &&
-      dimensions.current &&
-      date.current &&
-      images.length >= 1
-    ) {
-      const createdArtwork = await axios.post(
-        "/api/create-artwork",
-        {
-          title: title.current.value,
-          medium: medium.current.value,
-          dimensions: dimensions.current.value,
-          date: date.current.value,
-        },
-        config
+    if (title.current && medium.current && dimensions.current && date.current) {
+      createArtwork(
+        title.current.value,
+        medium.current.value,
+        dimensions.current.value,
+        date.current.value,
+        images,
+        user.access_key
       );
-      if (createdArtwork.status === 200) {
-        for (let x in images) {
-          const newMedia = await axios.post(
-            "/api/artwork-media",
-            {
-              artwork: createdArtwork.data.data.id,
-              img: images[x],
-            },
-            config
-          );
-          mediaSuccess.push(newMedia.status);
-        }
-      } else {
-        setSuccess(false);
-      }
-      if (mediaSuccess.indexOf(200) === -1) {
-        await axios.delete(
-          `/api/edit-artwork/${createdArtwork.data.data.id}`,
-          config
-        );
-        setSuccess(false);
-      } else {
-        setSuccess(true);
-      }
-    } else {
-      setSuccess(false);
     }
   };
 

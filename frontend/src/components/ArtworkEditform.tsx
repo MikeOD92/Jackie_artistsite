@@ -1,19 +1,21 @@
 import React, { FC, SyntheticEvent, useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-import axios from "axios";
-import { selectUser } from "../redux/store";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
+import { useActions } from "../hooks/useActions";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
   artwork: ArtWork | undefined;
   media: ArtWorkMedia[];
 }> = ({ id, artwork, media }) => {
-  const user = useSelector(selectUser);
+  const user = useTypedSelector((state) => state.user);
+  const artworkdata = useTypedSelector((state) => state.artwork);
+
+  const { editArtwork } = useActions();
 
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
 
@@ -22,28 +24,27 @@ const ArtworkEditform: FC<{
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${user}`,
-    },
-  };
-
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (title.current && medium.current && dimensions.current && date.current) {
-      const editArtwork = await axios.put(
-        `/api/edit-artwork/${id}`,
-        {
-          title: title.current.value,
-          medium: medium.current.value,
-          dimensions: dimensions.current.value,
-          date: date.current.value,
-        },
-        config
+    if (
+      id &&
+      title.current &&
+      medium.current &&
+      dimensions.current &&
+      date.current
+    ) {
+      editArtwork(
+        id,
+        title.current.value,
+        medium.current.value,
+        dimensions.current.value,
+        date.current.value,
+        user.access_key
       );
-      if (editArtwork.status === 200) {
+      if (artworkdata.error !== null) {
         setSuccess(true);
+      } else {
+        setSuccess(false);
       }
     }
   };

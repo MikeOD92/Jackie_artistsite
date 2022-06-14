@@ -12,6 +12,25 @@ import {
   passwordUpdateActionFail,
   passwordUpdateActionSuccess,
 } from "./userActions";
+import {
+  artworkListAction,
+  artworkListActionSuccess,
+  artworkListActionFail,
+} from "./artworkListActions";
+import {
+  artworkGetAction,
+  artworkGetActionSuccess,
+  artworkGetActionFail,
+  artworkCreateAction,
+  artworkCreateActionSuccess,
+  artworkCreateActionFail,
+  artworkEditAction,
+  artworkEditActionSuccess,
+  artworkEditActionFail,
+  artworkDeleteAction,
+  artworkDeleteActionSuccess,
+  artworkDeleteActionFail,
+} from "./artworkActions";
 
 export type Action =
   | loginAction
@@ -23,4 +42,19 @@ export type Action =
   | createUserActionSuccess
   | passwordUpdateAction
   | passwordUpdateActionFail
-  | passwordUpdateActionSuccess;
+  | passwordUpdateActionSuccess
+  | artworkListAction
+  | artworkListActionSuccess
+  | artworkListActionFail
+  | artworkGetAction
+  | artworkGetActionSuccess
+  | artworkGetActionFail
+  | artworkCreateAction
+  | artworkCreateActionSuccess
+  | artworkCreateActionFail
+  | artworkEditAction
+  | artworkEditActionSuccess
+  | artworkEditActionFail
+  | artworkDeleteAction
+  | artworkDeleteActionSuccess
+  | artworkDeleteActionFail;
