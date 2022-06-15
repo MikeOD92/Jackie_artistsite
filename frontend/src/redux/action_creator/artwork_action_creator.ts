@@ -33,7 +33,7 @@ export const getArtSingleWork = (id: string) => {
       const { data } = await axios.get(`/api/artwork/${id}`);
       dispatch({
         type: ActionTypes.ARTWORK_GET_SUCCESS,
-        payload: data,
+        payload: data.data,
       });
     } catch (err: any) {
       console.error(err);

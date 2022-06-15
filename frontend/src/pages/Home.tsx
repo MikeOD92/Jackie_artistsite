@@ -9,7 +9,6 @@ import { Gi3DStairs } from "react-icons/gi";
 import useAuth from "../hooks/useAuth";
 import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelect";
-import { get } from "https";
 
 const Home: FC = () => {
   const auth = useAuth();

@@ -35,8 +35,6 @@ export enum ActionTypes {
   USER_EDIT_SUCCESS = "USER_EDIT_SUCCESS",
   USER_EDIT_FAIL = "USER_EDIT_FAIL",
 
-  /////// I think this is all i have left
-
   /// PageData action types
   PAGEDATA_GET_REQUEST = "PAGEDATA_GET_REQUEST",
   PAGEDATA_GET_SUCCESS = "PAGEDATA_GET_SUCCESS",
@@ -45,6 +43,8 @@ export enum ActionTypes {
   PAGEDATA_EDIT_REQUEST = "PAGEDATA_EDIT_REQUEST",
   PAGEDATA_EDIT_SUCCESS = "PAGEDATA_EDIT_SUCCESS",
   PAGEDATA_EDIT_FAIL = "PAGEDATA_EDIT_FAIL",
+
+  /// need to build actions redux
 
   // UPLOAD ACTION TYPES
   UPLOAD_EDIT_REQUEST = "UPLOAD_EDIT_REQUEST",

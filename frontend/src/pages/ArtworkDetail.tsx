@@ -8,22 +8,28 @@ import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelect";
+import { idText } from "typescript";
 
 const ArtworkDetail = () => {
-  const [artwork, setArtwork] = useState<ArtWork>();
-  const [current, setCurrent] = useState<ArtWorkMedia>();
+  const { getArtSingleWork } = useActions();
+  const { error, loading, data } = useTypedSelector((state) => state.artwork);
+
+  const [current, setCurrent] = useState<ArtWorkMedia | null>();
   const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
 
   useEffect(() => {
-    const fetch = async () => {
-      const fetchData = await axios.get(`/api/artwork/${id}`);
-      const data = await fetchData.data.data;
-      setArtwork(data);
+    setCurrent(null);
+    if ((data === null || data.id.toString() !== id) && id) {
+      getArtSingleWork(id);
+    }
+    if (data !== null) {
+      // setArtwork(data);
       setCurrent(data.work_img[0]);
-    };
-    fetch();
-  }, []);
+    }
+  }, [data]);
 
   const handleClick = (img: ArtWorkMedia) => {
     return (event: React.MouseEvent) => {
@@ -41,13 +47,10 @@ const ArtworkDetail = () => {
           style={{ padding: "10px", marginLeft: "5vw" }}
         >
           <div style={{ textAlign: "left" }}>
-            <h3 className="mt-5 title"> {artwork ? artwork.title : ""}</h3>
-            <p className="mt-5 wall-txt"> {artwork ? artwork.medium : ""} </p>
-            <p className="mt-4 wall-txt">
-              {" "}
-              {artwork ? artwork.dimensions : ""}
-            </p>
-            <p className="mt-4 wall-txt"> {artwork ? artwork.date : ""}</p>
+            <h3 className="mt-5 title"> {data ? data.title : ""}</h3>
+            <p className="mt-5 wall-txt"> {data ? data.medium : ""} </p>
+            <p className="mt-4 wall-txt"> {data ? data.dimensions : ""}</p>
+            <p className="mt-4 wall-txt"> {data ? data.date : ""}</p>
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Link
@@ -89,13 +92,19 @@ const ArtworkDetail = () => {
           </div>
         </Col>
         <Col className="hide-on-shrink">
-          {current ? <DetailImage img={current.img} zoomable={zoomable} /> : ""}
+          {current ? (
+            <DetailImage img={current.img} zoomable={zoomable} />
+          ) : loading ? (
+            <h3>L o a d i n g</h3>
+          ) : (
+            ""
+          )}
         </Col>
         <Col md={2} className="mt-3 flex-d">
           <Container className="mb-4">
             <Row>
-              {artwork?.work_img
-                ? artwork.work_img.map((img) => {
+              {data?.work_img
+                ? data.work_img.map((img) => {
                     return (
                       <Col md={6} key={img.id}>
                         <Image
