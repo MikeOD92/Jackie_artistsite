@@ -7,10 +7,14 @@ interface UserState {
   access_key: string;
 }
 
+const access_key = localStorage.getItem("access_key")
+  ? localStorage.getItem("access_key")
+  : "";
+
 const initialState = {
   loading: false,
   error: null,
-  access_key: "",
+  access_key: access_key || "",
 };
 
 const userReducer = (

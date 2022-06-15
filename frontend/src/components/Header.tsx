@@ -1,18 +1,21 @@
-import React, { FC } from "react";
+import React, { FC, SyntheticEvent } from "react";
 
 import { Navbar, Nav, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-
-import { useDispatch } from "react-redux";
+import { useActions } from "../hooks/useActions";
 // import { logout } from "../redux/store";
 import useAuth from "../hooks/useAuth";
 
 import { FiUser, FiLogOut } from "react-icons/fi";
 
 const Header: FC = () => {
-  const dispatch = useDispatch();
+  const { logout } = useActions();
   const auth = useAuth();
 
+  const handleLogout = (e: SyntheticEvent) => {
+    e.preventDefault();
+    logout();
+  };
   return (
     <header
       className={`headerNav invert`}
@@ -86,7 +89,7 @@ const Header: FC = () => {
                 {auth ? (
                   <Nav.Link
                     className="rightalign-nav-links invert"
-                    // onClick={() => dispatch(logout())}
+                    onClick={(e) => handleLogout(e)}
                   >
                     <FiLogOut />
                   </Nav.Link>

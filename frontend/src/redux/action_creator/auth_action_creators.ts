@@ -16,7 +16,7 @@ export const login = (user: string, pass: string) => {
       localStorage.setItem("access_key", `${data.access}`);
       dispatch({
         type: ActionTypes.LOGIN_SUCCESS,
-        payload: data.access_key,
+        payload: data.token,
       });
     } catch (err: any) {
       console.error(err);
@@ -28,8 +28,11 @@ export const login = (user: string, pass: string) => {
   };
 };
 
-export const logout = (dispatch: Dispatch<Action>) => {
-  dispatch({
-    type: ActionTypes.LOGOUT,
-  });
+export const logout = () => {
+  return async (dispatch: Dispatch<Action>) => {
+    localStorage.removeItem("access_key");
+    dispatch({
+      type: ActionTypes.LOGOUT,
+    });
+  };
 };
