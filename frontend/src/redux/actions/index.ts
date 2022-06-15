@@ -39,6 +39,11 @@ import {
   editPageDataActionFail,
   editPageDataActionSuccess,
 } from "./pageDataActions";
+import {
+  uploadAction,
+  uploadActionSuccess,
+  uploadActionFail,
+} from "./uploadActions";
 
 export type Action =
   | loginAction
@@ -71,4 +76,7 @@ export type Action =
   | getPageDataActionSuccess
   | editPageDataAction
   | editPageDataActionFail
-  | editPageDataActionSuccess;
+  | editPageDataActionSuccess
+  | uploadAction
+  | uploadActionSuccess
+  | uploadActionFail;
