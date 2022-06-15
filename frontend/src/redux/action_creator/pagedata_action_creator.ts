@@ -14,7 +14,7 @@ export const getPageData = (pageName: string) => {
       const pageData = data.filter((item: SiteData) => item.name === pageName);
       dispatch({
         type: ActionTypes.PAGEDATA_GET_SUCCESS,
-        payload: pageData,
+        payload: pageData[0],
       });
     } catch (err: any) {
       console.error(err);

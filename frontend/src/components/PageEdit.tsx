@@ -11,10 +11,7 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import Upload from "./Upload";
 
-const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
-  data,
-  setData,
-}) => {
+const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
   // const user = useSelector(selectUser);
   const [success, setSuccess] = useState<boolean | null>(null);
   const [newLinks, setNewLinks] = useState<number>(0);
@@ -137,7 +134,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
                       link={link}
                       pageId={data.id}
                       action="update"
-                      setData={setData}
+                      // setData={setData}
                     />
                   );
                 })
@@ -151,7 +148,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
                       link={null}
                       pageId={data.id}
                       action="new"
-                      setData={setData}
+                      // setData={setData}
                     />
                   );
                 })

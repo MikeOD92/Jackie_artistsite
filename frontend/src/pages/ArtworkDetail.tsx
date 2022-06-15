@@ -96,6 +96,8 @@ const ArtworkDetail = () => {
             <DetailImage img={current.img} zoomable={zoomable} />
           ) : loading ? (
             <h3>L o a d i n g</h3>
+          ) : error ? (
+            <h3 style={{ color: "red" }}> {error}</h3>
           ) : (
             ""
           )}

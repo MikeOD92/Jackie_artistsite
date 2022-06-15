@@ -10,15 +10,13 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 const CV: FC = () => {
   const auth = useAuth();
   const { getPageData } = useActions();
-  const pageData = useTypedSelector((state) => state.siteData);
+  const { data, error, loading } = useTypedSelector((state) => state.siteData);
 
-  const [data, setData] = useState<SiteData>();
+  // const [data, setData] = useState<SiteData>();
 
   useEffect(() => {
-    if (data) return;
     getPageData("CV");
-    setData(pageData.data);
-  }, [data, pageData.data, getPageData]);
+  }, []);
 
   return (
     <Container
@@ -28,7 +26,7 @@ const CV: FC = () => {
       }}
     >
       {auth && data ? (
-        <PageEdit data={data} setData={setData} />
+        <PageEdit data={data} />
       ) : auth && !data ? (
         <PageEdit
           data={{
@@ -38,7 +36,6 @@ const CV: FC = () => {
             links: [],
             splash: "",
           }}
-          setData={setData}
         />
       ) : (
         <>

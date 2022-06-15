@@ -11,16 +11,15 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const About: FC = () => {
   const auth = useAuth();
-  const [data, setData] = useState<SiteData>();
+  // const [data, setData] = useState<SiteData>();
 
   const { getPageData } = useActions();
-  const pageData = useTypedSelector((state) => state.siteData);
+
+  const { data, error, loading } = useTypedSelector((state) => state.siteData);
 
   useEffect(() => {
-    if (data) return;
     getPageData("about");
-    setData(pageData.data);
-  }, [data, pageData.data, getPageData]);
+  }, []);
 
   return (
     <Container
@@ -30,7 +29,7 @@ const About: FC = () => {
       }}
     >
       {auth && data ? (
-        <PageEdit data={data} setData={setData} />
+        <PageEdit data={data} />
       ) : auth && !data ? (
         <PageEdit
           data={{
@@ -40,7 +39,6 @@ const About: FC = () => {
             links: [],
             splash: "",
           }}
-          setData={setData}
         />
       ) : (
         <Row>

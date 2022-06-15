@@ -10,8 +10,8 @@ const LinkEdit: FC<{
   link: ExternalLinks | null;
   pageId: Number;
   action: string;
-  setData: Function;
-}> = ({ link, pageId, action, setData }) => {
+  // setData: Function;
+}> = ({ link, pageId, action }) => {
   // const user = useSelector(selectUser);
 
   const title = useRef<HTMLInputElement>(null);
@@ -81,7 +81,7 @@ const LinkEdit: FC<{
       const pageData = fetchData.data.filter(
         (item: SiteData) => item.id === link.page
       );
-      setData(pageData[0]);
+      // setData(pageData[0]);
     }
   };
   return (
