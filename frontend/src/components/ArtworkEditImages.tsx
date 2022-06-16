@@ -1,104 +1,80 @@
-import React, { FC, SyntheticEvent } from "react";
+import React, { FC, SyntheticEvent, useEffect } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 
 import axios from "axios";
 
-// import { selectUser } from "../redux/store";
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import Upload from "../components/Upload";
 import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
+import { useActions } from "../hooks/useActions";
 
 const ArtworkEditImages: FC<{
-  images: string[];
   setImages: Function;
   id: string | undefined;
-  media: ArtWorkMedia[];
-  setMedia: Function;
   uploadSuccess: boolean | undefined;
-  setUploadSuccess: Function;
-  artwork: ArtWork | undefined;
-}> = ({
-  images,
-  setImages,
-  id,
-  media,
-  setMedia,
-  uploadSuccess,
-  setUploadSuccess,
-  artwork,
-}) => {
+}> = ({ setImages, id, uploadSuccess }) => {
   // const user = useSelector(selectUser);
+  const uploads = useTypedSelector((state) => state.upload);
+  const { data, error, loading } = useTypedSelector((state) => state.artwork);
+  const user = useTypedSelector((state) => state.user);
+  const mediaState = useTypedSelector((state) => state.media);
+  const { removeUpload, getArtSingleWork, createMedia, removeMedia } =
+    useActions();
 
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      // Authorization: `Bearer ${user}`,
-    },
-  };
+  useEffect(() => {
+    removeUpload([]);
+    if (id) {
+      getArtSingleWork(id);
+    }
+  }, [mediaState]);
 
-  const removeUpload = (e: SyntheticEvent, idx: number) => {
+  const handleRemoveUpload = (e: SyntheticEvent, idx: number) => {
     e.preventDefault();
-    if (images.length === 1) {
-      setImages([]);
+    if (uploads?.data.length === 1) {
+      removeUpload([]);
     } else {
-      let newset = images;
+      let newset = uploads.data;
       newset.splice(idx, 1);
-      setImages([...newset]);
+      removeUpload(newset);
     }
   };
-
+  //////////////////
   const deleteMedia = async (e: SyntheticEvent, mediaId: number) => {
     const confirm = window.confirm("delete image?");
     if (confirm) {
       try {
-        await axios.delete(`/api/artwork-media/${mediaId}`, config);
+        removeMedia(user.access_key, mediaId.toString());
+        console.log(mediaId);
       } catch (err) {
         console.error(err);
-      } finally {
-        const fetchData = await axios.get(`/api/artwork/${id}`);
-        const data = await fetchData.data.data;
-        setMedia(data.work_img);
       }
     }
   };
+  //////////////////////////
 
   const saveMedia = async (e: SyntheticEvent) => {
     e.preventDefault();
-    let mediaSuccess = [];
-    for (let x in images) {
-      const newMedia = await axios.post(
-        "/api/artwork-media",
-        {
-          artwork: id,
-          img: images[x],
-        },
-        config
-      );
-      mediaSuccess.push(newMedia.status);
-    }
-    if (mediaSuccess.indexOf(200) !== -1) {
-      setUploadSuccess(true);
-      setImages([]);
-    } else {
-      setUploadSuccess(false);
+    if (id) {
+      createMedia(user.access_key, id, uploads.data);
     }
   };
+
   return (
     <>
       <Form onSubmit={(e) => saveMedia(e)}>
         <Upload setImages={setImages} />
-        {artwork ? (
+        {data ? (
           <>
             <Button
               style={{ backgroundColor: "black" }}
               type="submit"
-              disabled={artwork?.work_img.length < 1 && images.length < 1}
+              disabled={data?.work_img.length < 1 && uploads.data.length < 1}
             >
               Save{" "}
             </Button>
-            {images.length > 0 ? (
+            {uploads.data.length > 0 ? (
               <p style={{ color: "orange" }}> you have unsaved images </p>
             ) : (
               ""
@@ -118,9 +94,9 @@ const ArtworkEditImages: FC<{
           ""
         )}
       </Form>
-      <Row>
-        {media
-          ? media.map((img) => {
+      <Row className="mt-3">
+        {data
+          ? data.work_img.map((img) => {
               return (
                 <Col md={4}>
                   <Image
@@ -133,15 +109,15 @@ const ArtworkEditImages: FC<{
               );
             })
           : ""}
-        {images
-          ? images.map((img, i) => {
+        {uploads
+          ? uploads.data.map((img, i) => {
               return (
                 <Col md={4}>
                   <Image
                     src={img}
                     fluid
                     className="mb-3"
-                    onClick={(e) => removeUpload(e, i)}
+                    onClick={(e) => handleRemoveUpload(e, i)}
                   />
                 </Col>
               );

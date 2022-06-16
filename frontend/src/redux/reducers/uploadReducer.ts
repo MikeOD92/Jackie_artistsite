@@ -24,6 +24,12 @@ const uploadReducer = (
       return { loading: false, error: null, data: action.payload };
     case ActionTypes.UPLOAD_FAIL:
       return { loading: false, error: action.payload, data: [] };
+    case ActionTypes.REMOVE_UPLOAD_REQUEST:
+      return { loading: true, error: null, data: [] };
+    case ActionTypes.REMOVE_UPLOAD_SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case ActionTypes.REMOVE_UPLOAD_FAIL:
+      return { loading: false, error: action.payload, data: [] };
     default:
       return state;
   }

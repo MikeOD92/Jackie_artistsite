@@ -7,29 +7,19 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Upload: FC<{ setImages: Function }> = ({ setImages }) => {
   const { access_key } = useTypedSelector((state) => state.user);
+  const { data } = useTypedSelector((state) => state.upload);
 
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${access_key}`,
-    },
-  };
+  const { makeUpload } = useActions();
 
-  const upload = async (files: FileList) => {
-    if (!files) return;
-    let data = new FormData();
-
-    for (let i = 0; i < files.length; i++) {
-      data.append("image", files[i]);
-    }
-    const uploaded = await axios.post("/api/upload", data, config);
-    setImages((uploads: string[]) => [...uploads, ...uploaded.data.data]);
+  const handleUpload = (files: FileList) => {
+    makeUpload(access_key, files);
+    setImages(data);
   };
 
   const handleChange = (e: SyntheticEvent) => {
-    const data = (e.target as HTMLInputElement).files;
-    if (data !== null) {
-      upload(data);
+    const eleData = (e.target as HTMLInputElement).files;
+    if (eleData) {
+      handleUpload(eleData);
     }
   };
 

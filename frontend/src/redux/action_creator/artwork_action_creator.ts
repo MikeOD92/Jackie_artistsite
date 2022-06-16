@@ -76,7 +76,7 @@ export const editArtwork = (
       );
       dispatch({
         type: ActionTypes.ARTWORK_EDIT_SUCCESS,
-        payload: data,
+        payload: data.data,
       });
     } catch (err: any) {
       console.error(err);

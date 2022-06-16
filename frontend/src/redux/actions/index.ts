@@ -43,7 +43,18 @@ import {
   uploadAction,
   uploadActionSuccess,
   uploadActionFail,
+  removeUploadAction,
+  removeUploadActionSuccess,
+  removeUploadActionFail,
 } from "./uploadActions";
+import {
+  mediaCreateAction,
+  mediaCreateActionSuccess,
+  mediaCreateActionFail,
+  mediaDeleteAction,
+  mediaDeleteActionSuccess,
+  mediaDeleteActionFail,
+} from "./mediaActions";
 
 export type Action =
   | loginAction
@@ -79,4 +90,13 @@ export type Action =
   | editPageDataActionSuccess
   | uploadAction
   | uploadActionSuccess
-  | uploadActionFail;
+  | uploadActionFail
+  | removeUploadAction
+  | removeUploadActionSuccess
+  | removeUploadActionFail
+  | mediaCreateAction
+  | mediaCreateActionSuccess
+  | mediaCreateActionFail
+  | mediaDeleteAction
+  | mediaDeleteActionSuccess
+  | mediaDeleteActionFail;

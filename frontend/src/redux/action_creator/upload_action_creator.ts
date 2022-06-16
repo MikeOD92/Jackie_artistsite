@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { ActionTypes } from "../action_types";
 import { Action } from "../actions";
 
-export const upload = (token: string, files: FileList) => {
+export const makeUpload = (token: string, files: FileList) => {
   return async (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionTypes.UPLOAD_REQUEST,
@@ -24,12 +24,32 @@ export const upload = (token: string, files: FileList) => {
       const { data } = await axios.post("/api/upload", fileList, config);
       dispatch({
         type: ActionTypes.UPLOAD_SUCCESS,
-        payload: data,
+        payload: data.data,
       });
     } catch (err: any) {
       console.error(err);
       dispatch({
         type: ActionTypes.UPLOAD_FAIL,
+        payload: err.message,
+      });
+    }
+  };
+};
+
+export const removeUpload = (newArr: string[]) => {
+  return async (dispatch: Dispatch) => {
+    dispatch({
+      type: ActionTypes.REMOVE_UPLOAD_REQUEST,
+    });
+    try {
+      dispatch({
+        type: ActionTypes.REMOVE_UPLOAD_SUCCESS,
+        payload: newArr,
+      });
+    } catch (err: any) {
+      console.error(err);
+      dispatch({
+        type: ActionTypes.REMOVE_UPLOAD_FAIL,
         payload: err.message,
       });
     }

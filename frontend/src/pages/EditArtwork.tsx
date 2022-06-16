@@ -37,9 +37,9 @@ const EditArtwork: FC = () => {
     if (id) {
       getArtSingleWork(id);
     }
-    if (data) {
-      setArtwork(data);
-    }
+    // if (data) {
+    //   setArtwork(data);
+    // }
   }, [id, uploadSuccess]);
 
   useEffect(() => {
@@ -61,18 +61,13 @@ const EditArtwork: FC = () => {
       <h1> Edit Artwork Data</h1>
       <Row className="mt-5">
         <Col md={6}>
-          <ArtworkEditform id={id} media={media} artwork={artwork} />
+          {data ? <ArtworkEditform id={id} media={media} artwork={data} /> : ""}
         </Col>
         <Col lg={6}>
           <ArtworkEditImages
-            images={images}
             setImages={setImages}
             id={id}
-            artwork={artwork}
-            media={media}
-            setMedia={setMedia}
             uploadSuccess={uploadSuccess}
-            setUploadSuccess={setUploadSuccess}
           />
         </Col>
       </Row>
@@ -84,7 +79,7 @@ const EditArtwork: FC = () => {
           </Button>
         </Col>
         <Col md={3}>
-          <Link style={{ color: "black" }} to={`/${id}`}>
+          <Link style={{ color: "white" }} to={`/${id}`}>
             Standard Artwork view
           </Link>
         </Col>

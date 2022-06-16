@@ -6,6 +6,7 @@ import artworkListReducer from "./artworkListReducer";
 import artworkReducer from "./artworkReducer";
 import pageDataReducer from "./pageDataReducers";
 import uploadReducer from "./uploadReducer";
+import mediaStateReducer from "./mediaReducer";
 
 const reducers = combineReducers({
   user: userReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   artwork: artworkReducer,
   siteData: pageDataReducer,
   upload: uploadReducer,
+  media: mediaStateReducer,
 });
 
 export default reducers;

@@ -1,23 +1,25 @@
-import React, { FC, SyntheticEvent, useRef, useState } from "react";
+import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
-import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
 import { useActions } from "../hooks/useActions";
+import { ArtWork } from "../types/art_work";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
-  artwork: ArtWork | undefined;
   media: ArtWorkMedia[];
-}> = ({ id, artwork, media }) => {
+  artwork: ArtWork;
+}> = ({ id, media, artwork }) => {
   const user = useTypedSelector((state) => state.user);
-  const artworkdata = useTypedSelector((state) => state.artwork);
+  // const artworkdata = useTypedSelector((state) => state.artwork);
 
   const { editArtwork } = useActions();
 
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
+
+  // useEffect(() => {}, [artworkdata]);
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
@@ -41,11 +43,11 @@ const ArtworkEditform: FC<{
         date.current.value,
         user.access_key
       );
-      if (artworkdata.error !== null) {
-        setSuccess(true);
-      } else {
-        setSuccess(false);
-      }
+      // if (artworkdata.error !== null) {
+      //   setSuccess(true);
+      // } else {
+      //   setSuccess(false);
+      // }
     }
   };
   return (
@@ -85,7 +87,7 @@ const ArtworkEditform: FC<{
         <Button
           style={{ backgroundColor: "black" }}
           type="submit"
-          disabled={media?.length < 1}
+          disabled={artwork.work_img?.length < 1}
         >
           save
         </Button>
