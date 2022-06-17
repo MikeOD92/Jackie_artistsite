@@ -3,16 +3,13 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelect";
-
+import axios from "axios";
 import Upload from "../components/Upload";
 import NewArrworkImages from "../components/NewArrworkImages";
-import { useActions } from "../hooks/useActions";
 
 const NewArtwork: FC = () => {
   const auth = useAuth();
-  const user = useTypedSelector((state) => state.user);
-
-  const { createArtwork } = useActions();
+  const { access_key } = useTypedSelector((state) => state.user);
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
@@ -24,18 +21,57 @@ const NewArtwork: FC = () => {
 
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (title.current && medium.current && dimensions.current && date.current) {
-      // createArtwork(
-      //   title.current.value,
-      //   medium.current.value,
-      //   dimensions.current.value,
-      //   date.current.value,
-      //   images,
-      //   user.access_key
-      // );
+    if (
+      title.current &&
+      medium.current &&
+      dimensions.current &&
+      date.current &&
+      images.length > 0
+    ) {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${access_key}`,
+        },
+      };
+      try {
+        const { data } = await axios.post(
+          "/api/create-artwork",
+          {
+            title: title.current.value,
+            medium: medium.current.value,
+            dimensions: dimensions.current.value,
+            date: date.current.value,
+          },
+          config
+        );
+
+        const mediaSuccess = [];
+
+        for (let x in images) {
+          const newMedia = await axios.post(
+            "/api/artwork-media",
+            {
+              artwork: data.data.id,
+              img: images[x],
+            },
+            config
+          );
+          mediaSuccess.push(newMedia.status);
+          console.log(mediaSuccess);
+        }
+        if (mediaSuccess.indexOf(200) === -1) {
+          await axios.delete(`/api/edit-artwork/${data.id}`, config);
+          setSuccess(false);
+        } else {
+          setSuccess(true);
+        }
+      } catch (err: any) {
+        console.error(err);
+      }
+      e.preventDefault();
     }
   };
-
   if (auth === false || success === true) {
     return <Navigate to="/" />;
   }
