@@ -2,17 +2,17 @@ import React, { FC, SyntheticEvent, useEffect, useState, useRef } from "react";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";
 import { ExternalLinks } from "../types/external_links";
-import { useSelector } from "react-redux";
-// import { selectUser } from "../redux/store";
+
 import { SiteData } from "../types/site_data";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const LinkEdit: FC<{
   link: ExternalLinks | null;
   pageId: Number;
   action: string;
-  // setData: Function;
-}> = ({ link, pageId, action }) => {
-  // const user = useSelector(selectUser);
+  setData: Function;
+}> = ({ link, pageId, action, setData }) => {
+  const { access_key } = useTypedSelector((state) => state.user);
 
   const title = useRef<HTMLInputElement>(null);
   const text = useRef<HTMLInputElement>(null);
@@ -23,7 +23,7 @@ const LinkEdit: FC<{
   const config = {
     headers: {
       "Content-type": "application/json",
-      // Authorization: `Bearer ${user}`,
+      Authorization: `Bearer ${access_key}`,
     },
   };
 
@@ -81,7 +81,7 @@ const LinkEdit: FC<{
       const pageData = fetchData.data.filter(
         (item: SiteData) => item.id === link.page
       );
-      // setData(pageData[0]);
+      setData(pageData[0]);
     }
   };
   return (

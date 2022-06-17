@@ -4,18 +4,25 @@ import { SiteData } from "../types/site_data";
 import { Container } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import PageEdit from "../components/PageEdit";
-import { useActions } from "../hooks/useActions";
-import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const CV: FC = () => {
   const auth = useAuth();
-  const { getPageData } = useActions();
-  const { data, error, loading } = useTypedSelector((state) => state.siteData);
 
-  // const [data, setData] = useState<SiteData>();
+  const [data, setData] = useState<SiteData>();
 
   useEffect(() => {
-    getPageData("CV");
+    const fetch = async (pageName: string) => {
+      try {
+        const { data } = await axios.get("/api/site-data");
+        const pageData = data.filter(
+          (item: SiteData) => item.name === pageName
+        );
+        setData(pageData[0]);
+      } catch (err: any) {
+        console.error(err);
+      }
+    };
+    fetch("CV");
   }, []);
 
   return (
@@ -26,7 +33,7 @@ const CV: FC = () => {
       }}
     >
       {auth && data ? (
-        <PageEdit data={data} />
+        <PageEdit data={data} setData={setData} />
       ) : auth && !data ? (
         <PageEdit
           data={{
@@ -36,6 +43,7 @@ const CV: FC = () => {
             links: [],
             splash: "",
           }}
+          setData={setData}
         />
       ) : (
         <>

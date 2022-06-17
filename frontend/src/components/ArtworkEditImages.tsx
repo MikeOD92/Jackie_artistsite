@@ -86,7 +86,7 @@ const ArtworkEditImages: FC<{
   return (
     <>
       <Form onSubmit={(e) => saveMedia(e)}>
-        <Upload setUpload={setImages} />
+        <Upload setUpload={setImages} required={false} />
         {artwork ? (
           <>
             <Button

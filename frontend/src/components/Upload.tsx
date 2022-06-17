@@ -4,7 +4,10 @@ import { Form } from "react-bootstrap";
 import axios from "axios";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
-const Upload: FC<{ setUpload: Function }> = ({ setUpload }) => {
+const Upload: FC<{ setUpload: Function; required: boolean }> = ({
+  setUpload,
+  required,
+}) => {
   const { access_key } = useTypedSelector((state) => state.user);
   const config = {
     headers: {
@@ -37,13 +40,22 @@ const Upload: FC<{ setUpload: Function }> = ({ setUpload }) => {
 
   return (
     <>
-      <Form.Control
-        type="file"
-        placeholder="img upload"
-        required
-        multiple
-        onChange={(e) => handleChange(e)}
-      />
+      {required ? (
+        <Form.Control
+          type="file"
+          placeholder="img upload"
+          multiple
+          required
+          onChange={(e) => handleChange(e)}
+        />
+      ) : (
+        <Form.Control
+          type="file"
+          placeholder="img upload"
+          multiple
+          onChange={(e) => handleChange(e)}
+        />
+      )}
     </>
   );
 };

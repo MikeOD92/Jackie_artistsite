@@ -112,7 +112,7 @@ const NewArtwork: FC = () => {
               ref={date}
               required
             />
-            <Upload setUpload={setImages} />
+            <Upload setUpload={setImages} required={true} />
 
             <Button style={{ backgroundColor: "black" }} type="submit">
               save

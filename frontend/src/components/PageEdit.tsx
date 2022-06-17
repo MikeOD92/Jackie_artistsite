@@ -1,7 +1,7 @@
 import React, { FC, SyntheticEvent, useState, useRef } from "react";
 import axios from "axios";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
-import { useSelector } from "react-redux";
+
 import LinkEdit from "./LinkEdit";
 import { SiteData } from "../types/site_data";
 import { ExternalLinks } from "../types/external_links";
@@ -11,15 +11,19 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import Upload from "./Upload";
 
-const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
-  // const user = useSelector(selectUser);
+const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
+  data,
+  setData,
+}) => {
   const [success, setSuccess] = useState<boolean | null>(null);
   const [newLinks, setNewLinks] = useState<number>(0);
   const body = useRef<HTMLTextAreaElement>(null);
   const [splash, setSplash] = useState<string>("");
 
-  const { editPageData } = useActions();
   const { access_key } = useTypedSelector((state) => state.user);
+
+  console.log("data", data);
+  console.log("access", access_key);
 
   const submitEdit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -47,12 +51,16 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
         }
       } else {
         try {
-          editPageData(
-            access_key,
-            data.id.toString(),
-            body.current.value,
-            splash
+          const updatedBody = await axios.put(
+            `/api/site-data/edit/${data.id}`,
+            { text: body.current.value, splash: splash[0] },
+            config
           );
+          if (updatedBody.status === 200) {
+            setSuccess(true);
+          } else {
+            setSuccess(false);
+          }
         } catch (err) {
           console.error(err);
         }
@@ -80,7 +88,7 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
         {data.name === "about" ? (
           <>
             <Form.Label className="mt-3">Splash Image</Form.Label>
-            <Upload setUpload={setSplash} />
+            <Upload setUpload={setSplash} required={false} />
             <Row className="p-3">
               <Col md={2}>
                 {splash !== "" ? (
@@ -126,7 +134,7 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
             <Col md={4}></Col>
           </Row>
           <Row>
-            {data?.links.length > 0
+            {data?.links?.length > 0
               ? data.links.map((link: ExternalLinks, i) => {
                   return (
                     <LinkEdit
@@ -134,7 +142,7 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
                       link={link}
                       pageId={data.id}
                       action="update"
-                      // setData={setData}
+                      setData={setData}
                     />
                   );
                 })
@@ -148,7 +156,7 @@ const PageEdit: FC<{ data: SiteData }> = ({ data }) => {
                       link={null}
                       pageId={data.id}
                       action="new"
-                      // setData={setData}
+                      setData={setData}
                     />
                   );
                 })

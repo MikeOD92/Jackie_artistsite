@@ -12,14 +12,6 @@ import {
   passwordUpdateActionFail,
   passwordUpdateActionSuccess,
 } from "./userActions";
-import {
-  getPageDataAction,
-  getPageDataActionFail,
-  getPageDataActionSuccess,
-  editPageDataAction,
-  editPageDataActionFail,
-  editPageDataActionSuccess,
-} from "./pageDataActions";
 
 export type Action =
   | loginAction
@@ -31,10 +23,4 @@ export type Action =
   | createUserActionSuccess
   | passwordUpdateAction
   | passwordUpdateActionFail
-  | passwordUpdateActionSuccess
-  | getPageDataAction
-  | getPageDataActionFail
-  | getPageDataActionSuccess
-  | editPageDataAction
-  | editPageDataActionFail
-  | editPageDataActionSuccess;
+  | passwordUpdateActionSuccess;

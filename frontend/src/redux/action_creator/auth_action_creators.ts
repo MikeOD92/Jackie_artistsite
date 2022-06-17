@@ -16,7 +16,7 @@ export const login = (user: string, pass: string) => {
       localStorage.setItem("access_key", `${data.access}`);
       dispatch({
         type: ActionTypes.LOGIN_SUCCESS,
-        payload: data.token,
+        payload: data.access,
       });
     } catch (err: any) {
       console.error(err);

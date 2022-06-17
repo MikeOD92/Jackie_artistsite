@@ -11,14 +11,24 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const About: FC = () => {
   const auth = useAuth();
-  // const [data, setData] = useState<SiteData>();
+  const [data, setData] = useState<SiteData>();
 
-  const { getPageData } = useActions();
-
-  const { data, error, loading } = useTypedSelector((state) => state.siteData);
+  // const { getPageData } = useActions();
+  // const { data, error, loading } = useTypedSelector((state) => state.siteData);
 
   useEffect(() => {
-    getPageData("about");
+    const fetch = async (pageName: string) => {
+      try {
+        const { data } = await axios.get("/api/site-data");
+        const pageData = data.filter(
+          (item: SiteData) => item.name === pageName
+        );
+        setData(pageData[0]);
+      } catch (err: any) {
+        console.error(err);
+      }
+    };
+    fetch("about");
   }, []);
 
   return (
@@ -29,7 +39,7 @@ const About: FC = () => {
       }}
     >
       {auth && data ? (
-        <PageEdit data={data} />
+        <PageEdit data={data} setData={setData} />
       ) : auth && !data ? (
         <PageEdit
           data={{
@@ -39,6 +49,7 @@ const About: FC = () => {
             links: [],
             splash: "",
           }}
+          setData={setData}
         />
       ) : (
         <Row>
