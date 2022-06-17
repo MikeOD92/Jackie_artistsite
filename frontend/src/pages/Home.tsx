@@ -7,51 +7,52 @@ import { BiCopyright } from "react-icons/bi";
 import { Gi3DStairs } from "react-icons/gi";
 
 import useAuth from "../hooks/useAuth";
-import { useActions } from "../hooks/useActions";
-import { useTypedSelector } from "../hooks/useTypedSelect";
+// import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
 
+  const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
 
-  const { getArtWorks } = useActions();
-
-  const { data, error, loading } = useTypedSelector(
-    (state) => state.artworkList
-  );
-
-  // getArtWorks();
   useEffect(() => {
-    if (data.length === 0) {
-      getArtWorks();
+    if (artworkList.length === 0) {
+      const fetch = async () => {
+        try {
+          const { data } = await axios.get("/api/artwork");
+          setArtworkList(data);
+        } catch (err: any) {
+          console.error(err);
+        }
+      };
+      fetch();
     }
   }, []);
 
   useEffect(() => {
-    if (data.length > 1) {
+    if (artworkList.length > 1) {
       setBucket1([]);
       setBucket2([]);
       setBucket3([]);
       let counter = 1;
-      for (let i = 0; i < data.length; i++) {
-        if (!data[i].work_img[0]) {
+      for (let i = 0; i < artworkList.length; i++) {
+        if (!artworkList[i].work_img[0]) {
           continue;
         }
         if (counter === 4) counter = 1;
         switch (counter) {
           case 1:
-            setBucket1((bucket1) => [...bucket1, data[i]]);
+            setBucket1((bucket1) => [...bucket1, artworkList[i]]);
             counter++;
             break;
           case 2:
-            setBucket2((bucket2) => [...bucket2, data[i]]);
+            setBucket2((bucket2) => [...bucket2, artworkList[i]]);
             counter++;
             break;
           case 3:
-            setBucket3((bucket3) => [...bucket3, data[i]]);
+            setBucket3((bucket3) => [...bucket3, artworkList[i]]);
             counter++;
             break;
           default:
@@ -61,7 +62,7 @@ const Home: FC = () => {
     } else {
       return;
     }
-  }, [data]);
+  }, [artworkList]);
 
   return (
     <div>

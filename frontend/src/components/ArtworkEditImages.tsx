@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useEffect } from "react";
+import React, { FC, SyntheticEvent, useState } from "react";
 import { Form, Button, Row, Col, Image } from "react-bootstrap";
 
 import axios from "axios";
@@ -8,73 +8,97 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 import Upload from "../components/Upload";
 import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
-import { useActions } from "../hooks/useActions";
 
 const ArtworkEditImages: FC<{
   setImages: Function;
+  images: string[];
   id: string | undefined;
-  uploadSuccess: boolean | undefined;
-}> = ({ setImages, id, uploadSuccess }) => {
-  // const user = useSelector(selectUser);
-  const uploads = useTypedSelector((state) => state.upload);
-  const { data, error, loading } = useTypedSelector((state) => state.artwork);
-  const user = useTypedSelector((state) => state.user);
-  const mediaState = useTypedSelector((state) => state.media);
-  const { removeUpload, getArtSingleWork, createMedia, removeMedia } =
-    useActions();
+  artwork: ArtWork;
+  setArtwork: Function;
+}> = ({ setImages, images, id, artwork, setArtwork }) => {
+  const { access_key } = useTypedSelector((state) => state.user);
 
-  useEffect(() => {
-    removeUpload([]);
-    if (id) {
-      getArtSingleWork(id);
-    }
-  }, [mediaState]);
+  const [uploadSuccess, setUploadSuccess] = useState<boolean | undefined>();
+
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${access_key}`,
+    },
+  };
 
   const handleRemoveUpload = (e: SyntheticEvent, idx: number) => {
     e.preventDefault();
-    if (uploads?.data.length === 1) {
-      removeUpload([]);
-    } else {
-      let newset = uploads.data;
+    if (images && images.length === 1) {
+      setImages([]);
+    } else if (images) {
+      let newset = images;
       newset.splice(idx, 1);
-      removeUpload(newset);
+      setImages(newset);
     }
   };
+
   //////////////////
   const deleteMedia = async (e: SyntheticEvent, mediaId: number) => {
+    e.preventDefault();
     const confirm = window.confirm("delete image?");
-    if (confirm) {
+    if (confirm)
       try {
-        removeMedia(user.access_key, mediaId.toString());
-        console.log(mediaId);
-      } catch (err) {
+        await axios.delete(`/api/artwork-media/${mediaId}`, config);
+        const { data } = await axios.get(`/api/artwork/${id}`);
+        setArtwork(data.data);
+      } catch (err: any) {
         console.error(err);
       }
-    }
   };
+
   //////////////////////////
 
   const saveMedia = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (id) {
-      createMedia(user.access_key, id, uploads.data);
+      try {
+        let mediaSuccess = [];
+        for (let x in images) {
+          const newMedia = await axios.post(
+            "/api/artwork-media",
+            {
+              artwork: id,
+              img: images[x],
+            },
+            config
+          );
+          mediaSuccess.push(newMedia.status);
+        }
+        if (mediaSuccess.indexOf(200) !== -1) {
+          const { data } = await axios.get(`/api/artwork/${id}`);
+          setImages([]);
+          setArtwork(data.data);
+          setUploadSuccess(true);
+        }
+      } catch (err: any) {
+        console.error(err);
+        setUploadSuccess(false);
+      }
     }
   };
 
   return (
     <>
       <Form onSubmit={(e) => saveMedia(e)}>
-        <Upload setImages={setImages} />
-        {data ? (
+        <Upload setUpload={setImages} />
+        {artwork ? (
           <>
             <Button
               style={{ backgroundColor: "black" }}
               type="submit"
-              disabled={data?.work_img.length < 1 && uploads.data.length < 1}
+              disabled={
+                artwork?.work_img.length < 1 && images && images?.length < 1
+              }
             >
               Save{" "}
             </Button>
-            {uploads.data.length > 0 ? (
+            {images && images?.length > 0 ? (
               <p style={{ color: "orange" }}> you have unsaved images </p>
             ) : (
               ""
@@ -95,8 +119,8 @@ const ArtworkEditImages: FC<{
         )}
       </Form>
       <Row className="mt-3">
-        {data
-          ? data.work_img.map((img) => {
+        {artwork
+          ? artwork.work_img.map((img: ArtWorkMedia) => {
               return (
                 <Col md={4}>
                   <Image
@@ -109,8 +133,8 @@ const ArtworkEditImages: FC<{
               );
             })
           : ""}
-        {uploads
-          ? uploads.data.map((img, i) => {
+        {images
+          ? images.map((img, i) => {
               return (
                 <Col md={4}>
                   <Image

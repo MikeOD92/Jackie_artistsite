@@ -25,14 +25,14 @@ const NewArtwork: FC = () => {
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (title.current && medium.current && dimensions.current && date.current) {
-      createArtwork(
-        title.current.value,
-        medium.current.value,
-        dimensions.current.value,
-        date.current.value,
-        images,
-        user.access_key
-      );
+      // createArtwork(
+      //   title.current.value,
+      //   medium.current.value,
+      //   dimensions.current.value,
+      //   date.current.value,
+      //   images,
+      //   user.access_key
+      // );
     }
   };
 
@@ -76,7 +76,7 @@ const NewArtwork: FC = () => {
               ref={date}
               required
             />
-            <Upload setImages={setImages} />
+            <Upload setUpload={setImages} />
 
             <Button style={{ backgroundColor: "black" }} type="submit">
               save

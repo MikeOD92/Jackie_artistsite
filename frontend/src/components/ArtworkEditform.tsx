@@ -1,6 +1,6 @@
 import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-
+import axios from "axios";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import { ArtWorkMedia } from "../types/artwork_media";
@@ -12,14 +12,8 @@ const ArtworkEditform: FC<{
   media: ArtWorkMedia[];
   artwork: ArtWork;
 }> = ({ id, media, artwork }) => {
-  const user = useTypedSelector((state) => state.user);
-  // const artworkdata = useTypedSelector((state) => state.artwork);
-
-  const { editArtwork } = useActions();
-
+  const { access_key } = useTypedSelector((state) => state.user);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
-
-  // useEffect(() => {}, [artworkdata]);
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
@@ -35,21 +29,34 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
-      editArtwork(
-        id,
-        title.current.value,
-        medium.current.value,
-        dimensions.current.value,
-        date.current.value,
-        user.access_key
-      );
-      // if (artworkdata.error !== null) {
-      //   setSuccess(true);
-      // } else {
-      //   setSuccess(false);
-      // }
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${access_key}`,
+        },
+      };
+      try {
+        const editResponse = await axios.put(
+          `/api/edit-artwork/${id}`,
+          {
+            title: title.current.value,
+            medium: medium.current.value,
+            dimensions: dimensions.current.value,
+            date: date.current.value,
+          },
+          config
+        );
+        if (editResponse.status === 200) {
+          setSuccess(true);
+        } else {
+          setSuccess(false);
+        }
+      } catch (err: any) {
+        console.error(err);
+      }
     }
   };
+
   return (
     <Form
       onSubmit={(e: SyntheticEvent) => {

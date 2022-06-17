@@ -36,22 +36,22 @@ export const makeUpload = (token: string, files: FileList) => {
   };
 };
 
-export const removeUpload = (newArr: string[]) => {
-  return async (dispatch: Dispatch) => {
-    dispatch({
-      type: ActionTypes.REMOVE_UPLOAD_REQUEST,
-    });
-    try {
-      dispatch({
-        type: ActionTypes.REMOVE_UPLOAD_SUCCESS,
-        payload: newArr,
-      });
-    } catch (err: any) {
-      console.error(err);
-      dispatch({
-        type: ActionTypes.REMOVE_UPLOAD_FAIL,
-        payload: err.message,
-      });
-    }
-  };
-};
+// export const removeUpload = (newArr: string[]) => {
+//   return async (dispatch: Dispatch) => {
+//     dispatch({
+//       type: ActionTypes.REMOVE_UPLOAD_REQUEST,
+//     });
+//     try {
+//       dispatch({
+//         type: ActionTypes.REMOVE_UPLOAD_SUCCESS,
+//         payload: newArr,
+//       });
+//     } catch (err: any) {
+//       console.error(err);
+//       dispatch({
+//         type: ActionTypes.REMOVE_UPLOAD_FAIL,
+//         payload: err.message,
+//       });
+//     }
+//   };
+// };

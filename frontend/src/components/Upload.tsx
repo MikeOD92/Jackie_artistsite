@@ -2,18 +2,30 @@ import React, { FC, SyntheticEvent } from "react";
 import { Form } from "react-bootstrap";
 
 import axios from "axios";
-import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
-const Upload: FC<{ setImages: Function }> = ({ setImages }) => {
+const Upload: FC<{ setUpload: Function }> = ({ setUpload }) => {
   const { access_key } = useTypedSelector((state) => state.user);
-  const { data } = useTypedSelector((state) => state.upload);
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${access_key}`,
+    },
+  };
 
-  const { makeUpload } = useActions();
+  const handleUpload = async (files: FileList) => {
+    try {
+      if (!files) return;
+      let fileList = new FormData();
 
-  const handleUpload = (files: FileList) => {
-    makeUpload(access_key, files);
-    setImages(data);
+      for (let i = 0; i < files.length; i++) {
+        fileList.append("image", files[i]);
+      }
+      const { data } = await axios.post("/api/upload", fileList, config);
+      setUpload(data.data);
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   const handleChange = (e: SyntheticEvent) => {

@@ -1,7 +1,6 @@
 import React, { FC, SyntheticEvent, useState, useEffect } from "react";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
-import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import axios from "axios";
@@ -21,26 +20,27 @@ const EditArtwork: FC = () => {
   const auth = useAuth();
   // const user = useSelector(selectUser);
   const { access_key } = useTypedSelector((state) => state.user);
-  const { data, error } = useTypedSelector((state) => state.artwork);
+  // const { data, error } = useTypedSelector((state) => state.artwork);
 
-  const { getArtSingleWork, deleteArtwork } = useActions();
+  // const { getArtSingleWork, deleteArtwork } = useActions();
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
-
-  const [uploadSuccess, setUploadSuccess] = useState<boolean | undefined>(
-    undefined
-  );
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
     if (id) {
-      getArtSingleWork(id);
+      const fetch = async () => {
+        try {
+          const { data } = await axios.get(`/api/artwork/${id}`);
+          setArtwork(data.data);
+        } catch (err: any) {
+          console.error(err);
+        }
+      };
+      fetch();
     }
-    // if (data) {
-    //   setArtwork(data);
-    // }
-  }, [id, uploadSuccess]);
+  }, [id, images]);
 
   useEffect(() => {
     if (artwork) setMedia(artwork.work_img);
@@ -49,7 +49,23 @@ const EditArtwork: FC = () => {
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (id) {
-      deleteArtwork(id, access_key);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${access_key}`,
+        },
+      };
+      try {
+        const deleteRequest = await axios.delete(
+          `/api/edit-artwork/${id}`,
+          config
+        );
+        if (deleteRequest.status === 204) {
+          setRedirect(true);
+        }
+      } catch (err: any) {
+        console.error(err);
+      }
     }
   };
 
@@ -61,14 +77,24 @@ const EditArtwork: FC = () => {
       <h1> Edit Artwork Data</h1>
       <Row className="mt-5">
         <Col md={6}>
-          {data ? <ArtworkEditform id={id} media={media} artwork={data} /> : ""}
+          {artwork ? (
+            <ArtworkEditform id={id} media={media} artwork={artwork} />
+          ) : (
+            ""
+          )}
         </Col>
         <Col lg={6}>
-          <ArtworkEditImages
-            setImages={setImages}
-            id={id}
-            uploadSuccess={uploadSuccess}
-          />
+          {artwork ? (
+            <ArtworkEditImages
+              artwork={artwork}
+              setImages={setImages}
+              images={images}
+              setArtwork={setArtwork}
+              id={id}
+            />
+          ) : (
+            ""
+          )}
         </Col>
       </Row>
       <Row>
