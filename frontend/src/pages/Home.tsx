@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import axios from "axios";
 import { ArtWork } from "../types/art_work";
 import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
@@ -15,7 +14,7 @@ const Home: FC = () => {
 
   const { data } = useTypedSelector((state) => state.siteData);
   const artworkList = useTypedSelector((state) => state.artworkList);
-  // const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
+
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);

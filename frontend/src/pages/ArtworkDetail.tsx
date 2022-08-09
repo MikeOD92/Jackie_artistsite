@@ -1,5 +1,4 @@
 import React, { useState, useEffect, SyntheticEvent } from "react";
-import axios from "axios";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { ArtWork } from "../types/art_work";
 import { Link } from "react-router-dom";
@@ -22,20 +21,6 @@ const ArtworkDetail = () => {
     const singleWork = list.filter((item) => item.id.toString() === id);
     setArtwork(singleWork[0]);
     setCurrent(singleWork[0].work_img[0]);
-
-    // this is going to be replaced with redux
-    // I think this should all exist in the actual call to api/artworks
-    // just filter through the array and set the state
-    // const fetch = async () => {
-    //   try {
-    //     const { data } = await axios.get(`/api/artwork/${id}`);
-    //     setArtwork(data.data);
-    //     setCurrent(data.data.work_img[0]);
-    //   } catch (err: any) {
-    //     console.error(err);
-    //   }
-    // };
-    // fetch();
   }, [list, id]);
 
   const handleClick = (img: ArtWorkMedia) => {

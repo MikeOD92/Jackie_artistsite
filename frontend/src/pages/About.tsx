@@ -1,12 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import axios from "axios";
 import { SiteData } from "../types/site_data";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { AiOutlineInstagram } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 
 import PageEdit from "../components/PageEdit";
-import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const About: FC = () => {
