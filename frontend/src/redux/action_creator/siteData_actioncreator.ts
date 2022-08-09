@@ -10,6 +10,7 @@ export const fetchData = () => {
     });
     try {
       const { data } = await axios.get("/api/site-data");
+      console.log(data);
       dispatch({
         type: ActionTypes.PAGEDATA_SUCCESS,
         payload: data,

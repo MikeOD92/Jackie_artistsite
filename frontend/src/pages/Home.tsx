@@ -5,12 +5,15 @@ import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
 import { BiCopyright } from "react-icons/bi";
 import { Gi3DStairs } from "react-icons/gi";
-
+import { useActions } from "../hooks/useActions";
 import useAuth from "../hooks/useAuth";
-// import { useTypedSelector } from "../hooks/useTypedSelect";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
+  const { fetchData } = useActions();
+
+  const { data } = useTypedSelector((state) => state.siteData);
 
   const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
@@ -28,6 +31,9 @@ const Home: FC = () => {
         }
       };
       fetch();
+      if (data.length === 0) {
+        fetchData();
+      }
     }
   }, []);
 
