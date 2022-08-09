@@ -11,6 +11,12 @@ import {
   pageDataFailAction,
 } from "./siteDataActions";
 
+import {
+  artworkListRequestAction,
+  artworkListSuccessAction,
+  artworkListFailAction,
+} from "./artworklistActions";
+
 export type Action =
   | loginAction
   | loginActionFail
@@ -18,4 +24,7 @@ export type Action =
   | logoutAction
   | pageDataRequestAction
   | pageDataSuccessAction
-  | pageDataFailAction;
+  | pageDataFailAction
+  | artworkListRequestAction
+  | artworkListSuccessAction
+  | artworkListFailAction;

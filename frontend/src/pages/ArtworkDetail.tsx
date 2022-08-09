@@ -16,6 +16,9 @@ const ArtworkDetail = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    // this is going to be replaced with redux
+    // I think this should all exist in the actual call to api/artworks
+    // just filter through the array and set the state
     const fetch = async () => {
       try {
         const { data } = await axios.get(`/api/artwork/${id}`);

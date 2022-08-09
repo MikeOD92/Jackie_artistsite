@@ -11,54 +11,46 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
-  const { fetchData } = useActions();
+  const { fetchData, getArtworkList } = useActions();
 
   const { data } = useTypedSelector((state) => state.siteData);
-
-  const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
+  const artworkList = useTypedSelector((state) => state.artworkList);
+  // const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
 
   useEffect(() => {
-    if (artworkList.length === 0) {
-      const fetch = async () => {
-        try {
-          const { data } = await axios.get("/api/artwork");
-          setArtworkList(data);
-        } catch (err: any) {
-          console.error(err);
-        }
-      };
-      fetch();
-      if (data.length === 0) {
-        fetchData();
-      }
+    if (artworkList.list.length === 0) {
+      getArtworkList();
+    }
+    if (data.length === 0) {
+      fetchData();
     }
   }, []);
 
   useEffect(() => {
-    if (artworkList.length > 1) {
+    if (artworkList.list.length > 1) {
       setBucket1([]);
       setBucket2([]);
       setBucket3([]);
       let counter = 1;
-      for (let i = 0; i < artworkList.length; i++) {
-        if (!artworkList[i].work_img[0]) {
+      for (let i = 0; i < artworkList.list.length; i++) {
+        if (!artworkList.list[i].work_img[0]) {
           continue;
         }
         if (counter === 4) counter = 1;
         switch (counter) {
           case 1:
-            setBucket1((bucket1) => [...bucket1, artworkList[i]]);
+            setBucket1((bucket1) => [...bucket1, artworkList.list[i]]);
             counter++;
             break;
           case 2:
-            setBucket2((bucket2) => [...bucket2, artworkList[i]]);
+            setBucket2((bucket2) => [...bucket2, artworkList.list[i]]);
             counter++;
             break;
           case 3:
-            setBucket3((bucket3) => [...bucket3, artworkList[i]]);
+            setBucket3((bucket3) => [...bucket3, artworkList.list[i]]);
             counter++;
             break;
           default:
