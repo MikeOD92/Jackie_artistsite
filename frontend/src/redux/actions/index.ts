@@ -15,6 +15,9 @@ import {
   artworkListRequestAction,
   artworkListSuccessAction,
   artworkListFailAction,
+  artworkEditRequestAction,
+  artworkEditSuccessAction,
+  artworkEditFailAction,
 } from "./artworklistActions";
 
 export type Action =
@@ -27,4 +30,7 @@ export type Action =
   | pageDataFailAction
   | artworkListRequestAction
   | artworkListSuccessAction
-  | artworkListFailAction;
+  | artworkListFailAction
+  | artworkEditRequestAction
+  | artworkEditSuccessAction
+  | artworkEditFailAction;

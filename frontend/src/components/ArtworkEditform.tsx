@@ -15,6 +15,8 @@ const ArtworkEditform: FC<{
   const { access_key } = useTypedSelector((state) => state.user);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
 
+  const { editArtwork } = useActions();
+
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const dimensions = useRef<HTMLInputElement>(null);
@@ -29,31 +31,34 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${access_key}`,
-        },
-      };
-      try {
-        const editResponse = await axios.put(
-          `/api/edit-artwork/${id}`,
-          {
-            title: title.current.value,
-            medium: medium.current.value,
-            dimensions: dimensions.current.value,
-            date: date.current.value,
-          },
-          config
-        );
-        if (editResponse.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
-        }
-      } catch (err: any) {
-        console.error(err);
-      }
+      editArtwork(id, access_key, {
+        title: title.current.value,
+        medium: medium.current.value,
+        dimensions: dimensions.current.value,
+        date: date.current.value,
+      });
+      // const config = {
+      //   headers: {
+      //     "Content-type": "application/json",
+      //     Authorization: `Bearer ${access_key}`,
+      //   },
+      // };
+      // try {
+      //   const editResponse = await axios.put(
+      //     `/api/edit-artwork/${id}`,
+      //     {
+      //       title: title.current.value,
+      //       medium: medium.current.value,
+      //       dimensions: dimensions.current.value,
+      //       date: date.current.value,
+      //     },
+      //     config
+      //   );
+      // if (editResponse.status === 200) {
+      //   setSuccess(true);
+      // } else {
+      //   setSuccess(false);
+      // }
     }
   };
 

@@ -25,6 +25,12 @@ const artworkListReducer = (
       return { loading: false, error: null, list: action.payload };
     case ActionTypes.ARTWORKLIST_FAIL:
       return { loading: false, error: action.payload, list: [] };
+    case ActionTypes.ARTWORK_EDIT_REQUEST:
+      return { loading: true, error: null, list: [] };
+    case ActionTypes.ARTWORK_EDIT_SUCCESS:
+      return { loading: false, error: null, list: action.payload };
+    case ActionTypes.ARTWORK_EDIT_FAIL:
+      return { loading: false, error: action.payload, list: [] };
     default:
       return state;
   }

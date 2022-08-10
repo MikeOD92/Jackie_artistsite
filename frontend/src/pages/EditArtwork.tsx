@@ -18,29 +18,18 @@ const EditArtwork: FC = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
 
   const auth = useAuth();
-  // const user = useSelector(selectUser);
-  const { access_key } = useTypedSelector((state) => state.user);
-  // const { data, error } = useTypedSelector((state) => state.artwork);
 
-  // const { getArtSingleWork, deleteArtwork } = useActions();
+  const { access_key } = useTypedSelector((state) => state.user);
+  const { list } = useTypedSelector((state) => state.artworkList);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    if (id) {
-      const fetch = async () => {
-        try {
-          const { data } = await axios.get(`/api/artwork/${id}`);
-          setArtwork(data.data);
-        } catch (err: any) {
-          console.error(err);
-        }
-      };
-      fetch();
-    }
-  }, [id, images]);
+    const singleWork = list.filter((item) => item.id.toString() === id);
+    setArtwork(singleWork[0]);
+  }, [id, images, list]);
 
   useEffect(() => {
     if (artwork) setMedia(artwork.work_img);
