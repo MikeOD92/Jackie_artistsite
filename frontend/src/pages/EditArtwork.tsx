@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent, useState, useEffect } from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
@@ -11,6 +11,7 @@ import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
 import ArtworkEditform from "../components/ArtworkEditform";
 import ArtworkEditImages from "../components/ArtworkEditImages";
+import { useActions } from "../hooks/useActions";
 
 const EditArtwork: FC = () => {
   const { id } = useParams();
@@ -19,21 +20,28 @@ const EditArtwork: FC = () => {
 
   const auth = useAuth();
 
+  // const { fetchData, getArtworkList } = useActions();
+
   const { access_key } = useTypedSelector((state) => state.user);
-  const { list } = useTypedSelector((state) => state.artworkList);
+  const artworkList = useTypedSelector((state) => state.artworkList);
+  // const siteData = useTypedSelector((state) => state.siteData);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    const singleWork = list.filter((item) => item.id.toString() === id);
+    const singleWork = artworkList.list.filter(
+      (item) => item.id.toString() === id
+    );
     setArtwork(singleWork[0]);
-  }, [id, images, list]);
+  }, [artworkList.list, id]);
+
+  console.log("singleArtwork", artwork);
 
   useEffect(() => {
     if (artwork) setMedia(artwork.work_img);
-  }, [artwork]);
+  });
 
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();

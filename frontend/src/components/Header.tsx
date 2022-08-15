@@ -1,16 +1,28 @@
-import React, { FC, SyntheticEvent } from "react";
+import React, { FC, SyntheticEvent, useEffect } from "react";
 
 import { Navbar, Nav, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useActions } from "../hooks/useActions";
 // import { logout } from "../redux/store";
 import useAuth from "../hooks/useAuth";
-
+import { useTypedSelector } from "../hooks/useTypedSelect";
 import { FiUser, FiLogOut } from "react-icons/fi";
 
 const Header: FC = () => {
-  const { logout } = useActions();
+  const { logout, getArtworkList, fetchData } = useActions();
   const auth = useAuth();
+
+  const { data } = useTypedSelector((state) => state.siteData);
+  const artworkList = useTypedSelector((state) => state.artworkList);
+
+  useEffect(() => {
+    if (artworkList.list.length === 0) {
+      getArtworkList();
+    }
+    if (data.length === 0) {
+      fetchData();
+    }
+  }, []);
 
   const handleLogout = (e: SyntheticEvent) => {
     e.preventDefault();

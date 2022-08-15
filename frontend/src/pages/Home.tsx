@@ -10,23 +10,14 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
-  const { fetchData, getArtworkList } = useActions();
+  // const { fetchData, getArtworkList } = useActions();
 
-  const { data } = useTypedSelector((state) => state.siteData);
+  // const { data } = useTypedSelector((state) => state.siteData);
   const artworkList = useTypedSelector((state) => state.artworkList);
 
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
-
-  useEffect(() => {
-    if (artworkList.list.length === 0) {
-      getArtworkList();
-    }
-    if (data.length === 0) {
-      fetchData();
-    }
-  }, []);
 
   useEffect(() => {
     if (artworkList.list.length > 1) {

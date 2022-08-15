@@ -7,20 +7,28 @@ const useAuth = () => {
   const [auth, setAuth] = useState<boolean>();
 
   useEffect(() => {
-    const validate = async () => {
-      const data = await axios.post("/api/token/verify/", {
-        token: user.access_key,
-      });
-      if (data.status === 200) {
-        setAuth(true);
-      }
-    };
+    // const validate = async () => {
+    //   const data = await axios.post("/api/token/verify/", {
+    //     token: user.access_key,
+    //   });
+    //   if (data.status === 200) {
+    //     setAuth(true);
+    //   }
+    // };
+    // if (user.access_key !== "") {
+    //   validate();
+    //   return;
+    // } else {
+    //   setAuth(false);
+    // }
     if (user.access_key !== "") {
-      validate();
-      return;
+      setAuth(true);
     } else {
       setAuth(false);
     }
+    // basiclly instead of validating the access token on the front end we just look to see if there is one,
+    // if it is there then we have access to admin pages and let server validate on form submission.
+    // i'll have to test
   }, [user]);
 
   return auth;
