@@ -1,4 +1,4 @@
-import React, { FC, SyntheticEvent, useRef } from "react";
+import React, { FC, SyntheticEvent, useRef, useEffect, useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
@@ -8,12 +8,29 @@ import { ArtWork } from "../types/art_work";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
-  media: ArtWorkMedia[];
-  artwork: ArtWork;
-}> = ({ id, media, artwork }) => {
+  // media: ArtWorkMedia[];
+  // artwork: ArtWork;
+}> = ({ id }) => {
   const { access_key } = useTypedSelector((state) => state.user);
 
-  const { error, loading } = useTypedSelector((state) => state.artworkList);
+  const { list, error, loading } = useTypedSelector(
+    (state) => state.artworkList
+  );
+
+  const [artwork, setArtwork] = useState<ArtWork>();
+
+  useEffect(() => {
+    if (list.length > 0) {
+      const singleWork = list.filter(
+        (item: ArtWork) => item.id.toString() === id
+      );
+      setArtwork(singleWork[0]);
+      // setMedia(singleWork[0].work_img);
+    }
+
+    // theres some kind of issue where changes aren't appearing in the form after edits are made
+    // even though they are going through.
+  }, [list, id]);
 
   const { editArtwork } = useActions();
 
@@ -22,7 +39,7 @@ const ArtworkEditform: FC<{
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const submission = (e: SyntheticEvent) => {
+  const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (
       id &&

@@ -10,7 +10,7 @@ export const getArtworkList = () => {
       type: ActionTypes.ARTWORKLIST_REQUEST,
     });
     try {
-      const { data } = await axios.get("/api/artwork");
+      const { data } = await axios.get("http://localhost:8000/api/artwork");
       // localStorage.setItem("artworkList", JSON.stringify(data));
       dispatch({
         type: ActionTypes.ARTWORKLIST_SUCCESS,
@@ -49,7 +49,7 @@ export const editArtwork = (
     };
     try {
       const { data } = await axios.put(
-        `/api/edit-artwork/${id}`,
+        `http://localhost:8000/api/edit-artwork/${id}`,
         {
           title: edit.title,
           medium: edit.medium,
@@ -58,7 +58,6 @@ export const editArtwork = (
         },
         config
       );
-      // localStorage.setItem("artworkList", JSON.stringify(data));
       dispatch({
         type: ActionTypes.ARTWORK_EDIT_SUCCESS,
         payload: data,

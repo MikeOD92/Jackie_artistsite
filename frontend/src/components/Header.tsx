@@ -16,12 +16,12 @@ const Header: FC = () => {
   const artworkList = useTypedSelector((state) => state.artworkList);
 
   useEffect(() => {
-    if (artworkList.list.length === 0) {
+    if (artworkList.list.length <= 0) {
       getArtworkList();
     }
-    if (data.length === 0) {
-      fetchData();
-    }
+    // if (data.length <= 0) {
+    //   fetchData();
+    // }
   }, []);
 
   const handleLogout = (e: SyntheticEvent) => {

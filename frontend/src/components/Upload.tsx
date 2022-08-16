@@ -24,7 +24,12 @@ const Upload: FC<{ setUpload: Function; required: boolean }> = ({
       for (let i = 0; i < files.length; i++) {
         fileList.append("image", files[i]);
       }
-      const { data } = await axios.post("/api/upload", fileList, config);
+      // const { data } = await axios.post("/api/upload", fileList, config);
+      const { data } = await axios.post(
+        "http://localhost:8000/api/upload",
+        fileList,
+        config
+      );
       setUpload(data.data);
     } catch (err: any) {
       console.error(err);
