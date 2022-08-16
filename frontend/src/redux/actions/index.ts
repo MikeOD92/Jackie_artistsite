@@ -4,7 +4,14 @@ import {
   loginActionFail,
   logoutAction,
 } from "./authActions";
-
+import {
+  createUserAction,
+  createUserActionFail,
+  createUserActionSuccess,
+  passwordUpdateAction,
+  passwordUpdateActionFail,
+  passwordUpdateActionSuccess,
+} from "./userActions";
 import {
   pageDataRequestAction,
   pageDataSuccessAction,
@@ -25,6 +32,13 @@ export type Action =
   | loginActionFail
   | loginActionSuccess
   | logoutAction
+  | logoutAction
+  | createUserAction
+  | createUserActionFail
+  | createUserActionSuccess
+  | passwordUpdateAction
+  | passwordUpdateActionFail
+  | passwordUpdateActionSuccess
   | pageDataRequestAction
   | pageDataSuccessAction
   | pageDataFailAction

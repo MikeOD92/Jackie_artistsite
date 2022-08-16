@@ -25,6 +25,8 @@ const ArtworkEditform: FC<{
         (item: ArtWork) => item.id.toString() === id
       );
       setArtwork(singleWork[0]);
+      // this is maybe not great it's nice becasue it does not require an aditional call to api
+      // but is messes up on refresh when the redux state for list no longer exists.
       // setMedia(singleWork[0].work_img);
     }
 
