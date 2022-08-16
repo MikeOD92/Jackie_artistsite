@@ -21,58 +21,26 @@ const EditArtwork: FC = () => {
   const auth = useAuth();
 
   // const { fetchData, getArtworkList } = useActions();
-  const { getArtworkList } = useActions();
+  const { getArtworkList, deleteArtwork } = useActions();
   const { access_key } = useTypedSelector((state) => state.user);
-  const { list, loading } = useTypedSelector((state) => state.artworkList);
-  console.log("list", list);
+  const { list, loading, error } = useTypedSelector(
+    (state) => state.artworkList
+  );
+  // console.log("list", list);
   // const siteData = useTypedSelector((state) => state.siteData);
 
   const [images, setImages] = useState<Array<string>>([]);
-  const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
+  // const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   if (list.length <= 0) {
-  //     getArtworkList();
-  //   }
-  // }, []);
-
-  // it shouldnt matter if it's here becasue its in the header
-  // and now it works fine?
-
-  // useEffect(() => {
-  //   if (list.length > 0) {
-  //     const singleWork = list.filter(
-  //       (item: ArtWork) => item.id.toString() === id
-  //     );
-  //     setArtwork(singleWork[0]);
-  //     setMedia(singleWork[0].work_img);
-  //   }
-
-  //   // theres some kind of issue where changes aren't appearing in the form after edits are made
-  //   // even though they are going through.
-  // }, [list, id]);
-
   const deleteWork = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (id) {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${access_key}`,
-        },
-      };
-      try {
-        const deleteRequest = await axios.delete(
-          `/api/edit-artwork/${id}`,
-          config
-        );
-        if (deleteRequest.status === 204) {
-          setRedirect(true);
-        }
-      } catch (err: any) {
-        console.error(err);
+    try {
+      if (id) {
+        deleteArtwork(id, access_key);
       }
+      setRedirect(true);
+    } catch (err) {
+      console.error(err);
     }
   };
 

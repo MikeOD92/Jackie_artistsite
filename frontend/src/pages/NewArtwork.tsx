@@ -3,21 +3,24 @@ import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelect";
-import axios from "axios";
 import Upload from "../components/Upload";
 import NewArrworkImages from "../components/NewArrworkImages";
+import { useActions } from "../hooks/useActions";
 
 const NewArtwork: FC = () => {
   const auth = useAuth();
   const { access_key } = useTypedSelector((state) => state.user);
+  const { data } = useTypedSelector((state) => state.upload);
+
+  const { createArtwork } = useActions();
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const [images, setImages] = useState<Array<string>>([]);
-  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  // const [images, setImages] = useState<Array<string>>([]);
+  // const [success, setSuccess] = useState<boolean | undefined>(undefined);
 
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -26,53 +29,19 @@ const NewArtwork: FC = () => {
       medium.current &&
       dimensions.current &&
       date.current &&
-      images.length > 0
+      data.length > 0
     ) {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${access_key}`,
-        },
-      };
-      try {
-        const { data } = await axios.post(
-          "/api/create-artwork",
-          {
-            title: title.current.value,
-            medium: medium.current.value,
-            dimensions: dimensions.current.value,
-            date: date.current.value,
-          },
-          config
-        );
-
-        const mediaSuccess = [];
-
-        for (let x in images) {
-          const newMedia = await axios.post(
-            "/api/artwork-media",
-            {
-              artwork: data.data.id,
-              img: images[x],
-            },
-            config
-          );
-          mediaSuccess.push(newMedia.status);
-          console.log(mediaSuccess);
-        }
-        if (mediaSuccess.indexOf(200) === -1) {
-          await axios.delete(`/api/edit-artwork/${data.id}`, config);
-          setSuccess(false);
-        } else {
-          setSuccess(true);
-        }
-      } catch (err: any) {
-        console.error(err);
-      }
-      e.preventDefault();
+      createArtwork(
+        title.current.value,
+        medium.current.value,
+        dimensions.current.value,
+        date.current.value,
+        data,
+        access_key
+      );
     }
   };
-  if (auth === false || success === true) {
+  if (auth === false) {
     return <Navigate to="/" />;
   }
   return (
@@ -112,20 +81,20 @@ const NewArtwork: FC = () => {
               ref={date}
               required
             />
-            <Upload setUpload={setImages} required={true} />
+            <Upload required={true} />
 
             <Button style={{ backgroundColor: "black" }} type="submit">
               save
             </Button>
-            {success === false ? (
+            {/* {success === false ? (
               <p style={{ color: "red" }}> Error: Artwork not created</p>
             ) : (
               ""
-            )}
+            )} */}
           </Form>
         </Col>
         <Col lg={6}>
-          <NewArrworkImages images={images} setImages={setImages} />
+          <NewArrworkImages images={data} />
         </Col>
       </Row>
     </Container>

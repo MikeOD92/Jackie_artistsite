@@ -43,15 +43,14 @@ class Upload(APIView):
         })
 
 # creation API view, requires user to to logged in to POST new works
-class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.CreateModelMixin):
-    queryset = Artwork.objects.all()
+class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
+    queryset = Artwork.objects.all().order_by('-id')
     serializer_class = CreateArtworkSerializer
     permission_classes = [IsAdminUser]
 
     def post(self, request):
-        return Response({
-            'data': self.create(request).data
-        })
+        self.create(request).data
+        return self.list(request)
 
 # API view for all non creation functions on artworks
 class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
@@ -65,7 +64,8 @@ class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mi
 
     
     def delete(self, request, pk=None):
-        return self.destroy(request, pk)
+        self.destroy(request, pk)
+        return self.list(request).data
 
 class ArtworkMediaProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
     queryset = ArtworkMedia.objects.all()

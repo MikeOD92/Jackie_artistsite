@@ -42,15 +42,19 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 #### Artwork and media Serializers
 
-class CreateArtworkSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Artwork
-        fields = '__all__'
-
 class ArtworkMediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArtworkMedia
         fields = '__all__'
+
+class CreateArtworkSerializer(serializers.ModelSerializer):
+    work_img = ArtworkMediaSerializer(many=True, required=False)
+    class Meta:
+        model = Artwork
+        fields = ['id', 'title', 'medium', 'dimensions', 'date', 'work_img' ]
+        extra_kwargs = {
+            'work_img': {'required':False}
+        }
 
 class ArtworkSerializer(serializers.ModelSerializer):
     work_img = ArtworkMediaSerializer(many=True)

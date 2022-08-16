@@ -3,18 +3,18 @@ import { Row, Col, Image } from "react-bootstrap";
 
 const NewArrworkImages: FC<{
   images: string[];
-  setImages: Function;
-}> = ({ images, setImages }) => {
-  const removeUpload = (e: SyntheticEvent, idx: number) => {
-    e.preventDefault();
-    if (images.length === 1) {
-      setImages([]);
-    } else {
-      let newset = images;
-      newset.splice(idx, 1);
-      setImages([...newset]);
-    }
-  };
+  // setImages: Function;
+}> = ({ images }) => {
+  // const removeUpload = (e: SyntheticEvent, idx: number) => {
+  //   e.preventDefault();
+  //   if (images.length === 1) {
+  //     setImages([]);
+  //   } else {
+  //     let newset = images;
+  //     newset.splice(idx, 1);
+  //     setImages([...newset]);
+  //   }
+  // };
   return (
     <Row>
       <>
@@ -29,7 +29,7 @@ const NewArrworkImages: FC<{
                     src={img}
                     fluid
                     className="mb-3"
-                    onClick={(e) => removeUpload(e, i)}
+                    // onClick={(e) => removeUpload(e, i)}
                   />
                 </Col>
               );

@@ -88,7 +88,7 @@ const PageEdit: FC<{ data: SiteData; setData: Function }> = ({
         {data.name === "about" ? (
           <>
             <Form.Label className="mt-3">Splash Image</Form.Label>
-            <Upload setUpload={setSplash} required={false} />
+            {/* <Upload setUpload={setSplash} required={false} /> */}
             <Row className="p-3">
               <Col md={2}>
                 {splash !== "" ? (
