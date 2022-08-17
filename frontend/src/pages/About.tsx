@@ -11,13 +11,6 @@ const About: FC = () => {
   const auth = useAuth();
   const [pageData, setPageData] = useState<SiteData>();
 
-  const { data, error } = useTypedSelector((state) => state.siteData);
-
-  useEffect(() => {
-    const about = data.filter((item: SiteData) => item.name === "about");
-    setPageData(about[0]);
-  }, []);
-
   return (
     <Container
       style={{
@@ -27,7 +20,7 @@ const About: FC = () => {
     >
       {auth && pageData ? (
         <PageEdit data={pageData} setData={setPageData} />
-      ) : auth && !data ? (
+      ) : auth ? (
         <PageEdit
           data={{
             id: 0,
@@ -38,8 +31,6 @@ const About: FC = () => {
           }}
           setData={setPageData}
         />
-      ) : error ? (
-        <h1> Error </h1>
       ) : (
         <Row>
           <Col md={4}>

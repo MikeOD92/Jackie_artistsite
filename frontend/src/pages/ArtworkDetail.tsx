@@ -15,14 +15,6 @@ const ArtworkDetail = () => {
   const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
 
-  const { list } = useTypedSelector((state) => state.artworkList);
-
-  useEffect(() => {
-    const singleWork = list.filter((item) => item.id.toString() === id);
-    setArtwork(singleWork[0]);
-    setCurrent(singleWork[0].work_img[0]);
-  }, [list, id]);
-
   const handleClick = (img: ArtWorkMedia) => {
     return (event: React.MouseEvent) => {
       setCurrent(img);

@@ -12,13 +12,6 @@ const CV: FC = () => {
 
   const [pageData, setPageData] = useState<SiteData>();
 
-  const { data, error } = useTypedSelector((state) => state.siteData);
-
-  useEffect(() => {
-    const CV = data.filter((item: SiteData) => item.name === "CV");
-    setPageData(CV[0]);
-  }, []);
-
   return (
     <Container
       style={{
@@ -39,8 +32,6 @@ const CV: FC = () => {
           }}
           setData={setPageData}
         />
-      ) : error ? (
-        <h1> Error</h1>
       ) : (
         <>
           {" "}

@@ -23,21 +23,11 @@ const EditArtwork: FC = () => {
   // const { fetchData, getArtworkList } = useActions();
 
   const { access_key } = useTypedSelector((state) => state.user);
-  const artworkList = useTypedSelector((state) => state.artworkList);
   // const siteData = useTypedSelector((state) => state.siteData);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
-
-  useEffect(() => {
-    const singleWork = artworkList.list.filter(
-      (item) => item.id.toString() === id
-    );
-    setArtwork(singleWork[0]);
-  }, [artworkList.list, id]);
-
-  console.log("singleArtwork", artwork);
 
   useEffect(() => {
     if (artwork) setMedia(artwork.work_img);

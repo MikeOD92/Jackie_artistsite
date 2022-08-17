@@ -13,12 +13,6 @@ const ArtworkEditform: FC<{
 }> = ({ id, media, artwork }) => {
   const { access_key } = useTypedSelector((state) => state.user);
 
-  const { data, loading, error } = useTypedSelector(
-    (state) => state.singleArtwork
-  );
-
-  const { editArtwork } = useActions();
-
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const dimensions = useRef<HTMLInputElement>(null);
@@ -33,20 +27,12 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
-      editArtwork(id, access_key, {
-        title: title.current.value,
-        medium: medium.current.value,
-        dimensions: dimensions.current.value,
-        date: date.current.value,
-      });
     }
   };
 
   return (
     <div>
-      {loading ? (
-        <Spinner animation="border" variant="light" />
-      ) : artwork ? (
+      {artwork ? (
         <Form
           onSubmit={(e: SyntheticEvent) => {
             submission(e);
@@ -90,7 +76,7 @@ const ArtworkEditform: FC<{
           ) : (
             ""
           )}
-          {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""}
+          {/* {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""} */}
         </Form>
       ) : (
         ""

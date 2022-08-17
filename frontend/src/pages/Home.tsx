@@ -13,44 +13,10 @@ const Home: FC = () => {
   // const { fetchData, getArtworkList } = useActions();
 
   // const { data } = useTypedSelector((state) => state.siteData);
-  const artworkList = useTypedSelector((state) => state.artworkList);
 
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
-
-  useEffect(() => {
-    if (artworkList.list.length > 1) {
-      setBucket1([]);
-      setBucket2([]);
-      setBucket3([]);
-      let counter = 1;
-      for (let i = 0; i < artworkList.list.length; i++) {
-        if (!artworkList.list[i].work_img[0]) {
-          continue;
-        }
-        if (counter === 4) counter = 1;
-        switch (counter) {
-          case 1:
-            setBucket1((bucket1) => [...bucket1, artworkList.list[i]]);
-            counter++;
-            break;
-          case 2:
-            setBucket2((bucket2) => [...bucket2, artworkList.list[i]]);
-            counter++;
-            break;
-          case 3:
-            setBucket3((bucket3) => [...bucket3, artworkList.list[i]]);
-            counter++;
-            break;
-          default:
-            return;
-        }
-      }
-    } else {
-      return;
-    }
-  }, [artworkList]);
 
   return (
     <div>
