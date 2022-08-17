@@ -22,9 +22,35 @@ const SingleArtworkReducer = (
     case ActionTypes.ARTWORK_GET_REQUEST:
       return { loading: true, error: null, data: null };
     case ActionTypes.ARTWORK_GET_SUCCESS:
-      return { loading: true, error: null, data: action.payload };
+      return { loading: false, error: null, data: action.payload };
     case ActionTypes.ARTWORK_GET_FAIL:
-      return { loading: true, error: action.payload, data: null };
+      return { loading: false, error: action.payload, data: null };
+    case ActionTypes.ARTWORK_EDIT_REQUEST:
+      return { loading: true, error: null, data: state.data };
+    case ActionTypes.ARTWORK_EDIT_SUCCESS:
+      return {
+        loading: false,
+        error: null,
+        data: action.payload,
+      };
+    case ActionTypes.ARTWORK_EDIT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+        data: null,
+      };
+    case ActionTypes.ARTWORK_DELETE_REQUEST:
+      return { loading: true, error: null, data: state.data };
+    case ActionTypes.ARTWORK_DELETE_SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case ActionTypes.ARTWORK_DELETE_FAIL:
+      return { loading: false, error: action.payload, data: null };
+    case ActionTypes.ARTWORK_CREATE_REQUEST:
+      return { loading: true, error: null, data: state.data };
+    case ActionTypes.ARTWORK_CREATE_SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case ActionTypes.ARTWORK_CREATE_FAIL:
+      return { loading: false, error: action.payload, data: null };
     default:
       return state;
   }

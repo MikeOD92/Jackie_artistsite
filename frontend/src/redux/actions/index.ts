@@ -24,6 +24,12 @@ import {
   artworkListRequestAction,
   artworkListSuccessAction,
   artworkListFailAction,
+} from "./artworklistActions";
+
+import {
+  artworkGetAction,
+  artworkGetActionSuccess,
+  artworkGetActionFail,
   artworkEditRequestAction,
   artworkEditSuccessAction,
   artworkEditFailAction,
@@ -33,12 +39,6 @@ import {
   artworkCreateAction,
   artworkCreateActionSuccess,
   artworkCreateActionFail,
-} from "./artworklistActions";
-
-import {
-  artworkGetAction,
-  artworkGetActionSuccess,
-  artworkGetActionFail,
 } from "./singleArtworkAction";
 
 import {

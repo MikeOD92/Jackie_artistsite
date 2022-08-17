@@ -15,14 +15,14 @@ const Header: FC = () => {
   const { data } = useTypedSelector((state) => state.siteData);
   const artworkList = useTypedSelector((state) => state.artworkList);
 
-  useEffect(() => {
-    if (artworkList.list.length <= 0) {
-      getArtworkList();
-    }
-    // if (data.length <= 0) {
-    //   fetchData();
-    // }
-  }, []);
+  // useEffect(() => {
+  //   if (artworkList.list.length <= 0) {
+  //     getArtworkList();
+  //   }
+  //   // if (data.length <= 0) {
+  //   //   fetchData();
+  //   // }
+  // }, []);
 
   const handleLogout = (e: SyntheticEvent) => {
     e.preventDefault();

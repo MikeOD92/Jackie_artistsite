@@ -16,24 +16,28 @@ import { useActions } from "../hooks/useActions";
 const EditArtwork: FC = () => {
   const { id } = useParams();
 
-  const [artwork, setArtwork] = useState<ArtWork>();
+  // const [artwork, setArtwork] = useState<ArtWork>();
 
   const auth = useAuth();
 
-  // const { fetchData, getArtworkList } = useActions();
+  const { getArtSingleWork } = useActions();
   const { deleteArtwork } = useActions();
   const { access_key } = useTypedSelector((state) => state.user);
-  const { list, loading, error } = useTypedSelector(
-    (state) => state.artworkList
-  );
+  const { error } = useTypedSelector((state) => state.singleArtwork);
   // console.log("list", list);
   // const siteData = useTypedSelector((state) => state.siteData);
+  useEffect(() => {
+    if (id) {
+      getArtSingleWork(id);
+    }
+  }, [id]);
 
-  const [images, setImages] = useState<Array<string>>([]);
+  // const [images, setImages] = useState<Array<string>>([]);
   // const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const deleteWork = async (e: SyntheticEvent) => {
+    e.preventDefault();
     try {
       if (id) {
         deleteArtwork(id, access_key);
@@ -43,6 +47,7 @@ const EditArtwork: FC = () => {
       }
     } catch (err) {
       console.error(err);
+      setRedirect(false);
     }
   };
 
@@ -56,23 +61,28 @@ const EditArtwork: FC = () => {
         <Col md={6}>
           {/* {artwork ? (
             // <ArtworkEditform id={id} media={media} artwork={artwork} /> */}
-          <ArtworkEditform id={id} redirect={setRedirect} />
+          <ArtworkEditform
+            id={id}
+            redirect={setRedirect}
+            // loading={loading}
+            // artwork={data}
+          />
           {/* ) : (
             ""
           )} */}
         </Col>
         <Col lg={6}>
-          {artwork ? (
-            <ArtworkEditImages
-              artwork={artwork}
-              setImages={setImages}
-              images={images}
-              setArtwork={setArtwork}
-              id={id}
-            />
+          {/* {data ? (
+            // <ArtworkEditImages
+            //   artwork={data}
+            //   setImages={setImages}
+            //   images={images}
+            //   // setArtwork={setArtwork}
+            //   id={id}
+            // />
           ) : (
             ""
-          )}
+          )} */}
         </Col>
       </Row>
       <Row>

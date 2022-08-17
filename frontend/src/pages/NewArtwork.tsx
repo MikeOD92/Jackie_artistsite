@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent, useRef, useState } from "react";
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { useTypedSelector } from "../hooks/useTypedSelect";
@@ -11,7 +11,7 @@ const NewArtwork: FC = () => {
   const auth = useAuth();
   const { access_key } = useTypedSelector((state) => state.user);
   const { data } = useTypedSelector((state) => state.upload);
-  const { error } = useTypedSelector((state) => state.artworkList);
+  const { error } = useTypedSelector((state) => state.singleArtwork);
 
   const { createArtwork } = useActions();
 
@@ -22,6 +22,7 @@ const NewArtwork: FC = () => {
 
   // const [images, setImages] = useState<Array<string>>([]);
   const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean | undefined>(undefined);
 
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ const NewArtwork: FC = () => {
       data.length > 0
     ) {
       try {
+        setLoading(true);
         createArtwork(
           title.current.value,
           medium.current.value,
@@ -41,8 +43,10 @@ const NewArtwork: FC = () => {
           data,
           access_key
         );
+
         if (!error) {
-          setSuccess(true);
+          setTimeout(() => setSuccess(true), 2500);
+          setLoading(false);
         }
       } catch (err) {
         console.error(err);
@@ -58,49 +62,53 @@ const NewArtwork: FC = () => {
       <h1> Add New Artworks</h1>
       <Row className="mt-5">
         <Col md={6}>
-          <Form
-            onSubmit={(e: SyntheticEvent) => {
-              submission(e);
-            }}
-          >
-            <Form.Control
-              type="text"
-              placeholder="title"
-              className="defaultCursor"
-              ref={title}
-              required
-            />
-            <Form.Control
-              type="text"
-              placeholder="medium"
-              className="defaultCursor"
-              ref={medium}
-            />
-            <Form.Control
-              type="text"
-              placeholder="dimensions"
-              className="defaultCursor"
-              ref={dimensions}
-              required
-            />
-            <Form.Control
-              type="text"
-              placeholder="date"
-              className="defaultCursor"
-              ref={date}
-              required
-            />
-            <Upload required={true} />
+          {!loading ? (
+            <Form
+              onSubmit={(e: SyntheticEvent) => {
+                submission(e);
+              }}
+            >
+              <Form.Control
+                type="text"
+                placeholder="title"
+                className="defaultCursor"
+                ref={title}
+                required
+              />
+              <Form.Control
+                type="text"
+                placeholder="medium"
+                className="defaultCursor"
+                ref={medium}
+              />
+              <Form.Control
+                type="text"
+                placeholder="dimensions"
+                className="defaultCursor"
+                ref={dimensions}
+                required
+              />
+              <Form.Control
+                type="text"
+                placeholder="date"
+                className="defaultCursor"
+                ref={date}
+                required
+              />
+              <Upload required={true} />
 
-            <Button style={{ backgroundColor: "black" }} type="submit">
-              save
-            </Button>
-            {success === false ? (
-              <p style={{ color: "red" }}> Error: Artwork not created</p>
-            ) : (
-              ""
-            )}
-          </Form>
+              <Button style={{ backgroundColor: "black" }} type="submit">
+                save
+              </Button>
+              {success === false ? (
+                <p style={{ color: "red" }}> Error: Artwork not created</p>
+              ) : (
+                ""
+              )}
+            </Form>
+          ) : (
+            <Spinner animation="border" variant="light" />
+          )}
         </Col>
         <Col lg={6}>
           <NewArrworkImages images={data} />

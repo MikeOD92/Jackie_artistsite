@@ -10,10 +10,19 @@ import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
-  // const { fetchData, getArtworkList } = useActions();
+  const { fetchData, getArtworkList } = useActions();
 
-  // const { data } = useTypedSelector((state) => state.siteData);
+  const { data } = useTypedSelector((state) => state.siteData);
   const artworkList = useTypedSelector((state) => state.artworkList);
+
+  useEffect(() => {
+    getArtworkList();
+    if (data.length <= 0) {
+      fetchData();
+    }
+  }, []);
+  // so becasue i moved this out of the header it should run every time we vist the Home page.
+  // this makes more calls but allows be to remove the extra call to pull the list in the edit and delete action creators.
 
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);

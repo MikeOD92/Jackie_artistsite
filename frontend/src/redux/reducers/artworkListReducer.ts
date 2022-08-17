@@ -42,32 +42,6 @@ const artworkListReducer = (
         error: action.payload,
         list: [],
       };
-    case ActionTypes.ARTWORK_EDIT_REQUEST:
-      return { loading: true, error: null, list: state.list };
-    case ActionTypes.ARTWORK_EDIT_SUCCESS:
-      return {
-        loading: false,
-        error: null,
-        list: action.payload,
-      };
-    case ActionTypes.ARTWORK_EDIT_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-        list: state.list,
-      };
-    case ActionTypes.ARTWORK_DELETE_REQUEST:
-      return { loading: true, error: null, list: state.list };
-    case ActionTypes.ARTWORK_DELETE_SUCCESS:
-      return { loading: false, error: null, list: action.payload };
-    case ActionTypes.ARTWORK_DELETE_FAIL:
-      return { loading: false, error: action.payload, list: state.list };
-    case ActionTypes.ARTWORK_CREATE_REQUEST:
-      return { loading: true, error: null, list: state.list };
-    case ActionTypes.ARTWORK_CREATE_SUCCESS:
-      return { loading: false, error: null, list: action.payload };
-    case ActionTypes.ARTWORK_CREATE_FAIL:
-      return { loading: false, error: action.payload, list: state.list };
     default:
       return state;
   }
