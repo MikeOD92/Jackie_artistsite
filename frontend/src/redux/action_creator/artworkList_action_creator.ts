@@ -47,7 +47,7 @@ export const editArtwork = (
       },
     };
     try {
-      const { data } = await axios.put(
+      await axios.put(
         `http://localhost:8000/api/edit-artwork/${id}`,
         {
           title: edit.title,
@@ -57,9 +57,10 @@ export const editArtwork = (
         },
         config
       );
+      const list = await axios.get("http://localhost:8000/api/artwork");
       dispatch({
         type: ActionTypes.ARTWORK_EDIT_SUCCESS,
-        payload: data,
+        payload: list.data,
       });
     } catch (err: any) {
       dispatch({
@@ -122,9 +123,10 @@ export const createArtwork = (
           payload: "error uploading media",
         });
       } else {
+        const list = await axios.get("http://localhost:8000/api/artwork");
         dispatch({
           type: ActionTypes.ARTWORK_CREATE_SUCCESS,
-          payload: data,
+          payload: list.data,
         });
       }
     } catch (err: any) {
@@ -149,10 +151,11 @@ export const deleteArtwork = (id: string, token: string) => {
       },
     };
     try {
-      const { data } = await axios.delete(`/api/edit-artwork/${id}`, config);
+      await axios.delete(`/api/edit-artwork/${id}`, config);
+      const list = await axios.get("http://localhost:8000/api/artwork");
       dispatch({
         type: ActionTypes.ARTWORK_DELETE_SUCCESS,
-        payload: data,
+        payload: list.data,
       });
     } catch (err: any) {
       console.error(err);

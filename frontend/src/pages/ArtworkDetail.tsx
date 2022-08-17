@@ -8,20 +8,25 @@ import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
 import { useTypedSelector } from "../hooks/useTypedSelect";
+import { useActions } from "../hooks/useActions";
 
 const ArtworkDetail = () => {
-  const [artwork, setArtwork] = useState<ArtWork>();
   const [current, setCurrent] = useState<ArtWorkMedia | null>(null);
   const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
 
-  const { list } = useTypedSelector((state) => state.artworkList);
+  const { getArtSingleWork } = useActions();
+  const { data } = useTypedSelector((state) => state.singleArtwork);
 
   useEffect(() => {
-    const singleWork = list.filter((item) => item.id.toString() === id);
-    setArtwork(singleWork[0]);
-    setCurrent(singleWork[0].work_img[0]);
-  }, [list, id]);
+    setCurrent(null);
+    if ((data === null || data.id.toString() !== id) && id) {
+      getArtSingleWork(id);
+    }
+    if (data !== null) {
+      setCurrent(data.work_img[0]);
+    }
+  }, [data]);
 
   const handleClick = (img: ArtWorkMedia) => {
     return (event: React.MouseEvent) => {
@@ -39,13 +44,10 @@ const ArtworkDetail = () => {
           style={{ padding: "10px", marginLeft: "5vw" }}
         >
           <div style={{ textAlign: "left" }}>
-            <h3 className="mt-5 title"> {artwork ? artwork.title : ""}</h3>
-            <p className="mt-5 wall-txt"> {artwork ? artwork.medium : ""} </p>
-            <p className="mt-4 wall-txt">
-              {" "}
-              {artwork ? artwork.dimensions : ""}
-            </p>
-            <p className="mt-4 wall-txt"> {artwork ? artwork.date : ""}</p>
+            <h3 className="mt-5 title"> {data ? data.title : ""}</h3>
+            <p className="mt-5 wall-txt"> {data ? data.medium : ""} </p>
+            <p className="mt-4 wall-txt"> {data ? data.dimensions : ""}</p>
+            <p className="mt-4 wall-txt"> {data ? data.date : ""}</p>
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <Link
@@ -92,8 +94,8 @@ const ArtworkDetail = () => {
         <Col md={2} className="mt-3 flex-d">
           <Container className="mb-4">
             <Row>
-              {artwork?.work_img
-                ? artwork.work_img.map((img) => {
+              {data?.work_img
+                ? data.work_img.map((img) => {
                     return (
                       <Col md={6} key={img.id}>
                         <Image

@@ -49,7 +49,7 @@ class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.CreateMode
     permission_classes = [IsAdminUser]
 
     def post(self, request):
-        self.create(request).data
+        self.create(request)
         return self.list(request)
 
 # API view for all non creation functions on artworks
@@ -65,7 +65,9 @@ class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mi
     
     def delete(self, request, pk=None):
         self.destroy(request, pk)
-        return self.list(request).data
+        return Response({
+            'data': self.list(request).data
+        })
 
 class ArtworkMediaProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
     queryset = ArtworkMedia.objects.all()

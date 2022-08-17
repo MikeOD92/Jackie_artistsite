@@ -8,9 +8,10 @@ import { ArtWork } from "../types/art_work";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
+  redirect: Function;
   // media: ArtWorkMedia[];
   // artwork: ArtWork;
-}> = ({ id }) => {
+}> = ({ id, redirect }) => {
   const { access_key } = useTypedSelector((state) => state.user);
 
   const { list, error, loading } = useTypedSelector(
@@ -50,12 +51,18 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
-      editArtwork(id, access_key, {
-        title: title.current.value,
-        medium: medium.current.value,
-        dimensions: dimensions.current.value,
-        date: date.current.value,
-      });
+      try {
+        editArtwork(id, access_key, {
+          title: title.current.value,
+          medium: medium.current.value,
+          dimensions: dimensions.current.value,
+          date: date.current.value,
+        });
+        redirect(true);
+      } catch (err) {
+        console.error(err);
+        redirect(false);
+      }
     }
   };
 

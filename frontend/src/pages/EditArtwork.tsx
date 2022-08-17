@@ -21,7 +21,7 @@ const EditArtwork: FC = () => {
   const auth = useAuth();
 
   // const { fetchData, getArtworkList } = useActions();
-  const { getArtworkList, deleteArtwork } = useActions();
+  const { deleteArtwork } = useActions();
   const { access_key } = useTypedSelector((state) => state.user);
   const { list, loading, error } = useTypedSelector(
     (state) => state.artworkList
@@ -38,7 +38,9 @@ const EditArtwork: FC = () => {
       if (id) {
         deleteArtwork(id, access_key);
       }
-      setRedirect(true);
+      if (!error) {
+        setRedirect(true);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -54,7 +56,7 @@ const EditArtwork: FC = () => {
         <Col md={6}>
           {/* {artwork ? (
             // <ArtworkEditform id={id} media={media} artwork={artwork} /> */}
-          <ArtworkEditform id={id} />
+          <ArtworkEditform id={id} redirect={setRedirect} />
           {/* ) : (
             ""
           )} */}

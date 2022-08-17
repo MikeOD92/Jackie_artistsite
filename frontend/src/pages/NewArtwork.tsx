@@ -11,6 +11,7 @@ const NewArtwork: FC = () => {
   const auth = useAuth();
   const { access_key } = useTypedSelector((state) => state.user);
   const { data } = useTypedSelector((state) => state.upload);
+  const { error } = useTypedSelector((state) => state.artworkList);
 
   const { createArtwork } = useActions();
 
@@ -20,7 +21,7 @@ const NewArtwork: FC = () => {
   const date = useRef<HTMLInputElement>(null);
 
   // const [images, setImages] = useState<Array<string>>([]);
-  // const [success, setSuccess] = useState<boolean | undefined>(undefined);
+  const [success, setSuccess] = useState<boolean | undefined>(undefined);
 
   const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -31,17 +32,25 @@ const NewArtwork: FC = () => {
       date.current &&
       data.length > 0
     ) {
-      createArtwork(
-        title.current.value,
-        medium.current.value,
-        dimensions.current.value,
-        date.current.value,
-        data,
-        access_key
-      );
+      try {
+        createArtwork(
+          title.current.value,
+          medium.current.value,
+          dimensions.current.value,
+          date.current.value,
+          data,
+          access_key
+        );
+        if (!error) {
+          setSuccess(true);
+        }
+      } catch (err) {
+        console.error(err);
+        setSuccess(false);
+      }
     }
   };
-  if (auth === false) {
+  if (auth === false || success) {
     return <Navigate to="/" />;
   }
   return (
@@ -86,11 +95,11 @@ const NewArtwork: FC = () => {
             <Button style={{ backgroundColor: "black" }} type="submit">
               save
             </Button>
-            {/* {success === false ? (
+            {success === false ? (
               <p style={{ color: "red" }}> Error: Artwork not created</p>
             ) : (
               ""
-            )} */}
+            )}
           </Form>
         </Col>
         <Col lg={6}>
