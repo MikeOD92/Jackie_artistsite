@@ -1,19 +1,16 @@
 import { FC, useEffect, useState } from "react";
+import axios from "axios";
 import { ArtWork } from "../types/art_work";
 import { Container, Col, Row } from "react-bootstrap";
 import HomeImg from "../components/HomeImg";
 import { BiCopyright } from "react-icons/bi";
 import { Gi3DStairs } from "react-icons/gi";
-import { useActions } from "../hooks/useActions";
 import useAuth from "../hooks/useAuth";
-import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const Home: FC = () => {
   const auth = useAuth();
-  // const { fetchData, getArtworkList } = useActions();
 
-  // const { data } = useTypedSelector((state) => state.siteData);
-
+  const [artworkList, setArtworkList] = useState<Array<ArtWork>>([]);
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);

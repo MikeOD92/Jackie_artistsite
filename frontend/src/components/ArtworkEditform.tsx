@@ -1,24 +1,32 @@
-import React, { FC, SyntheticEvent, useRef } from "react";
+import React, { FC, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import { ArtWorkMedia } from "../types/artwork_media";
 import { useActions } from "../hooks/useActions";
 import { ArtWork } from "../types/art_work";
+import axios from "axios";
 
 const ArtworkEditform: FC<{
   id: string | undefined;
   media: ArtWorkMedia[];
   artwork: ArtWork;
-}> = ({ id, media, artwork }) => {
+  setArtwork: Function;
+}> = ({ id, media, artwork, setArtwork }) => {
   const { access_key } = useTypedSelector((state) => state.user);
+
+  const [error, setError] = useState<string>();
+  const [success, setSuccess] = useState<Boolean | undefined>();
+  const [loading, setLoading] = useState<Boolean | undefined>();
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const submission = (e: SyntheticEvent) => {
+  useEffect(() => {}, [artwork]);
+
+  const submission = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (
       id &&
@@ -27,12 +35,44 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${access_key}`,
+        },
+      };
+      try {
+        setLoading(true);
+        const data = await axios.put(
+          `/api/edit-artwork/${id}`,
+          {
+            title: title.current.value,
+            medium: medium.current.value,
+            dimensions: dimensions.current.value,
+            date: date.current.value,
+          },
+          config
+        );
+        // console.log("updated artwork state");
+        // console.log(data.data);
+        if (data.status === 200) {
+          setArtwork(data.data.data);
+          setSuccess(true);
+          setLoading(false);
+          console.log("setting so many things");
+        }
+      } catch (err: any) {
+        setLoading(false);
+        setError(err.message);
+      }
     }
   };
 
   return (
     <div>
-      {artwork ? (
+      {loading ? (
+        <Spinner animation="border" variant="light" />
+      ) : artwork ? (
         <Form
           onSubmit={(e: SyntheticEvent) => {
             submission(e);
@@ -69,14 +109,15 @@ const ArtworkEditform: FC<{
             <Button
               style={{ backgroundColor: "black" }}
               type="submit"
-              disabled={media.length < 1}
+              disabled={media.length < 0}
             >
               save
             </Button>
           ) : (
             ""
           )}
-          {/* {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""} */}
+          {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""}
+          {success ? <p style={{ color: "green" }}> Update Successful</p> : ""}
         </Form>
       ) : (
         ""

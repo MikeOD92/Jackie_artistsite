@@ -12,6 +12,15 @@ const CV: FC = () => {
 
   const [pageData, setPageData] = useState<SiteData>();
 
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios.get("/api/site-data");
+      const page = data.filter((item: SiteData) => item.name === "CV");
+      setPageData(page[0]);
+    };
+    fetch();
+  }, []);
+
   return (
     <Container
       style={{

@@ -60,12 +60,16 @@ class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mi
     permission_classes = [IsAdminUser]
 
     def put(self, request, pk=None):
-        self.partial_update(request, pk).data
-        return self.list(request)
+        return Response({
+            'data':self.partial_update(request, pk).data
+        })
 
     
     def delete(self, request, pk=None):
-        return self.destroy(request, pk)
+        self.destroy(request, pk)
+        return Response({
+            'data': 'success'
+        })
 
 class ArtworkMediaProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin ):
     queryset = ArtworkMedia.objects.all()

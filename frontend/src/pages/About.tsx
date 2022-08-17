@@ -3,13 +3,21 @@ import { SiteData } from "../types/site_data";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { AiOutlineInstagram } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
-
+import axios from "axios";
 import PageEdit from "../components/PageEdit";
-import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const About: FC = () => {
   const auth = useAuth();
   const [pageData, setPageData] = useState<SiteData>();
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios.get("/api/site-data");
+      const page = data.filter((item: SiteData) => item.name === "about");
+      setPageData(page[0]);
+    };
+    fetch();
+  }, []);
 
   return (
     <Container

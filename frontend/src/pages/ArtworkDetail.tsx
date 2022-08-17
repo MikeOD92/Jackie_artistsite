@@ -6,14 +6,35 @@ import { useParams } from "react-router-dom";
 import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
+import axios from "axios";
 import DetailImage from "../components/DetailImage";
-import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
   const [current, setCurrent] = useState<ArtWorkMedia | null>(null);
-  const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (id) {
+        try {
+          const { data } = await axios.get(`/api/artwork/${id}`);
+          setArtwork(data.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetch();
+  }, [id]);
+
+  useEffect(() => {
+    if (artwork?.work_img) {
+      setCurrent(artwork.work_img[0]);
+    }
+  }, [artwork]);
+
+  const [zoomable, setZoomable] = useState<boolean>(false);
 
   const handleClick = (img: ArtWorkMedia) => {
     return (event: React.MouseEvent) => {

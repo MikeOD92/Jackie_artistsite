@@ -11,7 +11,6 @@ import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
 import ArtworkEditform from "../components/ArtworkEditform";
 import ArtworkEditImages from "../components/ArtworkEditImages";
-import { useActions } from "../hooks/useActions";
 
 const EditArtwork: FC = () => {
   const { id } = useParams();
@@ -20,18 +19,35 @@ const EditArtwork: FC = () => {
 
   const auth = useAuth();
 
-  // const { fetchData, getArtworkList } = useActions();
-
   const { access_key } = useTypedSelector((state) => state.user);
-  // const siteData = useTypedSelector((state) => state.siteData);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    if (artwork) setMedia(artwork.work_img);
-  });
+    const fetch = async () => {
+      try {
+        if (!artwork) {
+          const { data } = await axios.get(`/api/artwork/${id}`);
+          setArtwork(data.data);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        if (artwork?.work_img) {
+          setMedia(artwork.work_img);
+        }
+      }
+    };
+    fetch();
+  }, [id, images, artwork]);
+
+  // useEffect(() => {
+  //   if (artwork) setMedia(artwork.work_img);
+  //   console.log(media);
+  //   console.log(artwork);
+  // }, [artwork]);
 
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -47,7 +63,7 @@ const EditArtwork: FC = () => {
           `/api/edit-artwork/${id}`,
           config
         );
-        if (deleteRequest.status === 204) {
+        if (deleteRequest.status === 200) {
           setRedirect(true);
         }
       } catch (err: any) {
@@ -65,13 +81,18 @@ const EditArtwork: FC = () => {
       <Row className="mt-5">
         <Col md={6}>
           {artwork ? (
-            <ArtworkEditform id={id} media={media} artwork={artwork} />
+            <ArtworkEditform
+              id={id}
+              media={media}
+              artwork={artwork}
+              setArtwork={setArtwork}
+            />
           ) : (
             ""
           )}
         </Col>
         <Col lg={6}>
-          {artwork ? (
+          {artwork && artwork.work_img ? (
             <ArtworkEditImages
               artwork={artwork}
               setImages={setImages}
