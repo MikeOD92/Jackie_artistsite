@@ -18,6 +18,53 @@ const Home: FC = () => {
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
 
+  useEffect(() => {
+    if (artworkList.length === 0) {
+      const fetch = async () => {
+        try {
+          const { data } = await axios.get("/api/artwork");
+          setArtworkList(data);
+        } catch (err: any) {
+          console.log(err);
+        }
+      };
+      fetch();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (artworkList.length > 1) {
+      setBucket1([]);
+      setBucket2([]);
+      setBucket3([]);
+      let counter = 1;
+      for (let i = 0; i < artworkList.length; i++) {
+        if (!artworkList[i].work_img[0]) {
+          continue;
+        }
+        if (counter === 4) counter = 1;
+        switch (counter) {
+          case 1:
+            setBucket1((bucket1) => [...bucket1, artworkList[i]]);
+            counter++;
+            break;
+          case 2:
+            setBucket2((bucket2) => [...bucket2, artworkList[i]]);
+            counter++;
+            break;
+          case 3:
+            setBucket3((bucket3) => [...bucket3, artworkList[i]]);
+            counter++;
+            break;
+          default:
+            return;
+        }
+      }
+    } else {
+      return;
+    }
+  }, [artworkList]);
+
   return (
     <div>
       <Container
