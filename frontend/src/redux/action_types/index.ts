@@ -4,6 +4,7 @@ export enum ActionTypes {
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
   LOGIN_FAIL = "LOGIN_FAIL",
   LOGOUT = "LOGOUT",
+<<<<<<< HEAD
   // Page Data action types
   PAGEDATA_REQUEST = "PAGEDATA_REQUEST",
   PAGEDATA_SUCCESS = "PAGEDATA_SUCCESS",
@@ -16,4 +17,6 @@ export enum ActionTypes {
   ARTWORK_EDIT_REQUEST = "ARTWORK_EDIT_REQUEST",
   ARTWORK_EDIT_SUCCESS = "ARTWORK_EDIT_SUCCESS",
   ARTWORK_EDIT_FAIL = "ARTWORK_EDIT_FAIL",
+=======
+>>>>>>> parent of 9a4e4fa... setting up redux for siteData
 }

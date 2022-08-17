@@ -13,7 +13,9 @@ const ArtworkEditform: FC<{
 }> = ({ id, media, artwork }) => {
   const { access_key } = useTypedSelector((state) => state.user);
 
-  const { error, loading } = useTypedSelector((state) => state.artworkList);
+  const { data, loading, error } = useTypedSelector(
+    (state) => state.singleArtwork
+  );
 
   const { editArtwork } = useActions();
 
@@ -44,7 +46,7 @@ const ArtworkEditform: FC<{
     <div>
       {loading ? (
         <Spinner animation="border" variant="light" />
-      ) : (
+      ) : artwork ? (
         <Form
           onSubmit={(e: SyntheticEvent) => {
             submission(e);
@@ -77,11 +79,11 @@ const ArtworkEditform: FC<{
             ref={date}
             required
           />
-          {artwork ? (
+          {media ? (
             <Button
               style={{ backgroundColor: "black" }}
               type="submit"
-              disabled={artwork.work_img?.length < 1}
+              disabled={media.length < 1}
             >
               save
             </Button>
@@ -90,6 +92,8 @@ const ArtworkEditform: FC<{
           )}
           {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""}
         </Form>
+      ) : (
+        ""
       )}
     </div>
   );

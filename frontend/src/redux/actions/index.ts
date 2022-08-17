@@ -5,6 +5,7 @@ import {
   logoutAction,
 } from "./authActions";
 
+<<<<<<< HEAD
 import {
   pageDataRequestAction,
   pageDataSuccessAction,
@@ -20,10 +21,13 @@ import {
   artworkEditFailAction,
 } from "./artworklistActions";
 
+=======
+>>>>>>> parent of 9a4e4fa... setting up redux for siteData
 export type Action =
   | loginAction
   | loginActionFail
   | loginActionSuccess
+<<<<<<< HEAD
   | logoutAction
   | pageDataRequestAction
   | pageDataSuccessAction
@@ -34,3 +38,6 @@ export type Action =
   | artworkEditRequestAction
   | artworkEditSuccessAction
   | artworkEditFailAction;
+=======
+  | logoutAction;
+>>>>>>> parent of 9a4e4fa... setting up redux for siteData
