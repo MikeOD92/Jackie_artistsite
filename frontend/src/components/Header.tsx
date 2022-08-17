@@ -1,11 +1,11 @@
-import React, { FC, SyntheticEvent } from "react";
+import React, { FC, SyntheticEvent, useEffect } from "react";
 
 import { Navbar, Nav, Col } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useActions } from "../hooks/useActions";
 // import { logout } from "../redux/store";
 import useAuth from "../hooks/useAuth";
-
+import { useTypedSelector } from "../hooks/useTypedSelect";
 import { FiUser, FiLogOut } from "react-icons/fi";
 
 const Header: FC = () => {

@@ -1,35 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
-import axios from "axios";
 import { SiteData } from "../types/site_data";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { AiOutlineInstagram } from "react-icons/ai";
 import useAuth from "../hooks/useAuth";
 
 import PageEdit from "../components/PageEdit";
-import { useActions } from "../hooks/useActions";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const About: FC = () => {
   const auth = useAuth();
-  const [data, setData] = useState<SiteData>();
-
-  // const { getPageData } = useActions();
-  // const { data, error, loading } = useTypedSelector((state) => state.siteData);
-
-  useEffect(() => {
-    const fetch = async (pageName: string) => {
-      try {
-        const { data } = await axios.get("/api/site-data");
-        const pageData = data.filter(
-          (item: SiteData) => item.name === pageName
-        );
-        setData(pageData[0]);
-      } catch (err: any) {
-        console.error(err);
-      }
-    };
-    fetch("about");
-  }, []);
+  const [pageData, setPageData] = useState<SiteData>();
 
   return (
     <Container
@@ -38,9 +18,9 @@ const About: FC = () => {
         minHeight: "100vh",
       }}
     >
-      {auth && data ? (
-        <PageEdit data={data} setData={setData} />
-      ) : auth && !data ? (
+      {auth && pageData ? (
+        <PageEdit data={pageData} setData={setPageData} />
+      ) : auth ? (
         <PageEdit
           data={{
             id: 0,
@@ -49,22 +29,25 @@ const About: FC = () => {
             links: [],
             splash: "",
           }}
-          setData={setData}
+          setData={setPageData}
         />
       ) : (
         <Row>
           <Col md={4}>
-            {data ? (
-              <Image src={`${data.splash}`} fluid className="invert" />
+            {pageData ? (
+              <Image src={`${pageData.splash}`} fluid className="invert" />
             ) : (
               ""
             )}
           </Col>
           <Col className="m-5 ">
-            <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
+            <p style={{ whiteSpace: "pre-wrap" }}>
+              {" "}
+              {pageData ? pageData.text : ""}
+            </p>
             <ul className="mt-5" style={{ listStyle: "none" }}>
-              {data?.links
-                ? data.links.map((link, i) => {
+              {pageData?.links
+                ? pageData.links.map((link, i) => {
                     if (link.title === "instagram") {
                       return (
                         <li className="py-3" key={`${link.title} ${i}`}>

@@ -1,29 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
-import { SiteData } from "../types/site_data";
 import { Container } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import PageEdit from "../components/PageEdit";
+import { SiteData } from "../types/site_data";
+import { ExternalLinks } from "../types/external_links";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const CV: FC = () => {
   const auth = useAuth();
 
-  const [data, setData] = useState<SiteData>();
-
-  useEffect(() => {
-    const fetch = async (pageName: string) => {
-      try {
-        const { data } = await axios.get("/api/site-data");
-        const pageData = data.filter(
-          (item: SiteData) => item.name === pageName
-        );
-        setData(pageData[0]);
-      } catch (err: any) {
-        console.error(err);
-      }
-    };
-    fetch("CV");
-  }, []);
+  const [pageData, setPageData] = useState<SiteData>();
 
   return (
     <Container
@@ -32,9 +19,9 @@ const CV: FC = () => {
         minHeight: "100vh",
       }}
     >
-      {auth && data ? (
-        <PageEdit data={data} setData={setData} />
-      ) : auth && !data ? (
+      {auth && pageData ? (
+        <PageEdit data={pageData} setData={setPageData} />
+      ) : auth && !pageData ? (
         <PageEdit
           data={{
             id: 0,
@@ -43,14 +30,17 @@ const CV: FC = () => {
             links: [],
             splash: "",
           }}
-          setData={setData}
+          setData={setPageData}
         />
       ) : (
         <>
           {" "}
-          <p style={{ whiteSpace: "pre-wrap" }}> {data ? data.text : ""}</p>
-          {data?.links
-            ? data.links.map((link) => {
+          <p style={{ whiteSpace: "pre-wrap" }}>
+            {" "}
+            {pageData ? pageData.text : ""}
+          </p>
+          {pageData?.links
+            ? pageData.links.map((link: ExternalLinks) => {
                 return <a href={link.url}>{link.text}</a>;
               })
             : ""}

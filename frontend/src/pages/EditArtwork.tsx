@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent, useState, useEffect } from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
@@ -11,6 +11,7 @@ import { ArtWork } from "../types/art_work";
 import { ArtWorkMedia } from "../types/artwork_media";
 import ArtworkEditform from "../components/ArtworkEditform";
 import ArtworkEditImages from "../components/ArtworkEditImages";
+import { useActions } from "../hooks/useActions";
 
 const EditArtwork: FC = () => {
   const { id } = useParams();
@@ -18,33 +19,19 @@ const EditArtwork: FC = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
 
   const auth = useAuth();
-  // const user = useSelector(selectUser);
-  const { access_key } = useTypedSelector((state) => state.user);
-  // const { data, error } = useTypedSelector((state) => state.artwork);
 
-  // const { getArtSingleWork, deleteArtwork } = useActions();
+  // const { fetchData, getArtworkList } = useActions();
+
+  const { access_key } = useTypedSelector((state) => state.user);
+  // const siteData = useTypedSelector((state) => state.siteData);
 
   const [images, setImages] = useState<Array<string>>([]);
   const [media, setMedia] = useState<Array<ArtWorkMedia>>([]);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   useEffect(() => {
-    if (id) {
-      const fetch = async () => {
-        try {
-          const { data } = await axios.get(`/api/artwork/${id}`);
-          setArtwork(data.data);
-        } catch (err: any) {
-          console.error(err);
-        }
-      };
-      fetch();
-    }
-  }, [id, images]);
-
-  useEffect(() => {
     if (artwork) setMedia(artwork.work_img);
-  }, [artwork]);
+  });
 
   const deleteWork = async (e: SyntheticEvent) => {
     e.preventDefault();
