@@ -55,14 +55,14 @@ class ArtworkCreationProtectedAPIView(generics.GenericAPIView, mixins.CreateMode
 
 # API view for all non creation functions on artworks
 class ArtworkProtectedAPIView(generics.GenericAPIView, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
-    queryset = Artwork.objects.all()
+    queryset = Artwork.objects.all().order_by('-id')
     serializer_class = ArtworkSerializer
     permission_classes = [IsAdminUser]
 
     def put(self, request, pk=None):
-        return Response({
-            'data': self.partial_update(request, pk).data
-        })
+        self.partial_update(request, pk).data
+        return self.list(request)
+
     
     def delete(self, request, pk=None):
         return self.destroy(request, pk)

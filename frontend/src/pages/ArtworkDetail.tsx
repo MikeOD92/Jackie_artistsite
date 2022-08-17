@@ -1,5 +1,4 @@
 import React, { useState, useEffect, SyntheticEvent } from "react";
-import axios from "axios";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import { ArtWork } from "../types/art_work";
 import { Link } from "react-router-dom";
@@ -8,6 +7,7 @@ import { ArtWorkMedia } from "../types/artwork_media";
 import { IoReturnDownBackOutline } from "react-icons/io5";
 import { MdZoomIn, MdOutlineCancel } from "react-icons/md";
 import DetailImage from "../components/DetailImage";
+import { useTypedSelector } from "../hooks/useTypedSelect";
 
 const ArtworkDetail = () => {
   const [artwork, setArtwork] = useState<ArtWork>();
@@ -15,18 +15,13 @@ const ArtworkDetail = () => {
   const [zoomable, setZoomable] = useState<boolean>(false);
   const { id } = useParams();
 
+  const { list } = useTypedSelector((state) => state.artworkList);
+
   useEffect(() => {
-    const fetch = async () => {
-      try {
-        const { data } = await axios.get(`/api/artwork/${id}`);
-        setArtwork(data.data);
-        setCurrent(data.data.work_img[0]);
-      } catch (err: any) {
-        console.error(err);
-      }
-    };
-    fetch();
-  }, [id]);
+    const singleWork = list.filter((item) => item.id.toString() === id);
+    setArtwork(singleWork[0]);
+    setCurrent(singleWork[0].work_img[0]);
+  }, [list, id]);
 
   const handleClick = (img: ArtWorkMedia) => {
     return (event: React.MouseEvent) => {

@@ -1,6 +1,5 @@
-import React, { FC, SyntheticEvent, useRef, useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import axios from "axios";
+import React, { FC, SyntheticEvent, useRef } from "react";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { useTypedSelector } from "../hooks/useTypedSelect";
 
 import { ArtWorkMedia } from "../types/artwork_media";
@@ -13,14 +12,19 @@ const ArtworkEditform: FC<{
   artwork: ArtWork;
 }> = ({ id, media, artwork }) => {
   const { access_key } = useTypedSelector((state) => state.user);
-  const [success, setSuccess] = useState<boolean | undefined>(undefined);
+
+  const { data, loading, error } = useTypedSelector(
+    (state) => state.singleArtwork
+  );
+
+  const { editArtwork } = useActions();
 
   const title = useRef<HTMLInputElement>(null);
   const medium = useRef<HTMLInputElement>(null);
   const dimensions = useRef<HTMLInputElement>(null);
   const date = useRef<HTMLInputElement>(null);
 
-  const submission = async (e: SyntheticEvent) => {
+  const submission = (e: SyntheticEvent) => {
     e.preventDefault();
     if (
       id &&
@@ -29,86 +33,69 @@ const ArtworkEditform: FC<{
       dimensions.current &&
       date.current
     ) {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${access_key}`,
-        },
-      };
-      try {
-        const editResponse = await axios.put(
-          `/api/edit-artwork/${id}`,
-          {
-            title: title.current.value,
-            medium: medium.current.value,
-            dimensions: dimensions.current.value,
-            date: date.current.value,
-          },
-          config
-        );
-        if (editResponse.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
-        }
-      } catch (err: any) {
-        console.error(err);
-      }
+      editArtwork(id, access_key, {
+        title: title.current.value,
+        medium: medium.current.value,
+        dimensions: dimensions.current.value,
+        date: date.current.value,
+      });
     }
   };
 
   return (
-    <Form
-      onSubmit={(e: SyntheticEvent) => {
-        submission(e);
-      }}
-    >
-      <Form.Control
-        type="text"
-        defaultValue={artwork?.title || ""}
-        ref={title}
-        className="defaultCursor"
-        required
-      />
-      <Form.Control
-        type="text"
-        defaultValue={artwork?.medium || ""}
-        className="defaultCursor"
-        ref={medium}
-      />
-      <Form.Control
-        type="text"
-        defaultValue={artwork?.dimensions || ""}
-        className="defaultCursor"
-        ref={dimensions}
-        required
-      />
-      <Form.Control
-        type="text"
-        defaultValue={artwork?.date || ""}
-        className="defaultCursor"
-        ref={date}
-        required
-      />
-      {artwork ? (
-        <Button
-          style={{ backgroundColor: "black" }}
-          type="submit"
-          disabled={artwork.work_img?.length < 1}
+    <div>
+      {loading ? (
+        <Spinner animation="border" variant="light" />
+      ) : artwork ? (
+        <Form
+          onSubmit={(e: SyntheticEvent) => {
+            submission(e);
+          }}
         >
-          save
-        </Button>
+          <Form.Control
+            type="text"
+            defaultValue={artwork?.title || ""}
+            ref={title}
+            className="defaultCursor"
+            required
+          />
+          <Form.Control
+            type="text"
+            defaultValue={artwork?.medium || ""}
+            className="defaultCursor"
+            ref={medium}
+          />
+          <Form.Control
+            type="text"
+            defaultValue={artwork?.dimensions || ""}
+            className="defaultCursor"
+            ref={dimensions}
+            required
+          />
+          <Form.Control
+            type="text"
+            defaultValue={artwork?.date || ""}
+            className="defaultCursor"
+            ref={date}
+            required
+          />
+          {media ? (
+            <Button
+              style={{ backgroundColor: "black" }}
+              type="submit"
+              disabled={media.length < 1}
+            >
+              save
+            </Button>
+          ) : (
+            ""
+          )}
+          {error ? <p style={{ color: "red" }}> Error: {error}</p> : ""}
+        </Form>
       ) : (
         ""
       )}
-      {success === false ? (
-        <p style={{ color: "red" }}> Error: Update Failed</p>
-      ) : success === true ? (
-        <p style={{ color: "green" }}> Update Successful</p>
-      ) : (
-        ""
-      )}
-    </Form>
+    </div>
   );
 };
 
