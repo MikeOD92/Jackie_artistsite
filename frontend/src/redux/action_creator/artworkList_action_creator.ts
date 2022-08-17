@@ -11,7 +11,6 @@ export const getArtworkList = () => {
     });
     try {
       const { data } = await axios.get("/api/artwork");
-      // localStorage.setItem("artworkList", JSON.stringify(data));
       dispatch({
         type: ActionTypes.ARTWORKLIST_SUCCESS,
         payload: data,
@@ -58,7 +57,6 @@ export const editArtwork = (
         },
         config
       );
-      // localStorage.setItem("artworkList", JSON.stringify(data));
       dispatch({
         type: ActionTypes.ARTWORK_EDIT_SUCCESS,
         payload: data,
