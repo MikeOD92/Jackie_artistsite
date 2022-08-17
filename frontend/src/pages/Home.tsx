@@ -24,7 +24,7 @@ const Home: FC = () => {
           const { data } = await axios.get("/api/artwork");
           setArtworkList(data);
         } catch (err: any) {
-          console.error(err);
+          console.log(err);
         }
       };
       fetch();
