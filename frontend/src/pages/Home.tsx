@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { ArtWork } from "../types/art_work";
 import { Container, Col, Row } from "react-bootstrap";
@@ -6,6 +6,7 @@ import HomeImg from "../components/HomeImg";
 import { BiCopyright } from "react-icons/bi";
 import { Gi3DStairs } from "react-icons/gi";
 import useAuth from "../hooks/useAuth";
+import useCheckWidth from "../hooks/useCheckWidth";
 
 const Home: FC = () => {
   const auth = useAuth();
@@ -14,6 +15,8 @@ const Home: FC = () => {
   const [bucket1, setBucket1] = useState<Array<ArtWork>>([]);
   const [bucket2, setBucket2] = useState<Array<ArtWork>>([]);
   const [bucket3, setBucket3] = useState<Array<ArtWork>>([]);
+
+  const gridState = useCheckWidth();
 
   useEffect(() => {
     if (artworkList.length === 0) {
@@ -60,7 +63,7 @@ const Home: FC = () => {
     } else {
       return;
     }
-  }, [artworkList]);
+  }, [artworkList]); //, gridState
 
   return (
     <div>
@@ -75,33 +78,65 @@ const Home: FC = () => {
           minHeight: "100vh",
         }}
       >
-        <Col sm={6} md={6} lg={4}>
-          {bucket1
-            ? bucket1.map((work, i) => {
-                return (
-                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
-                );
-              })
-            : ""}
-        </Col>
-        <Col sm={6} md={6} lg={4}>
-          {bucket2
-            ? bucket2.map((work, i) => {
-                return (
-                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
-                );
-              })
-            : ""}
-        </Col>
-        <Col sm={12} md={12} lg={4}>
-          {bucket3
-            ? bucket3.map((work, i) => {
-                return (
-                  <HomeImg work={work} auth={auth} key={`${work.title} ${i}`} />
-                );
-              })
-            : ""}
-        </Col>
+        {!gridState ? (
+          <>
+            {artworkList
+              ? artworkList.map((work, i) => {
+                  return (
+                    <HomeImg
+                      work={work}
+                      auth={auth}
+                      key={`${work.title} ${i}`}
+                    />
+                  );
+                })
+              : ""}
+          </>
+        ) : gridState ? (
+          <>
+            <Col md={4} lg={4}>
+              {bucket1
+                ? bucket1.map((work, i) => {
+                    return (
+                      <HomeImg
+                        work={work}
+                        auth={auth}
+                        key={`${work.title} ${i}`}
+                      />
+                    );
+                  })
+                : ""}
+            </Col>
+            <Col md={4} lg={4}>
+              {bucket2
+                ? bucket2.map((work, i) => {
+                    return (
+                      <HomeImg
+                        work={work}
+                        auth={auth}
+                        key={`${work.title} ${i}`}
+                      />
+                    );
+                  })
+                : ""}
+            </Col>
+            <Col md={4} lg={4}>
+              {bucket3
+                ? bucket3.map((work, i) => {
+                    return (
+                      <HomeImg
+                        work={work}
+                        auth={auth}
+                        key={`${work.title} ${i}`}
+                      />
+                    );
+                  })
+                : ""}
+            </Col>
+          </>
+        ) : (
+          ""
+        )}
       </Container>
 
       <Row>
