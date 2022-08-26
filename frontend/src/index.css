@@ -46,6 +46,17 @@ code {
   position: relative;
   right: 15px;
 }
+.leftCol {
+  padding: 5px;
+  margin-left: 5vw;
+  margin-right: 2vw;
+}
+.returnBtn {
+  font-size: 32px;
+  color: white;
+  padding: 10px;
+}
+
 @media only screen and (max-width: 991px) {
   .rightalign-nav-links {
     position: relative;
@@ -55,5 +66,12 @@ code {
 @media only screen and (max-width: 767px) {
   .hide-on-shrink {
     display: none;
+  }
+  .returnBtn {
+    position: relative;
+    left: 70vw;
+  }
+  .leftCol {
+    margin-left: 10vw;
   }
 }

@@ -69,7 +69,12 @@ const DetailImage: FC<{ img: string; zoomable: boolean }> = ({
     return (
       <div className="d-flex" style={{ justifyContent: "center" }}>
         {/* <div className="invert" style={zoom}></div> */}
-        <Image fluid style={{ height: "80vh" }} src={img} className="invert" />
+        <Image
+          fluid
+          style={{ maxHeight: "80vh" }}
+          src={img}
+          className="invert pt-4"
+        />
       </div>
     );
   }
