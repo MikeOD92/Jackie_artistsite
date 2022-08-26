@@ -18,7 +18,9 @@ const ArtworkDetail = () => {
     const fetch = async () => {
       if (id) {
         try {
-          const { data } = await axios.get(`/api/artwork/${id}`);
+          const { data } = await axios.get(
+            `http://localhost:8000/api/artwork/${id}` /// be sure to change this back
+          );
           setArtwork(data.data);
         } catch (error) {
           console.error(error);
@@ -45,12 +47,7 @@ const ArtworkDetail = () => {
   return (
     <div style={{ marginTop: "14vh" }}>
       <Row className="mb-4">
-        <Col
-          md={2}
-          sm={12}
-          xs={12}
-          style={{ padding: "10px", marginLeft: "5vw" }}
-        >
+        <Col md={2} sm={12} xs={12} className="leftCol">
           <div style={{ textAlign: "left" }}>
             <h3 className="mt-5 title"> {artwork ? artwork.title : ""}</h3>
             <p className="mt-5 wall-txt"> {artwork ? artwork.medium : ""} </p>
@@ -60,15 +57,14 @@ const ArtworkDetail = () => {
             </p>
             <p className="mt-4 wall-txt"> {artwork ? artwork.date : ""}</p>
           </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Link
-              to="/"
-              style={{
-                fontSize: "32px",
-                color: "white",
-                padding: "10px",
-              }}
-            >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexFlow: "flex-end",
+            }}
+          >
+            <Link to="/" className="returnBtn">
               <IoReturnDownBackOutline />
             </Link>
             {zoomable ? (

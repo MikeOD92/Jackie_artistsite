@@ -63,7 +63,7 @@ const Home: FC = () => {
     } else {
       return;
     }
-  }, [artworkList]); //, gridState
+  }, [artworkList]);
 
   return (
     <div>
