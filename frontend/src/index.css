@@ -38,10 +38,7 @@ body {
 .wall-txt {
   font-size: 18px;
 }
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+
 .rightalign-nav-links {
   position: relative;
   right: 15px;
@@ -55,6 +52,9 @@ code {
   font-size: 32px;
   color: white;
   padding: 10px;
+}
+.returnBtn:hover {
+  color: grey;
 }
 
 @media only screen and (max-width: 991px) {

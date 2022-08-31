@@ -111,6 +111,7 @@ const ArtworkDetail = () => {
                           onClick={handleClick(img)}
                           style={{ marginTop: "5px" }}
                           className="invert"
+                          alt={`thumbnail of ${artwork.title}`}
                         />
                       </Col>
                     );
