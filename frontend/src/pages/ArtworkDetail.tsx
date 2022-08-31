@@ -18,9 +18,7 @@ const ArtworkDetail = () => {
     const fetch = async () => {
       if (id) {
         try {
-          const { data } = await axios.get(
-            `http://localhost:8000/api/artwork/${id}` /// be sure to change this back
-          );
+          const { data } = await axios.get(`/api/artwork/${id}`);
           setArtwork(data.data);
         } catch (error) {
           console.error(error);
